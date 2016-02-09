@@ -9,7 +9,7 @@ import java.awt.event.ActionListener;
 /**
  * Created by tomer on 2/8/16.
  */
-public class MainMenu {
+public class MainMenuView {
     public static JPanel getMainMenu(ActionListener newGame, ActionListener stats, ActionListener exit)
     {
         JPanel pane = new JPanel();

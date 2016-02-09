@@ -1,6 +1,6 @@
 package com.chess.Controllers;
 
-import com.chess.Layouts.MainMenu;
+import com.chess.Layouts.MainMenuView;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -15,7 +15,7 @@ public class MainMenuController {
 
     }
 
-    public void createView(JFrame frame)
+    public void createView(final JFrame frame)
     {
         ActionListener newGame = new ActionListener() {
             @Override
@@ -27,7 +27,8 @@ public class MainMenuController {
         ActionListener stats = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-
+                ViewStatsController c = new ViewStatsController();
+                c.createView(frame);
             }
         };
 
@@ -38,6 +39,7 @@ public class MainMenuController {
             }
         };
 
-        frame.add(MainMenu.getMainMenu(newGame,stats,exit));
+        frame.setContentPane(MainMenuView.getMainMenu(newGame, stats, exit));
+        frame.revalidate();
     }
 }

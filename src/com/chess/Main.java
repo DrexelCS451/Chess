@@ -10,7 +10,7 @@ public class Main {
         //Create and set up the window.
         JFrame frame = new JFrame("Chess");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setMinimumSize(new Dimension(600, 500));
+        frame.setMinimumSize(new Dimension(500, 550));
         //Add the ubiquitous "Hello World" label.
         MainMenuController menu = new MainMenuController();
         menu.createView(frame);

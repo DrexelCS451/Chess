@@ -12,7 +12,7 @@ public class ChessView {
     {
         JPanel p = new JPanel();
         p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
-        Label l =new Label("Your Turn\nPlaying Bobby");
+        Label l =new Label("Your Turn  Playing Bobby");
         l.setAlignment(Label.CENTER);
         l.setMaximumSize(new Dimension(Integer.MAX_VALUE, l.getMinimumSize().height));
         p.add(l);

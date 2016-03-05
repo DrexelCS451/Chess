@@ -76,8 +76,9 @@ public class MoveValidator {
                 // If a pawn hasn't moved, it can move its Y -2
                 if(toCell.getPos().getY() == fromCell.getPos().getY() - 2) {
                     // Check that there's no piece in the way
-                    //if(board.getCell()
-                    return true;
+                    if(board.getCell(fromCell.getPos().getX(), fromCell.getPos().getY() - 1).getCellState() == Chess.Pieces.EMPTY) {
+                        return true;
+                    }
                 }
             }
             // If the pawn has already moved, Check if the move Y is -1
@@ -143,14 +144,96 @@ public class MoveValidator {
     //================================ Validate KING moves ================================
     //================================---------------------================================
     private static boolean validate_KING_MOVE(ChessMove move, Board board) {
+        Cell fromCell = move.getFrom();
+        Cell toCell = move.getTo();
+
+        // Moves where the X doesn't change
+        if(toCell.getPos().getX() == fromCell.getPos().getX()) {
+            if(toCell.getPos().getY() == fromCell.getPos().getY() + 1 || toCell.getPos().getY() == fromCell.getPos().getY() - 1) {
+                return true;
+            }
+            // Moves where Y doesn't change
+        } else if(toCell.getPos().getY() == fromCell.getPos().getY()) {
+            if(toCell.getPos().getX() == fromCell.getPos().getX() + 1 || toCell.getPos().getX() == fromCell.getPos().getX() - 1) {
+                return true;
+            }
+            // Moves where X changes +1
+        } else if(toCell.getPos().getX() == fromCell.getPos().getX() + 1) {
+            if(toCell.getPos().getY() == fromCell.getPos().getY()) {
+                return true;
+            } else if(toCell.getPos().getY() == fromCell.getPos().getY() + 1) {
+                return true;
+            } else if(toCell.getPos().getY() == fromCell.getPos().getY() - 1) {
+                return true;
+            }
+            // Moves where X changes -1
+        } else if(toCell.getPos().getX() == fromCell.getPos().getX() - 1) {
+            if(toCell.getPos().getY() == fromCell.getPos().getY()) {
+                return true;
+            } else if(toCell.getPos().getY() == fromCell.getPos().getY() + 1) {
+                return true;
+            } else if(toCell.getPos().getY() == fromCell.getPos().getY() - 1) {
+                return true;
+            }
+            // Moves where Y changes +1
+        } else if(toCell.getPos().getY() == fromCell.getPos().getY() + 1) {
+            if(toCell.getPos().getX() == fromCell.getPos().getX()) {
+                return true;
+            } else if(toCell.getPos().getX() == fromCell.getPos().getX() + 1) {
+                return true;
+            } else if(toCell.getPos().getX() == fromCell.getPos().getX() - 1) {
+                return true;
+            }
+            // Moves where Y changes -1
+        } else if(toCell.getPos().getY() == fromCell.getPos().getY() - 1) {
+            if(toCell.getPos().getX() == fromCell.getPos().getX()) {
+                return true;
+            } else if(toCell.getPos().getX() == fromCell.getPos().getX() + 1) {
+                return true;
+            } else if(toCell.getPos().getX() == fromCell.getPos().getX() - 1) {
+                return true;
+            }
+        }
         return false;
     }
 
     private static boolean validate_BLACK_KING(ChessMove move, Board board) {
+        Cell fromCell = move.getFrom();
+        Cell toCell = move.getTo();
+
+        // If cell is empty, move is not an attack
+        if(toCell.getCellState() == Chess.Pieces.EMPTY) {
+            return validate_KING_MOVE(move, board);
+            // If cell is not empty and other piece is white, move is an attack
+        } else if(toCell.getCellState() == Chess.Pieces.WHITE_PAWN
+                || toCell.getCellState() == Chess.Pieces.WHITE_KING
+                || toCell.getCellState() == Chess.Pieces.WHITE_QUEEN
+                || toCell.getCellState() == Chess.Pieces.WHITE_ROOK
+                || toCell.getCellState() == Chess.Pieces.WHITE_KNIGHT
+                || toCell.getCellState() == Chess.Pieces.WHITE_BISHOP) {
+            return validate_KING_MOVE(move, board);
+        }
+        // Cell is occupied by a black piece
         return false;
     }
 
     private static boolean validate_WHITE_KING(ChessMove move, Board board) {
+        Cell fromCell = move.getFrom();
+        Cell toCell = move.getTo();
+
+        // If cell is empty, move is not an attack
+        if(toCell.getCellState() == Chess.Pieces.EMPTY) {
+            return validate_KING_MOVE(move, board);
+            // If cell is not empty and other piece is white, move is an attack
+        } else if(toCell.getCellState() == Chess.Pieces.BLACK_PAWN
+                || toCell.getCellState() == Chess.Pieces.BLACK_KING
+                || toCell.getCellState() == Chess.Pieces.BLACK_QUEEN
+                || toCell.getCellState() == Chess.Pieces.BLACK_ROOK
+                || toCell.getCellState() == Chess.Pieces.BLACK_KNIGHT
+                || toCell.getCellState() == Chess.Pieces.BLACK_BISHOP) {
+            return validate_KING_MOVE(move, board);
+        }
+        // Cell is occupied by a white piece
         return false;
     }
 

@@ -17,7 +17,7 @@ public class Game {
         return board;
     }
 
-    public void startGame() {}
+    public void startGame() { initBoard(); }
 
     public Board makeMove(ChessMove m) {
         Coordinate c1 = m.getFrom().getPos();

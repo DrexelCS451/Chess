@@ -1,7 +1,12 @@
 package com.chess.Controllers;
 
+import com.chess.Helpers.BoardHelper;
+import com.chess.Helpers.CellListener;
+import com.chess.Helpers.ImageHelper;
 import com.chess.Layouts.ChessView;
 import com.chess.Layouts.MainMenuView;
+import com.chess.Models.Board;
+import com.chess.Models.Coordinate;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -16,6 +21,9 @@ public class ChessScreenController {
 
     }
 
+    Coordinate click1;
+    Coordinate click2;
+
     public void createView(final JFrame frame)
     {
         ActionListener forfeit = new ActionListener() {
@@ -29,7 +37,19 @@ public class ChessScreenController {
 
             }
         };
-        frame.setContentPane(ChessView.getChessView(forfeit));
+
+       final Board b =  BoardHelper.CreateBoard(true);
+       final ChessView view = new ChessView();
+        view.setCellClickListner(new CellListener() {
+            @Override
+            public void actionPerformed(int i, int j) {
+                view.cellClicked(i,j);
+            }
+        });
+
+
+        view.setBoard(b);
+        frame.setContentPane(view.getView());
         frame.revalidate();
     }
 }

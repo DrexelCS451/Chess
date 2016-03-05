@@ -19,7 +19,7 @@ public class Board {
 
     public void setCell(int x, int y, Cell cell)
     {
-
+        cells[x][y] = cell;
     }
 
     public Chess.BoardState getBoardState()

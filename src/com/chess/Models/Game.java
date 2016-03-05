@@ -1,5 +1,6 @@
-package com.chess.Helpers;
+package com.chess.Models;
 
+import com.chess.Helpers.MoveValidator;
 import com.chess.Models.Board;
 
 /**

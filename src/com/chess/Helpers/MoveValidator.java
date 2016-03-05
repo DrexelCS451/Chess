@@ -51,9 +51,9 @@ public class MoveValidator {
             case WHITE_KNIGHT:
                 return validate_WHITE_KNIGHT(move, board);
             case BLACK_BISHOP:
-                break;
+                return validate_BLACK_KNIGHT(move, board);
             case WHITE_BISHOP:
-                break;
+                return validate_WHITE_BISHOP(move, board);
         }
         return false;
     }
@@ -201,7 +201,6 @@ public class MoveValidator {
     }
 
     private static boolean validate_BLACK_KING(ChessMove move, Board board) {
-        Cell fromCell = move.getFrom();
         Cell toCell = move.getTo();
 
         // If cell is empty, move is not an attack
@@ -221,7 +220,6 @@ public class MoveValidator {
     }
 
     private static boolean validate_WHITE_KING(ChessMove move, Board board) {
-        Cell fromCell = move.getFrom();
         Cell toCell = move.getTo();
 
         // If cell is empty, move is not an attack
@@ -245,20 +243,60 @@ public class MoveValidator {
     //================================ Validate QUEEN moves ================================
     //================================----------------------================================
     private static boolean validate_QUEEN_MOVE(ChessMove move, Board board) {
+        Cell fromCell = move.getFrom();
+        Cell toCell = move.getTo();
+
+        if (fromCell.getPos().getX() == toCell.getPos().getX() && fromCell.getPos().getY() == toCell.getPos().getY())
+            return false;
+        else if (validate_ROOK_MOVE(move, board) || validate_BISHOP_MOVE(move, board))
+            return true;
         return false;
     }
 
     private static boolean validate_BLACK_QUEEN(ChessMove move, Board board) {
+        Cell toCell = move.getTo();
+
+        if(toCell.getCellState() == Chess.Pieces.EMPTY) {
+            return validate_QUEEN_MOVE(move, board);
+        }
+
+        else if (toCell.getCellState() == Chess.Pieces.WHITE_PAWN
+                || toCell.getCellState() == Chess.Pieces.WHITE_KING
+                || toCell.getCellState() == Chess.Pieces.WHITE_QUEEN
+                || toCell.getCellState() == Chess.Pieces.WHITE_ROOK
+                || toCell.getCellState() == Chess.Pieces.WHITE_KNIGHT
+                || toCell.getCellState() == Chess.Pieces.WHITE_BISHOP)  {
+            return validate_QUEEN_MOVE(move, board);
+        }
+
         return false;
     }
 
     private static boolean validate_WHITE_QUEEN(ChessMove move, Board board) {
+        Cell toCell = move.getTo();
+
+        if(toCell.getCellState() == Chess.Pieces.EMPTY) {
+            return validate_QUEEN_MOVE(move, board);
+        }
+
+        else if (toCell.getCellState() == Chess.Pieces.BLACK_PAWN
+                || toCell.getCellState() == Chess.Pieces.BLACK_KING
+                || toCell.getCellState() == Chess.Pieces.BLACK_QUEEN
+                || toCell.getCellState() == Chess.Pieces.BLACK_ROOK
+                || toCell.getCellState() == Chess.Pieces.BLACK_KNIGHT
+                || toCell.getCellState() == Chess.Pieces.BLACK_BISHOP)  {
+            return validate_QUEEN_MOVE(move, board);
+        }
+
         return false;
     }
 
     //================================---------------------================================
     //================================ Validate ROOK moves ================================
     //================================---------------------================================
+
+    // created by Kelly Shiptoski on 3/4
+
     private static boolean validate_ROOK_MOVE(ChessMove move, Board board) {
         Cell fromCell = move.getFrom();
         Cell toCell = move.getTo();
@@ -271,7 +309,10 @@ public class MoveValidator {
         int fromRow = fromCell.getPos().getY();
         int fromCol = fromCell.getPos().getX();
 
-        if (toCol == fromCol) {
+        if (fromCell.getPos().getX() == toCell.getPos().getX() && fromCell.getPos().getY() == toCell.getPos().getY())
+            return false;
+
+        else if (toCol == fromCol) {
             if (toRow - fromRow < 0) {
                 for (int i = (fromRow - 1); i > toRow; i--) {
                     if (board.getCell(toCol, i).getCellState() != Chess.Pieces.EMPTY)
@@ -309,17 +350,9 @@ public class MoveValidator {
     }
 
     private static boolean validate_BLACK_ROOK(ChessMove move, Board board) {
-        Cell fromCell = move.getFrom();
         Cell toCell = move.getTo();
 
-        int moveRow = toCell.getPos().getX();
-        int moveCol = toCell.getPos().getY();
-        int fromRow = fromCell.getPos().getX();
-        int fromCol = fromCell.getPos().getY();
-
-        if (fromCell.getPos().getX() == toCell.getPos().getX() && fromCell.getPos().getY() == toCell.getPos().getY())
-            return false;
-        else if(toCell.getCellState() == Chess.Pieces.EMPTY) {
+        if(toCell.getCellState() == Chess.Pieces.EMPTY) {
             return validate_ROOK_MOVE(move, board);
         }
         else if(toCell.getCellState() == Chess.Pieces.WHITE_PAWN
@@ -334,18 +367,9 @@ public class MoveValidator {
     }
 
     private static boolean validate_WHITE_ROOK(ChessMove move, Board board) {
-        Cell fromCell = move.getFrom();
         Cell toCell = move.getTo();
 
-        int moveRow = toCell.getPos().getX();
-        int moveCol = toCell.getPos().getY();
-        int fromRow = fromCell.getPos().getX();
-        int fromCol = fromCell.getPos().getY();
-
-        if (fromCell.getPos().getX() == toCell.getPos().getX() && fromCell.getPos().getY() == toCell.getPos().getY())
-            return false;
-
-        else if(toCell.getCellState() == Chess.Pieces.EMPTY) {
+        if(toCell.getCellState() == Chess.Pieces.EMPTY) {
             return validate_ROOK_MOVE(move, board);
         }
 
@@ -401,17 +425,9 @@ public class MoveValidator {
     }
 
     private static boolean validate_BLACK_KNIGHT(ChessMove move, Board board) {
-        Cell fromCell = move.getFrom();
         Cell toCell = move.getTo();
 
-        int toRow = toCell.getPos().getX();
-        int toCol = toCell.getPos().getY();
-        int fromRow = fromCell.getPos().getX();
-        int fromCol = fromCell.getPos().getY();
-
-        if (fromCell == toCell)
-            return false;
-        else if(toCell.getCellState() == Chess.Pieces.EMPTY) {
+        if(toCell.getCellState() == Chess.Pieces.EMPTY) {
             return validate_KNIGHT_MOVE(move, board);
         }
         else if (toCell.getCellState() == Chess.Pieces.WHITE_PAWN
@@ -426,17 +442,9 @@ public class MoveValidator {
     }
 
     private static boolean validate_WHITE_KNIGHT(ChessMove move, Board board) {
-        Cell fromCell = move.getFrom();
         Cell toCell = move.getTo();
 
-        int toRow = toCell.getPos().getX();
-        int toCol = toCell.getPos().getY();
-        int fromRow = fromCell.getPos().getX();
-        int fromCol = fromCell.getPos().getY();
-
-        if (fromCell == toCell)
-            return false;
-        else if(toCell.getCellState() == Chess.Pieces.EMPTY) {
+        if(toCell.getCellState() == Chess.Pieces.EMPTY) {
             return validate_KNIGHT_MOVE(move, board);
         }
         else if (toCell.getCellState() == Chess.Pieces.BLACK_PAWN
@@ -462,28 +470,76 @@ public class MoveValidator {
         int yDiff = toCell.getPos().getY() - fromCell.getPos().getY();
         int absXDiff = Math.abs(xDiff);
         int absYDiff = Math.abs(yDiff);
-        if(absXDiff == absYDiff) {
+
+        if (fromCell.getPos().getX() == toCell.getPos().getX() && fromCell.getPos().getY() == toCell.getPos().getY())
+            return false;
+
+        else if(absXDiff == absYDiff) {
             // Check that there is no piece in the move path
             if(xDiff > 0 && yDiff > 0) {
-                for(int i = 0; i < xDiff; i++) {
-
+                for(int i = 1; i < xDiff; i++) {
+                    if (board.getCell(fromCell.getPos().getX() + i, fromCell.getPos().getY() + i).getCellState() != Chess.Pieces.EMPTY)
+                        return false;
                 }
+                return true;
             } else if(xDiff > 0 && yDiff < 0) {
+                for(int i = 1; i < xDiff; i++) {
+                    if (board.getCell(fromCell.getPos().getX() + i, fromCell.getPos().getY() - i).getCellState() != Chess.Pieces.EMPTY)
+                        return false;
+                }
+                return true;
 
             } else if(xDiff < 0 && yDiff > 0) {
+                for(int i = 1; i < yDiff; i++) {
+                    if (board.getCell(fromCell.getPos().getX() - i, fromCell.getPos().getY() + i).getCellState() != Chess.Pieces.EMPTY)
+                        return false;
+                }
+                return true;
 
             } else if(xDiff < 0 && yDiff < 0) {
-
+                for(int i = 1; i < absXDiff; i++) {
+                    if (board.getCell(fromCell.getPos().getX() - i, fromCell.getPos().getY() - i).getCellState() != Chess.Pieces.EMPTY)
+                        return false;
+                }
+                return true;
             }
         }
         return false;
     }
 
     private static boolean validate_BLACK_BISHOP(ChessMove move, Board board) {
+        Cell toCell = move.getTo();
+
+        if(toCell.getCellState() == Chess.Pieces.EMPTY) {
+            return validate_BISHOP_MOVE(move, board);
+        }
+
+        else if (toCell.getCellState() == Chess.Pieces.WHITE_PAWN
+                || toCell.getCellState() == Chess.Pieces.WHITE_KING
+                || toCell.getCellState() == Chess.Pieces.WHITE_QUEEN
+                || toCell.getCellState() == Chess.Pieces.WHITE_ROOK
+                || toCell.getCellState() == Chess.Pieces.WHITE_KNIGHT
+                || toCell.getCellState() == Chess.Pieces.WHITE_BISHOP) {
+            return validate_BISHOP_MOVE(move, board);
+        }
         return false;
     }
 
     private static boolean validate_WHITE_BISHOP(ChessMove move, Board board) {
+        Cell toCell = move.getTo();
+
+        if(toCell.getCellState() == Chess.Pieces.EMPTY) {
+            return validate_BISHOP_MOVE(move, board);
+        }
+
+        else if (toCell.getCellState() == Chess.Pieces.BLACK_PAWN
+                || toCell.getCellState() == Chess.Pieces.BLACK_KING
+                || toCell.getCellState() == Chess.Pieces.BLACK_QUEEN
+                || toCell.getCellState() == Chess.Pieces.BLACK_ROOK
+                || toCell.getCellState() == Chess.Pieces.BLACK_KNIGHT
+                || toCell.getCellState() == Chess.Pieces.BLACK_BISHOP) {
+            return validate_BISHOP_MOVE(move, board);
+        }
         return false;
     }
 }

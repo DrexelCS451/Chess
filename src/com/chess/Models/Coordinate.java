@@ -4,19 +4,17 @@ package com.chess.Models;
  * Created by tomer on 3/4/16.
  */
 public class Coordinate {
-    private int row;
-    private int col;
+    private int x;
+    private int y;
 
-    public Coordinate(int row, int col) {
-        this.row = row;
-        this.col = col;
+    public Coordinate(int x, int y) {
+        this.x = x;
+        this.y = y;
     }
 
-    public int getRow() {
-        return row;
+    public int getX() {
+        return x;
     }
 
-    public int getCol() {
-        return col;
-    }
+    public int getY() { return y; }
 }

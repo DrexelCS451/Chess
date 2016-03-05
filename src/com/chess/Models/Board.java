@@ -12,10 +12,11 @@ public class Board {
 
     }
 
-    public Cell getcell(int x, int y)
+    public Cell getCell(int x, int y)
     {
         return cells[x][y];
     }
+    public Cell getCell(Coordinate pos) {return cells[pos.getY()][pos.getX()]; }
 
     public void setCell(int x, int y, Cell cell)
     {

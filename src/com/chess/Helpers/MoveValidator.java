@@ -69,17 +69,19 @@ public class MoveValidator {
     private static boolean validate_PAWN_MOVE(ChessMove move, Board board) {
         Cell fromCell = move.getFrom();
         Cell toCell = move.getTo();
-        // Check if the move column stays the same
-        if(toCell.getPos().getCol() == fromCell.getPos().getCol()) {
+        // Check if the move X stays the same
+        if(toCell.getPos().getX() == fromCell.getPos().getX()) {
             // Check if the pawn has moved yet
-            if(fromCell.getPos().getRow() == 6) {
-                // If a pawn hasn't moved, it can move its row -2
-                if(toCell.getPos().getRow() == fromCell.getPos().getRow() - 2) {
+            if(fromCell.getPos().getY() == 6) {
+                // If a pawn hasn't moved, it can move its Y -2
+                if(toCell.getPos().getY() == fromCell.getPos().getY() - 2) {
+                    // Check that there's no piece in the way
+                    //if(board.getCell()
                     return true;
                 }
             }
-            // If the pawn has already moved, Check if the move row is +1
-            if(toCell.getPos().getRow() == fromCell.getPos().getRow() - 1) {
+            // If the pawn has already moved, Check if the move Y is -1
+            if(toCell.getPos().getY() == fromCell.getPos().getY() - 1) {
                 return true;
             }
         }
@@ -100,10 +102,10 @@ public class MoveValidator {
                 || toCell.getCellState() == Chess.Pieces.WHITE_ROOK
                 || toCell.getCellState() == Chess.Pieces.WHITE_KNIGHT
                 || toCell.getCellState() == Chess.Pieces.WHITE_BISHOP) {
-            // Check if the attack column is +1 or -1
-            if(toCell.getPos().getCol() == fromCell.getPos().getCol() + 1 || toCell.getPos().getCol() == fromCell.getPos().getCol() - 1 ) {
-                // Check if the attack row is -1
-                if(toCell.getPos().getRow() == fromCell.getPos().getRow() - 1) {
+            // Check if the attack X is +1 or -1
+            if(toCell.getPos().getX() == fromCell.getPos().getX() + 1 || toCell.getPos().getX() == fromCell.getPos().getX() - 1 ) {
+                // Check if the attack Y is -1
+                if(toCell.getPos().getY() == fromCell.getPos().getY() - 1) {
                     return true;
                 }
             }
@@ -117,7 +119,6 @@ public class MoveValidator {
 
         // If cell is empty, move is not an attack
         if(toCell.getCellState() == Chess.Pieces.EMPTY) {
-            // Check if the move column stays the same
             return validate_PAWN_MOVE(move, board);
             // If cell is not empty and other piece is white, move is an attack
         } else if(toCell.getCellState() == Chess.Pieces.BLACK_PAWN
@@ -126,10 +127,10 @@ public class MoveValidator {
                 || toCell.getCellState() == Chess.Pieces.BLACK_ROOK
                 || toCell.getCellState() == Chess.Pieces.BLACK_KNIGHT
                 || toCell.getCellState() == Chess.Pieces.BLACK_BISHOP) {
-            // Check if the attack column is +1 or -1
-            if(toCell.getPos().getCol() == fromCell.getPos().getCol() + 1 || toCell.getPos().getCol() == fromCell.getPos().getCol() - 1 ) {
-                // Check if the attack row is -1
-                if(toCell.getPos().getRow() == fromCell.getPos().getRow() - 1) {
+            // Check if the attack X is +1 or -1
+            if(toCell.getPos().getX() == fromCell.getPos().getX() + 1 || toCell.getPos().getX() == fromCell.getPos().getX() - 1 ) {
+                // Check if the attack Y is -1
+                if(toCell.getPos().getY() == fromCell.getPos().getY() - 1) {
                     return true;
                 }
             }

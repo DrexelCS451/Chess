@@ -266,44 +266,44 @@ public class MoveValidator {
         // any distance as long as it doesn't
         // run into another piece
 
-        int moveRow = toCell.getPos().getX();
-        int moveCol = toCell.getPos().getY();
-        int fromRow = fromCell.getPos().getX();
-        int fromCol = fromCell.getPos().getY();
+        int toRow = toCell.getPos().getY();
+        int toCol = toCell.getPos().getX();
+        int fromRow = fromCell.getPos().getY();
+        int fromCol = fromCell.getPos().getX();
 
-        if (fromCell == toCell)
+        if (toCol == fromCol) {
+            if (toRow - fromRow < 0) {
+                for (int i = (fromRow - 1); i > toRow; i--) {
+                    if (board.getCell(toCol, i).getCellState() != Chess.Pieces.EMPTY)
+                        return false;
+                }
+                return true;
+            }
+            else if (toRow - fromRow > 0)  {
+                for (int i = (fromRow + 1) ; i < toRow; i++) {
+                    if (board.getCell(toCol, i).getCellState() != Chess.Pieces.EMPTY)
+                        return false;
+                }
+                return true;
+            }
             return false;
-        else if (moveRow == fromRow) {
-            if (moveCol - fromCol < 0) {
-                for (int i = fromCol; i >= moveCol; i--) {
-                    if (board.getCell(moveRow, moveCol - 1).getCellState() == Chess.Pieces.EMPTY)
-                        return false;
-                }
-                return true;
-            }
-            else {
-                for (int i = fromCol ; i <= moveCol; i++) {
-                    if (board.getCell(moveRow, moveCol + 1).getCellState() == Chess.Pieces.EMPTY)
-                        return false;
-                }
-                return true;
-            }
         }
-        else if (moveCol == fromCol) {
-            if (moveRow - fromRow < 0) {
-                for (int i = fromRow; i >= moveRow; i--) {
-                    if (board.getCell(moveRow - 1, moveCol).getCellState() == Chess.Pieces.EMPTY)
+        else if (toRow == fromRow) {
+            if (toCol - fromCol > 0) {
+                for (int i = (fromCol + 1); i < toCol; i++) {
+                    if (board.getCell(i, toRow).getCellState() != Chess.Pieces.EMPTY)
                         return false;
                 }
                 return true;
             }
-            else {
-                for (int i = fromRow; i <= moveRow; i++) {
-                    if (board.getCell(moveRow + 1, moveCol).getCellState() == Chess.Pieces.EMPTY)
+            else if (toCol - fromCol < 0) {
+                for (int i = (fromCol - 1); i > toCol; i--) {
+                    if (board.getCell(i, toRow).getCellState() != Chess.Pieces.EMPTY)
                         return false;
                 }
                 return true;
             }
+            return false;
         }
         return false;
     }
@@ -317,7 +317,7 @@ public class MoveValidator {
         int fromRow = fromCell.getPos().getX();
         int fromCol = fromCell.getPos().getY();
 
-        if (fromCell == toCell)
+        if (fromCell.getPos().getX() == toCell.getPos().getX() && fromCell.getPos().getY() == toCell.getPos().getY())
             return false;
         else if(toCell.getCellState() == Chess.Pieces.EMPTY) {
             return validate_ROOK_MOVE(move, board);
@@ -342,7 +342,7 @@ public class MoveValidator {
         int fromRow = fromCell.getPos().getX();
         int fromCol = fromCell.getPos().getY();
 
-        if (fromCell == toCell)
+        if (fromCell.getPos().getX() == toCell.getPos().getX() && fromCell.getPos().getY() == toCell.getPos().getY())
             return false;
 
         else if(toCell.getCellState() == Chess.Pieces.EMPTY) {
@@ -376,7 +376,7 @@ public class MoveValidator {
         int fromRow = fromCell.getPos().getX();
         int fromCol = fromCell.getPos().getY();
 
-        if (fromCell == toCell)
+        if (fromCell.getPos().getX() == toCell.getPos().getX() && fromCell.getPos().getY() == toCell.getPos().getY())
             return false;
         else if (toRow > 8 || toRow < -1 || toCol > 8 || toCol < -1)
             return false;

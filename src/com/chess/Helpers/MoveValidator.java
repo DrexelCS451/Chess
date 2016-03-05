@@ -274,19 +274,36 @@ public class MoveValidator {
         if (fromCell == toCell)
             return false;
         else if (moveRow == fromRow) {
-            int row = fromRow;
-            for(int i = fromCol; i <= moveCol;i--) {
-                if (board.getCell(moveRow, moveCol - 1).getCellState() == Chess.Pieces.EMPTY)
-                    return false;
+            if (moveCol - fromCol < 0) {
+                for (int i = fromCol; i >= moveCol; i--) {
+                    if (board.getCell(moveRow, moveCol - 1).getCellState() == Chess.Pieces.EMPTY)
+                        return false;
+                }
+                return true;
             }
-            return true;
+            else {
+                for (int i = fromCol ; i <= moveCol; i++) {
+                    if (board.getCell(moveRow, moveCol + 1).getCellState() == Chess.Pieces.EMPTY)
+                        return false;
+                }
+                return true;
+            }
         }
         else if (moveCol == fromCol) {
-            for(int i = fromRow; i <= moveRow;i--) {
-                if (board.getCell(moveRow - 1, moveCol).getCellState() == Chess.Pieces.EMPTY)
-                    return false;
+            if (moveRow - fromRow < 0) {
+                for (int i = fromRow; i >= moveRow; i--) {
+                    if (board.getCell(moveRow - 1, moveCol).getCellState() == Chess.Pieces.EMPTY)
+                        return false;
+                }
+                return true;
             }
-            return true;
+            else {
+                for (int i = fromRow; i <= moveRow; i++) {
+                    if (board.getCell(moveRow + 1, moveCol).getCellState() == Chess.Pieces.EMPTY)
+                        return false;
+                }
+                return true;
+            }
         }
         return false;
     }

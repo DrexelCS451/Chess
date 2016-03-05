@@ -9,6 +9,8 @@ public class User {
 
     }
 
+    public static boolean isWhite = true;
+
     public String name;
     public String id;
 

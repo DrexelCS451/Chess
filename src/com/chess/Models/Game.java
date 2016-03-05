@@ -1,5 +1,6 @@
 package com.chess.Models;
 
+import com.chess.Helpers.BoardHelper;
 import com.chess.Helpers.MoveValidator;
 import com.chess.Models.Board;
 
@@ -7,23 +8,29 @@ import com.chess.Models.Board;
  * Created by AlexMarion on 3/4/16.
  */
 public class Game {
-    private MoveValidator validator;
     private Board board;
 
-    public Game() {}
+    public Game() {
+        initBoard();
+    }
+
+    public Board getBoard()
+    {
+        return board;
+    }
 
     public void startGame() {}
 
-    public boolean makeMove() {
-        return false;
+    public Board makeMove(ChessMove m) {
+        Coordinate c1 = m.getFrom().getPos();
+        Coordinate c2 = m.getTo().getPos();
+        board.getCell(c2).setCellState(board.getCell(c1).getCellState());
+        board.getCell(c1).setCellState(Chess.Pieces.EMPTY);
+        return board;
     }
 
-    private boolean validateMove() {
-        return false;
-    }
-
-    private Board initBoard() {
-        return null;
+    private void initBoard() {
+        board = BoardHelper.CreateBoard(true);
     }
 
     public void endGame() {}

@@ -16,7 +16,11 @@ public class Board {
     {
         return cells[x][y];
     }
-    public Cell getCell(Coordinate pos) {return cells[pos.getY()][pos.getX()]; }
+
+    public Cell getCell(Coordinate c)
+    {
+        return cells[c.getX()][c.getY()];
+    }
 
     public void setCell(int x, int y, Cell cell)
     {

@@ -1,9 +1,6 @@
 package com.chess.Helpers;
 
-import com.chess.Models.Board;
-import com.chess.Models.Cell;
-import com.chess.Models.Chess;
-import com.chess.Models.Coordinate;
+import com.chess.Models.*;
 
 /**
  * Created by tomer on 3/4/16.
@@ -23,88 +20,95 @@ public class BoardHelper {
         }
         int row1,row2,row3,row4;
 
-        row1 = (userIsWhite)?0:7;
-        row2 = (userIsWhite)?1:6;
-        row3 = (userIsWhite)?6:1;
-        row4 = (userIsWhite)?7:0;
+        row1 = (userIsWhite)?7:0;
+        row2 = (userIsWhite)?6:1;
+        row3 = (userIsWhite)?1:6;
+        row4 = (userIsWhite)?0:7;
 
-        Coordinate c = new Coordinate(row4,0);
+        Coordinate c = new Coordinate(0,row1);
         Cell cell = new Cell(c, Chess.Pieces.WHITE_ROOK);
-        b.setCell(row4,0,cell);
+        b.setCell(0,row1,cell);
 
-        c = new Coordinate(row4,1);
+        c = new Coordinate(1,row1);
         cell = new Cell(c, Chess.Pieces.WHITE_KNIGHT);
-        b.setCell(row4,1,cell);
+        b.setCell(1,row1,cell);
 
-        c = new Coordinate(row4,2);
+        c = new Coordinate(2,row1);
         cell = new Cell(c, Chess.Pieces.WHITE_BISHOP);
-        b.setCell(row4,2,cell);
+        b.setCell(2,row1,cell);
 
-        c = new Coordinate(row4,3);
+        c = new Coordinate(3,row1);
         cell = new Cell(c, Chess.Pieces.WHITE_QUEEN);
-        b.setCell(row4,3,cell);
+        b.setCell(3,row1,cell);
 
-        c = new Coordinate(row4,4);
+        c = new Coordinate(4,row1);
         cell = new Cell(c, Chess.Pieces.WHITE_KING);
-        b.setCell(row4,4,cell);
+        b.setCell(4,row1,cell);
 
-        c = new Coordinate(row4,5);
+        c = new Coordinate(5,row1);
         cell = new Cell(c, Chess.Pieces.WHITE_BISHOP);
-        b.setCell(row4,5,cell);
+        b.setCell(5,row1,cell);
 
-        c = new Coordinate(row4,6);
+        c = new Coordinate(6,row1);
         cell = new Cell(c, Chess.Pieces.WHITE_KNIGHT);
-        b.setCell(row4,6,cell);
+        b.setCell(6,row1,cell);
 
-        c = new Coordinate(row4,7);
+        c = new Coordinate(7,row1);
         cell = new Cell(c, Chess.Pieces.WHITE_ROOK);
-        b.setCell(row4,7,cell);
+        b.setCell(7,row1,cell);
 
         for (int i=0; i <8; i++)
         {
-            c = new Coordinate(row3,i);
+            c = new Coordinate(i,row2);
             cell = new Cell(c, Chess.Pieces.WHITE_PAWN);
-            b.setCell(row3,i,cell);
+            b.setCell(i,row2,cell);
         }
 
-        c = new Coordinate(row1,0);
+        c = new Coordinate(0,row4);
         cell = new Cell(c, Chess.Pieces.BLACK_ROOK);
-        b.setCell(row1,0,cell);
+        b.setCell(0,row4,cell);
 
-        c = new Coordinate(row1,1);
+        c = new Coordinate(1,row4);
         cell = new Cell(c, Chess.Pieces.BLACK_KNIGHT);
-        b.setCell(row1,1,cell);
+        b.setCell(1,row4,cell);
 
-        c = new Coordinate(row1,2);
+        c = new Coordinate(2,row4);
         cell = new Cell(c, Chess.Pieces.BLACK_BISHOP);
-        b.setCell(row1,2,cell);
+        b.setCell(2,row4,cell);
 
-        c = new Coordinate(row1,3);
+        c = new Coordinate(3,row4);
         cell = new Cell(c, Chess.Pieces.BLACK_QUEEN);
-        b.setCell(row1,3,cell);
+        b.setCell(3,row4,cell);
 
-        c = new Coordinate(row1,4);
+        c = new Coordinate(4,row4);
         cell = new Cell(c, Chess.Pieces.BLACK_KING);
-        b.setCell(row1,4,cell);
+        b.setCell(4,row4,cell);
 
-        c = new Coordinate(row1,5);
+        c = new Coordinate(5,row4);
         cell = new Cell(c, Chess.Pieces.BLACK_BISHOP);
-        b.setCell(row1,5,cell);
+        b.setCell(5,row4,cell);
 
-        c = new Coordinate(row1,6);
+        c = new Coordinate(6,row4);
         cell = new Cell(c, Chess.Pieces.BLACK_KNIGHT);
-        b.setCell(row1,6,cell);
+        b.setCell(6,row4,cell);
 
-        c = new Coordinate(row1,7);
+        c = new Coordinate(7,row4);
         cell = new Cell(c, Chess.Pieces.BLACK_ROOK);
-        b.setCell(row1,7,cell);
+        b.setCell(7,row4,cell);
 
         for (int i=0; i <8; i++)
         {
-            c = new Coordinate(row2,i);
+            c = new Coordinate(i,row3);
             cell = new Cell(c, Chess.Pieces.BLACK_PAWN);
-            b.setCell(row2,i,cell);
+            b.setCell(i,row3,cell);
         }
         return b;
+    }
+
+
+    public static boolean SquareIsUsers(int i, int j, Board b)
+    {
+        Chess.Pieces p = b.getCell(i,j).getCellState();
+        return (User.isWhite &&  p.name().startsWith("WHITE") || (!User.isWhite &&  p.name().startsWith("BLACK")));
     }
 }

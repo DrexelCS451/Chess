@@ -57,11 +57,13 @@ public class ChessView {
         col1 = new JPanel();
         col1.setLayout(new BoxLayout(col1, BoxLayout.Y_AXIS));
 
-        b1 = new Button("Confirm");
+        b1 = new Button("");
+        b1.setEnabled(false);
         //b1.setMaximumSize(new Dimension(Integer.MAX_VALUE, b1.getMinimumSize().height));
         col1.add(b1);
 
-        b2 = new Button("Cancel");
+        b2 = new Button("");
+        b2.setEnabled(false);
         //b1.setMaximumSize(new Dimension(Integer.MAX_VALUE, b1.getMinimumSize().height));
         col1.add(b2);
 
@@ -85,6 +87,46 @@ public class ChessView {
         pieces[i][j].setBackground(Color.YELLOW);
     }
 
+    public void resetCellColor()
+    {
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                pieces[i][j].setBackground(((i + j) % 2 == 0) ? new Color(50, 50, 50) : new Color(255, 255, 255));
+            }
+        }
+    }
+
+    public void show2Buttons(String s1, String s2)
+    {
+        b1.setLabel(s1);
+        b1.setEnabled(true);
+        b2.setLabel(s2);
+        b2.setEnabled(true);
+    }
+
+    public void remove2Buttons()
+    {
+        b1.setLabel("");
+        b1.setEnabled(false);
+        b2.setLabel("");
+        b2.setEnabled(false);
+    }
+
+    public void setForfeitListener(ActionListener listener)
+    {
+        forfeit.addActionListener(listener);
+    }
+
+    public void setB1Listener(ActionListener listener)
+    {
+        b1.addActionListener(listener);
+    }
+
+    public void setB2Listener(ActionListener listener)
+    {
+        b2.addActionListener(listener);
+    }
+
 
     public void setBoard(Board boardModel)
     {
@@ -94,13 +136,13 @@ public class ChessView {
                 JPanel square = new JPanel();
                 square.setBackground(((i + j) % 2 == 0) ? new Color(50, 50, 50) : new Color(255, 255, 255));
 
-                JLabel piece = new JLabel(ImageHelper.getPeiceIcon(boardModel.getcell(i,j).getCellState()));
+                JLabel piece = new JLabel(ImageHelper.getPeiceIcon(boardModel.getCell(j, i).getCellState()));
                 piece.setFont(new Font("Serif", Font.BOLD, 40));
                 piece.setForeground(Color.BLACK);
-                pieces[i][j] = square;
+                pieces[j][i] = square;
                 square.add(piece);
-                final int x = i;
-                final int y = j;
+                final int x = j;
+                final int y = i;
                 square.addMouseListener(new MouseListener() {
                     @Override
                     public void mouseClicked(MouseEvent mouseEvent) {
@@ -127,6 +169,7 @@ public class ChessView {
 
             }
         }
+        board.revalidate();
     }
 
 }

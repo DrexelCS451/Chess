@@ -35,21 +35,21 @@ public class MoveValidator {
             case WHITE_PAWN:
                 return validate_WHITE_PAWN(move, board);
             case BLACK_KING:
-                break;
+                return validate_BLACK_KING(move, board);
             case WHITE_KING:
-                break;
+                return validate_WHITE_KING(move, board);
             case BLACK_QUEEN:
-                break;
+                return validate_BLACK_QUEEN(move, board);
             case WHITE_QUEEN:
-                break;
+                return validate_WHITE_QUEEN(move, board);
             case BLACK_ROOK:
-                break;
+                return validate_BLACK_ROOK(move, board);
             case WHITE_ROOK:
-                break;
+                return validate_WHITE_ROOK(move, board);
             case BLACK_KNIGHT:
-                break;
+                return validate_BLACK_KNIGHT(move, board);
             case WHITE_KNIGHT:
-                break;
+                return validate_WHITE_KNIGHT(move, board);
             case BLACK_BISHOP:
                 break;
             case WHITE_BISHOP:

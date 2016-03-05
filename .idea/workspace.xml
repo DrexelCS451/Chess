@@ -2,19 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b80dc3a3-d9e4-4ad5-9be5-02391ca24254" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/encodings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/gson_2_5__2_.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/chess/Helpers/Game.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/chess/Helpers/MainController.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/chess/Helpers/MoveValidator.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/chess/Models/ChessMove.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Chess/com/chess/Main$1.class" afterPath="$PROJECT_DIR$/out/production/Chess/com/chess/Main$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Chess/com/chess/Main.class" afterPath="$PROJECT_DIR$/out/production/Chess/com/chess/Main.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Chess.iml" afterPath="$PROJECT_DIR$/Chess.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/chess/Models/Cell.java" afterPath="$PROJECT_DIR$/src/com/chess/Models/Cell.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/chess/Models/Coordinate.java" afterPath="$PROJECT_DIR$/src/com/chess/Models/Coordinate.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/chess/Helpers/MoveValidator.java" afterPath="$PROJECT_DIR$/src/com/chess/Helpers/MoveValidator.java" />
     </list>
     <ignored path="Chess.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -51,11 +40,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Game.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Game.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/chess/Helpers/Game.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5646438">
-              <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="6" column="3" selection-start-line="6" selection-start-column="3" selection-end-line="6" selection-end-column="3" />
               <folding>
                 <element signature="e#271#272#0" expanded="true" />
                 <element signature="e#299#300#0" expanded="true" />
@@ -68,21 +57,43 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MoveValidator.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="MoveValidator.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/chess/Helpers/MoveValidator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="26" column="18" selection-start-line="26" selection-start-column="18" selection-end-line="26" selection-end-column="18" />
+            <state vertical-scroll-proportion="0.24802111">
+              <caret line="32" column="28" selection-start-line="32" selection-start-column="28" selection-end-line="32" selection-end-column="28" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#312#313#0" expanded="true" />
-                <element signature="e#340#341#0" expanded="true" />
-                <element signature="e#403#404#0" expanded="true" />
-                <element signature="e#430#431#0" expanded="true" />
-                <element signature="e#480#481#0" expanded="true" />
-                <element signature="e#508#509#0" expanded="true" />
-                <element signature="e#562#563#0" expanded="true" />
-                <element signature="e#590#591#0" expanded="true" />
+                <element signature="e#5611#5612#0" expanded="true" />
+                <element signature="e#5639#5640#0" expanded="true" />
+                <element signature="e#5718#5719#0" expanded="true" />
+                <element signature="e#5746#5747#0" expanded="true" />
+                <element signature="e#5825#5826#0" expanded="true" />
+                <element signature="e#5853#5854#0" expanded="true" />
+                <element signature="e#6212#6213#0" expanded="true" />
+                <element signature="e#6240#6241#0" expanded="true" />
+                <element signature="e#6320#6321#0" expanded="true" />
+                <element signature="e#6348#6349#0" expanded="true" />
+                <element signature="e#6428#6429#0" expanded="true" />
+                <element signature="e#6456#6457#0" expanded="true" />
+                <element signature="e#6810#6811#0" expanded="true" />
+                <element signature="e#6838#6839#0" expanded="true" />
+                <element signature="e#6917#6918#0" expanded="true" />
+                <element signature="e#6945#6946#0" expanded="true" />
+                <element signature="e#7024#7025#0" expanded="true" />
+                <element signature="e#7052#7053#0" expanded="true" />
+                <element signature="e#7415#7416#0" expanded="true" />
+                <element signature="e#7443#7444#0" expanded="true" />
+                <element signature="e#7524#7525#0" expanded="true" />
+                <element signature="e#7552#7553#0" expanded="true" />
+                <element signature="e#7633#7634#0" expanded="true" />
+                <element signature="e#7661#7662#0" expanded="true" />
+                <element signature="e#8023#8024#0" expanded="true" />
+                <element signature="e#8051#8052#0" expanded="true" />
+                <element signature="e#8132#8133#0" expanded="true" />
+                <element signature="e#8160#8161#0" expanded="true" />
+                <element signature="e#8241#8242#0" expanded="true" />
+                <element signature="e#8269#8270#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -113,8 +124,8 @@
         <option value="$PROJECT_DIR$/src/com/chess/Models/Coordinate.java" />
         <option value="$PROJECT_DIR$/src/com/chess/Models/Cell.java" />
         <option value="$PROJECT_DIR$/src/com/chess/Helpers/MainController.java" />
-        <option value="$PROJECT_DIR$/src/com/chess/Helpers/MoveValidator.java" />
         <option value="$PROJECT_DIR$/src/com/chess/Helpers/Game.java" />
+        <option value="$PROJECT_DIR$/src/com/chess/Helpers/MoveValidator.java" />
       </list>
     </option>
   </component>
@@ -246,7 +257,7 @@
     <property name="dynamic.classpath" value="false" />
     <property name="settings.editor.selected.configurable" value="configurable.group.build" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
-    <property name="last_opened_file_path" value="$APPLICATION_HOME_DIR$/plugins/testng/lib" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../ChessBackend/simple-service/pom.xml" />
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -789,12 +800,19 @@
       <updated>1454547465168</updated>
       <workItem from="1454547466721" duration="1025000" />
       <workItem from="1454551060073" duration="230000" />
-      <workItem from="1457129694588" duration="5194000" />
+      <workItem from="1457129694588" duration="10664000" />
     </task>
+    <task id="LOCAL-00001" summary="Closes #27">
+      <created>1457135101293</created>
+      <option name="number" value="00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1457135101293</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="6449000" />
+    <option name="totallyTimeSpent" value="11919000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1366" height="675" extended-state="6" />
@@ -837,6 +855,10 @@
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Closes #27" />
+    <option name="LAST_COMMIT_MESSAGE" value="Closes #27" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -928,14 +950,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/chess/Models/Board.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.36675462">
-          <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/chess/Helpers/MainController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.3166227">
@@ -956,28 +970,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/chess/Helpers/MoveValidator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="26" column="18" selection-start-line="26" selection-start-column="18" selection-end-line="26" selection-end-column="18" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#312#313#0" expanded="true" />
-            <element signature="e#340#341#0" expanded="true" />
-            <element signature="e#403#404#0" expanded="true" />
-            <element signature="e#430#431#0" expanded="true" />
-            <element signature="e#480#481#0" expanded="true" />
-            <element signature="e#508#509#0" expanded="true" />
-            <element signature="e#562#563#0" expanded="true" />
-            <element signature="e#590#591#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/chess/Helpers/Game.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5646438">
-          <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="6" column="3" selection-start-line="6" selection-start-column="3" selection-end-line="6" selection-end-column="3" />
           <folding>
             <element signature="e#271#272#0" expanded="true" />
             <element signature="e#299#300#0" expanded="true" />
@@ -985,6 +981,54 @@
             <element signature="e#365#366#0" expanded="true" />
             <element signature="e#398#399#0" expanded="true" />
             <element signature="e#425#426#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/chess/Models/Board.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.71240103">
+          <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/chess/Helpers/MoveValidator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.24802111">
+          <caret line="32" column="28" selection-start-line="32" selection-start-column="28" selection-end-line="32" selection-end-column="28" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#5611#5612#0" expanded="true" />
+            <element signature="e#5639#5640#0" expanded="true" />
+            <element signature="e#5718#5719#0" expanded="true" />
+            <element signature="e#5746#5747#0" expanded="true" />
+            <element signature="e#5825#5826#0" expanded="true" />
+            <element signature="e#5853#5854#0" expanded="true" />
+            <element signature="e#6212#6213#0" expanded="true" />
+            <element signature="e#6240#6241#0" expanded="true" />
+            <element signature="e#6320#6321#0" expanded="true" />
+            <element signature="e#6348#6349#0" expanded="true" />
+            <element signature="e#6428#6429#0" expanded="true" />
+            <element signature="e#6456#6457#0" expanded="true" />
+            <element signature="e#6810#6811#0" expanded="true" />
+            <element signature="e#6838#6839#0" expanded="true" />
+            <element signature="e#6917#6918#0" expanded="true" />
+            <element signature="e#6945#6946#0" expanded="true" />
+            <element signature="e#7024#7025#0" expanded="true" />
+            <element signature="e#7052#7053#0" expanded="true" />
+            <element signature="e#7415#7416#0" expanded="true" />
+            <element signature="e#7443#7444#0" expanded="true" />
+            <element signature="e#7524#7525#0" expanded="true" />
+            <element signature="e#7552#7553#0" expanded="true" />
+            <element signature="e#7633#7634#0" expanded="true" />
+            <element signature="e#7661#7662#0" expanded="true" />
+            <element signature="e#8023#8024#0" expanded="true" />
+            <element signature="e#8051#8052#0" expanded="true" />
+            <element signature="e#8132#8133#0" expanded="true" />
+            <element signature="e#8160#8161#0" expanded="true" />
+            <element signature="e#8241#8242#0" expanded="true" />
+            <element signature="e#8269#8270#0" expanded="true" />
           </folding>
         </state>
       </provider>

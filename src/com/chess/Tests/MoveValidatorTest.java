@@ -171,7 +171,193 @@ public class MoveValidatorTest extends TestCase {
         Game game = new Game();
         game.startGame();
 
+        Cell king = board.getCell(4, 7);
 
+        // Test that king can't move onto another piece
+        ChessMove blockedLeftMove = new ChessMove(king, board.getCell(3, 7));
+        assertFalse(MoveValidator.isValidMove(blockedLeftMove, board));
+
+        ChessMove blockedRightMove = new ChessMove(king, board.getCell(5, 7));
+        assertFalse(MoveValidator.isValidMove(blockedRightMove, board));
+
+        ChessMove blockedForwardMove = new ChessMove(king, board.getCell(4, 6));
+        assertFalse(MoveValidator.isValidMove(blockedForwardMove, board));
+
+        // Create a new board with the king in the center to test moves
+        Board board2 = new Board("0,0,BLACK_ROOK\n" +
+                "0,1,BLACK_PAWN\n" +
+                "0,2,EMPTY\n" +
+                "0,3,EMPTY\n" +
+                "0,4,EMPTY\n" +
+                "0,5,EMPTY\n" +
+                "0,6,WHITE_PAWN\n" +
+                "0,7,WHITE_ROOK\n" +
+                "1,0,BLACK_KNIGHT\n" +
+                "1,1,BLACK_PAWN\n" +
+                "1,2,EMPTY\n" +
+                "1,3,EMPTY\n" +
+                "1,4,EMPTY\n" +
+                "1,5,EMPTY\n" +
+                "1,6,WHITE_PAWN\n" +
+                "1,7,WHITE_KNIGHT\n" +
+                "2,0,BLACK_BISHOP\n" +
+                "2,1,BLACK_PAWN\n" +
+                "2,2,EMPTY\n" +
+                "2,3,EMPTY\n" +
+                "2,4,EMPTY\n" +
+                "2,5,EMPTY\n" +
+                "2,6,WHITE_PAWN\n" +
+                "2,7,WHITE_BISHOP\n" +
+                "3,0,BLACK_QUEEN\n" +
+                "3,1,BLACK_PAWN\n" +
+                "3,2,EMPTY\n" +
+                "3,3,EMPTY\n" +
+                "3,4,EMPTY\n" +
+                "3,5,EMPTY\n" +
+                "3,6,WHITE_PAWN\n" +
+                "3,7,WHITE_QUEEN\n" +
+                "4,0,BLACK_KING\n" +
+                "4,1,BLACK_PAWN\n" +
+                "4,2,EMPTY\n" +
+                "4,3,EMPTY\n" +
+                "4,4,WHITE_KING\n" + // Moved king to here
+                "4,5,EMPTY\n" +
+                "4,6,WHITE_PAWN\n" +
+                "4,7,EMPTY\n" + // Moved white king from here
+                "5,0,BLACK_BISHOP\n" +
+                "5,1,BLACK_PAWN\n" +
+                "5,2,EMPTY\n" +
+                "5,3,EMPTY\n" +
+                "5,4,EMPTY\n" +
+                "5,5,EMPTY\n" +
+                "5,6,WHITE_PAWN\n" +
+                "5,7,WHITE_BISHOP\n" +
+                "6,0,BLACK_KNIGHT\n" +
+                "6,1,BLACK_PAWN\n" +
+                "6,2,EMPTY\n" +
+                "6,3,EMPTY\n" +
+                "6,4,EMPTY\n" +
+                "6,5,EMPTY\n" +
+                "6,6,WHITE_PAWN\n" +
+                "6,7,WHITE_KNIGHT\n" +
+                "7,0,BLACK_ROOK\n" +
+                "7,1,BLACK_PAWN\n" +
+                "7,2,EMPTY\n" +
+                "7,3,EMPTY\n" +
+                "7,4,EMPTY\n" +
+                "7,5,EMPTY\n" +
+                "7,6,WHITE_PAWN\n" +
+                "7,7,WHITE_ROOK\n");
+        Cell centerKing = board2.getCell(4, 4);
+
+        // Test all valid moves
+        // TODO: *NOTE* testing for check and checkMate may break this
+        ChessMove forwardMove = new ChessMove(centerKing, board2.getCell(4, 3));
+        ChessMove backwardMove = new ChessMove(centerKing, board2.getCell(4, 5));
+        ChessMove leftMove = new ChessMove(centerKing, board2.getCell(3, 4));
+        ChessMove rightMove = new ChessMove(centerKing, board2.getCell(5, 4));
+
+        ChessMove forwardLeftMove = new ChessMove(centerKing, board2.getCell(3, 3));
+        ChessMove forwardRightMove = new ChessMove(centerKing, board2.getCell(5, 3));
+        ChessMove backwardLeftMove = new ChessMove(centerKing, board2.getCell(3, 5));
+        ChessMove backwardRightMove = new ChessMove(centerKing, board2.getCell(5, 5));
+
+        assertTrue(MoveValidator.isValidMove(forwardMove, board2));
+        assertTrue(MoveValidator.isValidMove(backwardMove, board2));
+        assertTrue(MoveValidator.isValidMove(leftMove, board2));
+        assertTrue(MoveValidator.isValidMove(rightMove, board2));
+
+        assertTrue(MoveValidator.isValidMove(forwardLeftMove, board2));
+        assertTrue(MoveValidator.isValidMove(forwardRightMove, board2));
+        assertTrue(MoveValidator.isValidMove(backwardLeftMove, board2));
+        assertTrue(MoveValidator.isValidMove(backwardRightMove, board2));
+
+        // Test that the king cannot move by more than 1
+        ChessMove falseMoveBy2 = new ChessMove(centerKing, board2.getCell(4, 2));
+        assertFalse(MoveValidator.isValidMove(falseMoveBy2, board2));
+
+        // Test that a king cannot move into check
+        game.setBoard(board2);
+        board2 = game.makeMove(forwardMove);
+        centerKing = board2.getCell(4, 3);
+
+        // TODO: this won't work until isCheck is in king move validator
+        ChessMove falseMoveToCheck = new ChessMove(centerKing, board2.getCell(4, 2));
+        // TODO: assertFalse(MoveValidator.isValidMove(falseMoveToCheck, board2));
+
+        // Test king attack
+        // Create a new board with the king in the center and a piece to attack
+        Board board3 = new Board("0,0,BLACK_ROOK\n" +
+                "0,1,BLACK_PAWN\n" +
+                "0,2,EMPTY\n" +
+                "0,3,EMPTY\n" +
+                "0,4,EMPTY\n" +
+                "0,5,EMPTY\n" +
+                "0,6,WHITE_PAWN\n" +
+                "0,7,WHITE_ROOK\n" +
+                "1,0,BLACK_KNIGHT\n" +
+                "1,1,BLACK_PAWN\n" +
+                "1,2,EMPTY\n" +
+                "1,3,EMPTY\n" +
+                "1,4,EMPTY\n" +
+                "1,5,EMPTY\n" +
+                "1,6,WHITE_PAWN\n" +
+                "1,7,WHITE_KNIGHT\n" +
+                "2,0,BLACK_BISHOP\n" +
+                "2,1,BLACK_PAWN\n" +
+                "2,2,EMPTY\n" +
+                "2,3,EMPTY\n" +
+                "2,4,EMPTY\n" +
+                "2,5,EMPTY\n" +
+                "2,6,WHITE_PAWN\n" +
+                "2,7,WHITE_BISHOP\n" +
+                "3,0,BLACK_QUEEN\n" +
+                "3,1,BLACK_PAWN\n" +
+                "3,2,EMPTY\n" +
+                "3,3,EMPTY\n" +
+                "3,4,EMPTY\n" +
+                "3,5,EMPTY\n" +
+                "3,6,WHITE_PAWN\n" +
+                "3,7,WHITE_QUEEN\n" +
+                "4,0,BLACK_KING\n" +
+                "4,1,EMPTY\n" + // Moved black pawn from here
+                "4,2,EMPTY\n" +
+                "4,3,BLACK_PAWN\n" + // Moved black pawn to here
+                "4,4,WHITE_KING\n" + // Moved king to here
+                "4,5,EMPTY\n" +
+                "4,6,WHITE_PAWN\n" +
+                "4,7,EMPTY\n" + // Moved white king from here
+                "5,0,BLACK_BISHOP\n" +
+                "5,1,BLACK_PAWN\n" +
+                "5,2,EMPTY\n" +
+                "5,3,EMPTY\n" +
+                "5,4,EMPTY\n" +
+                "5,5,EMPTY\n" +
+                "5,6,WHITE_PAWN\n" +
+                "5,7,WHITE_BISHOP\n" +
+                "6,0,BLACK_KNIGHT\n" +
+                "6,1,BLACK_PAWN\n" +
+                "6,2,EMPTY\n" +
+                "6,3,EMPTY\n" +
+                "6,4,EMPTY\n" +
+                "6,5,EMPTY\n" +
+                "6,6,WHITE_PAWN\n" +
+                "6,7,WHITE_KNIGHT\n" +
+                "7,0,BLACK_ROOK\n" +
+                "7,1,BLACK_PAWN\n" +
+                "7,2,EMPTY\n" +
+                "7,3,EMPTY\n" +
+                "7,4,EMPTY\n" +
+                "7,5,EMPTY\n" +
+                "7,6,WHITE_PAWN\n" +
+                "7,7,WHITE_ROOK\n");
+        game.setBoard(board3);
+        Cell attackKing = board3.getCell(4, 4);
+        Cell victemPawn = board3.getCell(4, 3);
+        ChessMove validAttack = new ChessMove(attackKing, victemPawn);
+        assertTrue(MoveValidator.isValidMove(validAttack, board3));
+        board3 = game.makeMove(validAttack);
+        attackKing = board3.getCell(victemPawn.getPos());
     }
 
     public void testQueenMoves() throws Exception {

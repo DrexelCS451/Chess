@@ -14,8 +14,7 @@ public class MoveValidator {
         return null;
     }
 
-    public static boolean isCheck(Board board, Chess.Pieces king) {
-        Coordinate kingCell = board.findKing(king);
+    public static boolean isCheck(Board board, Chess.Pieces king, Coordinate kingCell) {
         int kingX = kingCell.getX();
         int kingY = kingCell.getY();
         Chess.Pieces otherQueen;
@@ -87,7 +86,8 @@ public class MoveValidator {
         for (int i = kingX + 1, j = kingY + 1; i < 8 && j < 8; i++, j++) {
             if (board.getCell(i, j).getCellState() != Chess.Pieces.EMPTY) {
                 if (board.getCell(i, j).getCellState() == otherBishop ||
-                        board.getCell(i, j).getCellState() == otherPawn) {
+                        board.getCell(i, j).getCellState() == otherPawn ||
+                        board.getCell(i, j).getCellState() == otherQueen) {
                     return true;
                 } else
                     break;
@@ -98,7 +98,8 @@ public class MoveValidator {
         for (int i = kingX - 1, j = kingY - 1; i >= 0 && j >= 0; i--, j--) {
             if (board.getCell(i, j).getCellState() != Chess.Pieces.EMPTY) {
                 if (board.getCell(i, j).getCellState() == otherBishop ||
-                        board.getCell(i, j).getCellState() == otherPawn) {
+                        board.getCell(i, j).getCellState() == otherPawn ||
+                        board.getCell(i, j).getCellState() == otherQueen) {
                     return true;
                 } else
                     break;
@@ -109,7 +110,8 @@ public class MoveValidator {
         for (int i = kingX + 1, j = kingY - 1; i < 8 && j >= 0; i++, j--) {
             if (board.getCell(i, j).getCellState() != Chess.Pieces.EMPTY) {
                 if (board.getCell(i, j).getCellState() == otherBishop ||
-                        board.getCell(i, j).getCellState() == otherPawn) {
+                        board.getCell(i, j).getCellState() == otherPawn ||
+                        board.getCell(i, j).getCellState() == otherQueen) {
                     return true;
                 } else
                     break;
@@ -120,7 +122,8 @@ public class MoveValidator {
         for (int i = kingX - 1, j = kingY + 1; i >= 0 && j < 8; i--, j++) {
             if (board.getCell(i, j).getCellState() != Chess.Pieces.EMPTY) {
                 if (board.getCell(i, j).getCellState() == otherBishop ||
-                    board.getCell(i, j).getCellState() == otherPawn) {
+                    board.getCell(i, j).getCellState() == otherPawn ||
+                        board.getCell(i, j).getCellState() == otherQueen) {
                     return true;
                 } else
                     break;

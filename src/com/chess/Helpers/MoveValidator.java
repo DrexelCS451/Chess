@@ -1,9 +1,6 @@
 package com.chess.Helpers;
 
-import com.chess.Models.Board;
-import com.chess.Models.Cell;
-import com.chess.Models.Chess;
-import com.chess.Models.ChessMove;
+import com.chess.Models.*;
 
 import java.util.ArrayList;
 
@@ -17,7 +14,144 @@ public class MoveValidator {
         return null;
     }
 
-    public static boolean isCheck(Board board) {
+    public static boolean isCheck(Board board, Chess.Pieces king) {
+        Coordinate kingCell = board.findKing(king);
+        int kingX = kingCell.getX();
+        int kingY = kingCell.getY();
+        Chess.Pieces otherQueen;
+        Chess.Pieces otherRook;
+        Chess.Pieces otherPawn;
+        Chess.Pieces otherBishop;
+        Chess.Pieces otherKnight;
+
+        if (king == Chess.Pieces.BLACK_KING) {
+            otherQueen = Chess.Pieces.WHITE_QUEEN;
+            otherRook = Chess.Pieces.WHITE_ROOK;
+            otherPawn = Chess.Pieces.WHITE_PAWN;
+            otherBishop = Chess.Pieces.WHITE_BISHOP;
+            otherKnight = Chess.Pieces.WHITE_KNIGHT;
+        }
+        else {
+            otherQueen = Chess.Pieces.BLACK_QUEEN;
+            otherRook = Chess.Pieces.BLACK_ROOK;
+            otherPawn = Chess.Pieces.BLACK_PAWN;
+            otherBishop = Chess.Pieces.BLACK_BISHOP;
+            otherKnight = Chess.Pieces.BLACK_KNIGHT;
+        }
+        // vertical or horizontal attack = queen or rook
+        // from above for white, below for black (vertical attacks)
+        for (int i = (kingY - 1); i >= 0; i--) {
+            if (board.getCell(kingX, i).getCellState() != Chess.Pieces.EMPTY) {
+                if (board.getCell(kingX, i).getCellState() == otherQueen ||
+                    board.getCell(kingX, i).getCellState() == otherRook) {
+                    return true;
+                }
+                else
+                    break;
+            }
+        }
+        for (int i = (kingY + 1); i < 8; i++) {
+            if (board.getCell(kingX, i).getCellState() != Chess.Pieces.EMPTY) {
+                if (board.getCell(kingX, i).getCellState() == otherQueen ||
+                        board.getCell(kingX, i).getCellState() == otherRook) {
+                    return true;
+                }
+                else
+                    break;
+            }
+        }
+        // left and right attacks (horizontal attacks) (rooks and queens)
+        for (int i = (kingX + 1); i < 8; i++) {
+            if (board.getCell(i, kingY).getCellState() != Chess.Pieces.EMPTY) {
+                if (board.getCell(i, kingY).getCellState() == otherQueen ||
+                        board.getCell(i, kingY).getCellState() == otherRook) {
+                    return true;
+                }
+                else
+                    break;
+            }
+        }
+        for (int i = (kingX - 1); i >= 0; i--) {
+            if(board.getCell(i, kingY).getCellState() != Chess.Pieces.EMPTY) {
+                if (board.getCell(i, kingY).getCellState() == otherQueen ||
+                    board.getCell(i, kingY).getCellState() == otherRook) {
+                    return true;
+                }
+                else
+                    break;
+            }
+        }
+
+        // Diagonal attacks = pawns and bishops
+        // down and right
+        for (int i = kingX + 1, j = kingY + 1; i < 8 && j < 8; i++, j++) {
+            if (board.getCell(i, j).getCellState() != Chess.Pieces.EMPTY) {
+                if (board.getCell(i, j).getCellState() == otherBishop ||
+                        board.getCell(i, j).getCellState() == otherPawn) {
+                    return true;
+                } else
+                    break;
+            }
+        }
+
+        // up and left
+        for (int i = kingX - 1, j = kingY - 1; i >= 0 && j >= 0; i--, j--) {
+            if (board.getCell(i, j).getCellState() != Chess.Pieces.EMPTY) {
+                if (board.getCell(i, j).getCellState() == otherBishop ||
+                        board.getCell(i, j).getCellState() == otherPawn) {
+                    return true;
+                } else
+                    break;
+            }
+        }
+
+        // up and right
+        for (int i = kingX + 1, j = kingY - 1; i < 8 && j >= 0; i++, j--) {
+            if (board.getCell(i, j).getCellState() != Chess.Pieces.EMPTY) {
+                if (board.getCell(i, j).getCellState() == otherBishop ||
+                        board.getCell(i, j).getCellState() == otherPawn) {
+                    return true;
+                } else
+                    break;
+            }
+        }
+
+        // down and left
+        for (int i = kingX - 1, j = kingY + 1; i >= 0 && j < 8; i--, j++) {
+            if (board.getCell(i, j).getCellState() != Chess.Pieces.EMPTY) {
+                if (board.getCell(i, j).getCellState() == otherBishop ||
+                    board.getCell(i, j).getCellState() == otherPawn) {
+                    return true;
+                } else
+                    break;
+            }
+        }
+
+        // case of knights
+        if ((kingX + 1 < 8) && (kingY - 2 > -1) &&(board.getCell(kingX + 1, kingY - 2).getCellState() == otherKnight)) {
+            return true;
+        }
+        if ((kingX + 2 < 8) && (kingY - 1 > -1) && (board.getCell(kingX + 2, kingY - 1).getCellState() == otherKnight)) {
+            return true;
+        }
+        if ((kingX + 2 < 8) && (kingY + 1 < 8) && (board.getCell(kingX + 2, kingY + 1).getCellState() == otherKnight)) {
+            return true;
+        }
+        if ((kingX + 1 < 8) && (kingY + 2 < 8) && (board.getCell(kingX + 1, kingY + 2).getCellState() == otherKnight)) {
+            return true;
+        }
+        if ((kingX - 1 > -1) && (kingY + 2 < 8) && (board.getCell(kingX - 1, kingY + 2).getCellState() == otherKnight)) {
+            return true;
+        }
+        if ((kingX - 2 > -1) && (kingY + 1 < 8) && (board.getCell(kingX - 2, kingY + 1).getCellState() == otherKnight)) {
+            return true;
+        }
+        if ((kingX - 2 > -1) && (kingY - 1 > -1) && (board.getCell(kingX - 2, kingY - 1).getCellState() == otherKnight)) {
+            return true;
+        }
+        if ((kingX - 1 > -1) && (kingY - 2 > - 1) && (board.getCell(kingX - 1, kingY - 2).getCellState() == otherKnight)) {
+            return true;
+        }
         return false;
     }
 
@@ -51,7 +185,7 @@ public class MoveValidator {
             case WHITE_KNIGHT:
                 return validate_WHITE_KNIGHT(move, board);
             case BLACK_BISHOP:
-                return validate_BLACK_KNIGHT(move, board);
+                return validate_BLACK_BISHOP(move, board);
             case WHITE_BISHOP:
                 return validate_WHITE_BISHOP(move, board);
         }

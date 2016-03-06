@@ -158,9 +158,15 @@ public class MoveValidator {
         return false;
     }
 
-    public static boolean isCheckMate(Board board) {
+    // The king cannot move out of check.
+    // No one can move in front of him to save him.
+    public static boolean isCheckMate(Board board, Chess.Pieces king, Coordinate kingCell) {
+        if (isCheck(board, king, kingCell) && !board.savableKing(king, kingCell))
+            return true;
         return false;
-    }
+        }
+
+
 
     public static boolean isValidMove(ChessMove move, Board board) {
         Chess.Pieces piece = move.getFrom().getCellState();
@@ -340,8 +346,10 @@ public class MoveValidator {
     private static boolean validate_BLACK_KING(ChessMove move, Board board) {
         Cell toCell = move.getTo();
 
+        if(isCheck(board, Chess.Pieces.BLACK_KING, toCell.getPos()))
+            return false;
         // If cell is empty, move is not an attack
-        if(toCell.getCellState() == Chess.Pieces.EMPTY) {
+        else if(toCell.getCellState() == Chess.Pieces.EMPTY) {
             return validate_KING_MOVE(move, board);
             // If cell is not empty and other piece is white, move is an attack
         } else if(toCell.getCellState() == Chess.Pieces.WHITE_PAWN
@@ -359,8 +367,10 @@ public class MoveValidator {
     private static boolean validate_WHITE_KING(ChessMove move, Board board) {
         Cell toCell = move.getTo();
 
+        if(isCheck(board, Chess.Pieces.WHITE_KING, toCell.getPos()))
+            return false;
         // If cell is empty, move is not an attack
-        if(toCell.getCellState() == Chess.Pieces.EMPTY) {
+        else if(toCell.getCellState() == Chess.Pieces.EMPTY) {
             return validate_KING_MOVE(move, board);
             // If cell is not empty and other piece is white, move is an attack
         } else if(toCell.getCellState() == Chess.Pieces.BLACK_PAWN

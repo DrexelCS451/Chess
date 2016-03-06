@@ -12,6 +12,11 @@ public class Cell {
         this.cellState = cellState;
     }
 
+    public Cell copyCell()
+    {
+        return new Cell(new Coordinate(pos.getX(), pos.getY()), cellState);
+    }
+
     public Coordinate getPos() {
         return pos;
     }

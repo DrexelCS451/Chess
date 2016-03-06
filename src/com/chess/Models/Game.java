@@ -1,6 +1,7 @@
 package com.chess.Models;
 
 import com.chess.Helpers.BoardHelper;
+import com.chess.Helpers.MoveValidator;
 
 /**
  * Created by AlexMarion on 3/4/16.
@@ -38,6 +39,7 @@ public class Game {
             board.getCell(c2).setCellState(board.getCell(c1).getCellState());
             board.getCell(c1).setCellState(Chess.Pieces.EMPTY);
         }
+        boolean c = MoveValidator.isCheck(board, Chess.Pieces.BLACK_KING);
         return board;
     }
 

@@ -1,7 +1,5 @@
 package com.chess.Models;
 
-import com.chess.Helpers.BoardHelper;
-
 /**
  * Created by tomer on 3/4/16.
  */
@@ -71,5 +69,15 @@ public class Board {
             }
         }
         return boardString;
+    }
+
+    public Coordinate findKing(Chess.Pieces piece) {
+        for(int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                if (getCell(i, j).getCellState() == piece)
+                    return new Coordinate(i, j);
+            }
+        }
+        return new Coordinate(-1, -1);
     }
 }

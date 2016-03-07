@@ -10,10 +10,6 @@ import java.util.ArrayList;
 public class MoveValidator {
     public MoveValidator() {}
 
-    public static ArrayList<ChessMove> findMoves(Cell cell) {
-        return null;
-    }
-
     // Castling
     // The king and the chosen rook are on the player's first rank (Y == 7) -- DONE
     // Neither the king nor the chosen rook has previously moved. -- DONE

@@ -14,74 +14,6 @@ public class MoveValidator {
         return null;
     }
 
-    // Castling
-    // The king and the chosen rook are on the player's first rank (Y == 7) -- DONE
-    // Neither the king nor the chosen rook has previously moved. -- DONE
-    // There are no pieces between the king and the chosen rook. -- DONE
-    // The king is not currently in check. -- DONE
-    // The king does not pass through a square that is attacked by an enemy piece
-    // The king does not end up in check. (True of any legal move.) -- DONE
-    public static boolean canCastle(Board board, Cell kingCell, Cell rookCell) {
-        int kingX = kingCell.getPos().getX();
-        int kingY = kingCell.getPos().getY();
-        int rookX = rookCell.getPos().getX();
-        int rookY = rookCell.getPos().getY();
-
-        Coordinate kingCoord = new Coordinate(kingX, kingY);
-
-        if (kingCell.getPos().getY() == 7 && rookCell.getPos().getY() == 7 && !kingCell.getHasMoved() &&
-                !rookCell.getHasMoved() && !isCheck(board, kingCell.getCellState(), kingCoord)) {
-            if (rookX == 0) {
-                if (board.getCell(1,7).getCellState() == Chess.Pieces.EMPTY &&
-                        board.getCell(2,7).getCellState() == Chess.Pieces.EMPTY &&
-                        board.getCell(3,7).getCellState() == Chess.Pieces.EMPTY) {
-
-                        Board tempBoard1 = board.copyBoard();
-                        Chess.Pieces king = tempBoard1.getCell(4,7).getCellState();
-                        tempBoard1.getCell(4,7).setCellState(Chess.Pieces.EMPTY);
-                        tempBoard1.getCell(3,7).setCellState(king);
-
-                        Board tempBoard2 = board.copyBoard();
-                        Chess.Pieces king2 = tempBoard2.getCell(4,7).getCellState();
-                        tempBoard2.getCell(4,7).setCellState(Chess.Pieces.EMPTY);
-                        tempBoard2.getCell(2,7).setCellState(king2);
-
-                        Board tempBoard3 = board.copyBoard();
-                        Chess.Pieces king3 = tempBoard3.getCell(4,7).getCellState();
-                        tempBoard3.getCell(4,7).setCellState(Chess.Pieces.EMPTY);
-                        tempBoard3.getCell(1,7).setCellState(king3);
-                        if (!MoveValidator.isCheck(tempBoard1, kingCell.getCellState(), new Coordinate(3,7)) &&
-                                !MoveValidator.isCheck(tempBoard2, kingCell.getCellState(), new Coordinate(2,7)) &&
-                                !MoveValidator.isCheck(tempBoard3, kingCell.getCellState(), new Coordinate(1,7)))
-                            return true;
-                        return false;
-                }
-            }
-            else if (rookX == 7) {
-                if (board.getCell(5,7).getCellState() == Chess.Pieces.EMPTY &&
-                        board.getCell(6,7).getCellState() == Chess.Pieces.EMPTY){
-
-                    //move king from (4,7) to (5,7)
-                    Board tempBoard1 = board.copyBoard();
-                    Chess.Pieces king = tempBoard1.getCell(4,7).getCellState();
-                    tempBoard1.getCell(4,7).setCellState(Chess.Pieces.EMPTY);
-                    tempBoard1.getCell(5,7).setCellState(king);
-
-                    //move king from (4,7) to (6,7)
-                    Board tempBoard2 = board.copyBoard();
-                    Chess.Pieces king2 = tempBoard2.getCell(4,7).getCellState();
-                    tempBoard2.getCell(4,7).setCellState(Chess.Pieces.EMPTY);
-                    tempBoard2.getCell(6,7).setCellState(king2);
-
-                    if (!MoveValidator.isCheck(tempBoard1, kingCell.getCellState(), new Coordinate(5,7)) &&
-                            !MoveValidator.isCheck(tempBoard2, kingCell.getCellState(), new Coordinate(6,7)))
-                        return true;
-                    return false;
-                }
-            }
-        }
-        return false;
-    }
     public static boolean isCheck(Board board, Chess.Pieces king, Coordinate kingCell) {
         int kingX = kingCell.getX();
         int kingY = kingCell.getY();
@@ -195,11 +127,11 @@ public class MoveValidator {
         }
 
         // case of pawns - down and left from king and down and right from king
-        // down and left - (X - 1, Y + 1)
-        if ((kingX - 1 > -1) && (kingY - 1 > -1) && board.getCell(kingX - 1, kingY - 1).getCellState() == otherPawn)
+        // down and left - (X - 1, Y - 1)
+        if ((kingX - 1 > -1) && (kingY + 1 < 8) && board.getCell(kingX - 1, kingY - 1).getCellState() == otherPawn)
             return true;
-        // down and right - (X + 1, Y + 1)
-        if ((kingX + 1 < 8) && (kingY - 1 > -1) && board.getCell(kingX + 1, kingY - 1).getCellState() == otherPawn)
+        // down and right - (X + 1, Y - 1)
+        if ((kingX + 1 < 8) && (kingY + 1 < 8) && board.getCell(kingX + 1, kingY - 1).getCellState() == otherPawn)
             return true;
 
         // case of knights
@@ -369,36 +301,9 @@ public class MoveValidator {
     private static boolean validate_KING_MOVE(ChessMove move, Board board) {
         Cell fromCell = move.getFrom();
         Cell toCell = move.getTo();
-        int toX = toCell.getPos().getX();
-        int toY = toCell.getPos().getY();
-        Chess.Pieces king = fromCell.getCellState();
 
-        // Validate castling
-        if (toX == 6 && toY == 7 && king == Chess.Pieces.WHITE_KING) {
-            Cell rookCell = new Cell(new Coordinate(7,7), Chess.Pieces.WHITE_ROOK);
-            if (canCastle(board, fromCell, rookCell))
-                return true;
-        }
-
-        else if (toX == 2 && toY == 7 && king == Chess.Pieces.WHITE_KING) {
-            Cell rookCell = new Cell(new Coordinate(0,7), Chess.Pieces.WHITE_ROOK);
-            if (canCastle(board, fromCell, rookCell))
-                return true;
-        }
-
-        else if (toX == 6 && toY == 7 && king == Chess.Pieces.BLACK_KING) {
-            Cell rookCell = new Cell(new Coordinate(7,7), Chess.Pieces.BLACK_ROOK);
-            if (canCastle(board, fromCell, rookCell))
-                return true;
-        }
-
-        else if (toX == 2 && toY == 7 && king == Chess.Pieces.BLACK_KING) {
-            Cell rookCell = new Cell(new Coordinate(0,7), Chess.Pieces.BLACK_ROOK);
-            if (canCastle(board, fromCell, rookCell))
-                return true;
-        }
         // Moves where the X doesn't change
-        else if(toCell.getPos().getX() == fromCell.getPos().getX()) {
+        if(toCell.getPos().getX() == fromCell.getPos().getX()) {
             if(toCell.getPos().getY() == fromCell.getPos().getY() + 1 || toCell.getPos().getY() == fromCell.getPos().getY() - 1) {
                 return true;
             }

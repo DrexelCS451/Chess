@@ -658,7 +658,18 @@ public class MoveValidatorTest extends TestCase {
         ChessMove knightMove7 = new ChessMove(knight, board.getCell(1, 2));
         ChessMove knightMove8 = new ChessMove(knight, board.getCell(2, 1));
 
-        //assertTrue(MoveValidator.isValidMove());
+        assertTrue(MoveValidator.isValidMove(knightMove1, board));
+        assertTrue(MoveValidator.isValidMove(knightMove2, board));
+        assertTrue(MoveValidator.isValidMove(knightMove3, board));
+        assertTrue(MoveValidator.isValidMove(knightMove4, board));
+        assertTrue(MoveValidator.isValidMove(knightMove5, board));
+        assertTrue(MoveValidator.isValidMove(knightMove6, board));
+        assertTrue(MoveValidator.isValidMove(knightMove7, board));
+        assertTrue(MoveValidator.isValidMove(knightMove8, board));
+
+        // Test invalid knight move
+        ChessMove falseKnightMove = new ChessMove(knight, board.getCell(4, 2));
+        assertFalse(MoveValidator.isValidMove(falseKnightMove, board));
     }
 
     public void testBishopMoves() throws Exception {

@@ -94,11 +94,6 @@ public class Game {
             board.getCell(c1).setCellState(Chess.Pieces.EMPTY);
         }
 
-        //ArrayList<ChessMove> knightMvs = board.findKnightMoves(Chess.Pieces.WHITE_KNIGHT, new Coordinate(2,5));
-        //ArrayList<ChessMove> pawnMvs = board.findPawnMoves(Chess.Pieces.WHITE_PAWN, new Coordinate(1,6));
-//        if(MoveValidator.isCheckMate(board, Chess.Pieces.BLACK_KING, new Coordinate(4,0))) {
-//            System.out.println("CHECKMATE AGAINST BLACK, WHITE WINS");
-//        }
         return board;
     }
 

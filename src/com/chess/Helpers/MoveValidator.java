@@ -36,12 +36,6 @@ public class MoveValidator {
                         board.getCell(2,7).getCellState() == Chess.Pieces.EMPTY &&
                         board.getCell(3,7).getCellState() == Chess.Pieces.EMPTY) {
 
-                        //move king from (4,7) to (3,7)
-                        /*Game tempGame1 = new Game();
-                        Board tempBoard1 = board.copyBoard();
-                        tempGame1.setBoard(tempBoard1);
-                        tempGame1.makeMove(new ChessMove(new Cell(new Coordinate(4,7), kingCell.getCellState()),
-                                                         new Cell (new Coordinate(3,7), kingCell.getCellState())));*/
                         Board tempBoard1 = board.copyBoard();
                         Chess.Pieces king = tempBoard1.getCell(4,7).getCellState();
                         tempBoard1.getCell(4,7).setCellState(Chess.Pieces.EMPTY);

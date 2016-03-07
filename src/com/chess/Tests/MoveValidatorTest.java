@@ -15,7 +15,418 @@ public class MoveValidatorTest extends TestCase {
     }
 
     public void testIsCheck() throws Exception {
+        // Test isCheck for every piece
+        Board board = BoardHelper.CreateBoard(true);
+        Cell king = board.getCell(4, 7);
+        assertFalse(MoveValidator.isCheck(board,king.getCellState(), king.getPos()));
 
+        // Testing for pawns
+        board = new Board("0,0,BLACK_ROOK\n" +
+                "0,1,BLACK_PAWN\n" +
+                "0,2,EMPTY\n" +
+                "0,3,EMPTY\n" +
+                "0,4,EMPTY\n" +
+                "0,5,EMPTY\n" +
+                "0,6,WHITE_PAWN\n" +
+                "0,7,WHITE_ROOK\n" +
+                "1,0,BLACK_KNIGHT\n" +
+                "1,1,BLACK_PAWN\n" +
+                "1,2,EMPTY\n" +
+                "1,3,EMPTY\n" +
+                "1,4,EMPTY\n" +
+                "1,5,EMPTY\n" +
+                "1,6,WHITE_PAWN\n" +
+                "1,7,WHITE_KNIGHT\n" +
+                "2,0,BLACK_BISHOP\n" +
+                "2,1,EMPTY\n" + // Moved pawn from here
+                "2,2,BLACK_PAWN\n" + // Moved pawn to here
+                "2,3,EMPTY\n" +
+                "2,4,EMPTY\n" +
+                "2,5,EMPTY\n" +
+                "2,6,WHITE_PAWN\n" +
+                "2,7,WHITE_BISHOP\n" +
+                "3,0,BLACK_QUEEN\n" +
+                "3,1,BLACK_PAWN\n" +
+                "3,2,EMPTY\n" +
+                "3,3,WHITE_KING\n" + // Moved king to here
+                "3,4,EMPTY\n" +
+                "3,5,EMPTY\n" +
+                "3,6,WHITE_PAWN\n" +
+                "3,7,WHITE_QUEEN\n" +
+                "4,0,BLACK_KING\n" +
+                "4,1,BLACK_PAWN\n" +
+                "4,2,EMPTY\n" +
+                "4,3,EMPTY\n" +
+                "4,4,EMPTY\n" +
+                "4,5,EMPTY\n" +
+                "4,6,WHITE_PAWN\n" +
+                "4,7,EMPTY\n" + // Moved king from here
+                "5,0,BLACK_BISHOP\n" +
+                "5,1,BLACK_PAWN\n" +
+                "5,2,EMPTY\n" +
+                "5,3,EMPTY\n" +
+                "5,4,EMPTY\n" +
+                "5,5,EMPTY\n" +
+                "5,6,WHITE_PAWN\n" +
+                "5,7,WHITE_BISHOP\n" +
+                "6,0,BLACK_KNIGHT\n" +
+                "6,1,BLACK_PAWN\n" +
+                "6,2,EMPTY\n" +
+                "6,3,EMPTY\n" +
+                "6,4,EMPTY\n" +
+                "6,5,EMPTY\n" +
+                "6,6,WHITE_PAWN\n" +
+                "6,7,WHITE_KNIGHT\n" +
+                "7,0,BLACK_ROOK\n" +
+                "7,1,BLACK_PAWN\n" +
+                "7,2,EMPTY\n" +
+                "7,3,EMPTY\n" +
+                "7,4,EMPTY\n" +
+                "7,5,EMPTY\n" +
+                "7,6,WHITE_PAWN\n" +
+                "7,7,WHITE_ROOK\n");
+       king = board.getCell(3, 3);
+        assertTrue(MoveValidator.isCheck(board, king.getCellState(), king.getPos()));
+
+        // Testing for kings
+        new Board("0,0,BLACK_ROOK\n" +
+                "0,1,BLACK_PAWN\n" +
+                "0,2,EMPTY\n" +
+                "0,3,EMPTY\n" +
+                "0,4,EMPTY\n" +
+                "0,5,EMPTY\n" +
+                "0,6,WHITE_PAWN\n" +
+                "0,7,WHITE_ROOK\n" +
+                "1,0,BLACK_KNIGHT\n" +
+                "1,1,BLACK_PAWN\n" +
+                "1,2,EMPTY\n" +
+                "1,3,EMPTY\n" +
+                "1,4,EMPTY\n" +
+                "1,5,EMPTY\n" +
+                "1,6,WHITE_PAWN\n" +
+                "1,7,WHITE_KNIGHT\n" +
+                "2,0,BLACK_BISHOP\n" +
+                "2,1,BLACK_PAWN\n" +
+                "2,2,EMPTY\n" +
+                "2,3,EMPTY\n" +
+                "2,4,EMPTY\n" +
+                "2,5,EMPTY\n" +
+                "2,6,WHITE_PAWN\n" +
+                "2,7,WHITE_BISHOP\n" +
+                "3,0,BLACK_QUEEN\n" +
+                "3,1,BLACK_PAWN\n" +
+                "3,2,EMPTY\n" +
+                "3,3,WHITE_KING\n" + // Moved king to here
+                "3,4,BLACK_KING\n" + // Moved enemy king here
+                "3,5,EMPTY\n" +
+                "3,6,WHITE_PAWN\n" +
+                "3,7,WHITE_QUEEN\n" +
+                "4,0,EMPTY\n" + // Moved enemy king from here
+                "4,1,BLACK_PAWN\n" +
+                "4,2,EMPTY\n" +
+                "4,3,EMPTY\n" +
+                "4,4,EMPTY\n" +
+                "4,5,EMPTY\n" +
+                "4,6,WHITE_PAWN\n" +
+                "4,7,EMPTY\n" + // Moved king from here
+                "5,0,BLACK_BISHOP\n" +
+                "5,1,BLACK_PAWN\n" +
+                "5,2,EMPTY\n" +
+                "5,3,EMPTY\n" +
+                "5,4,EMPTY\n" +
+                "5,5,EMPTY\n" +
+                "5,6,WHITE_PAWN\n" +
+                "5,7,WHITE_BISHOP\n" +
+                "6,0,BLACK_KNIGHT\n" +
+                "6,1,BLACK_PAWN\n" +
+                "6,2,EMPTY\n" +
+                "6,3,EMPTY\n" +
+                "6,4,EMPTY\n" +
+                "6,5,EMPTY\n" +
+                "6,6,WHITE_PAWN\n" +
+                "6,7,WHITE_KNIGHT\n" +
+                "7,0,BLACK_ROOK\n" +
+                "7,1,BLACK_PAWN\n" +
+                "7,2,EMPTY\n" +
+                "7,3,EMPTY\n" +
+                "7,4,EMPTY\n" +
+                "7,5,EMPTY\n" +
+                "7,6,WHITE_PAWN\n" +
+                "7,7,WHITE_ROOK\n");
+        king = board.getCell(3, 3);
+        assertTrue(MoveValidator.isCheck(board, king.getCellState(), king.getPos()));
+
+        // Testing for queens
+        new Board("0,0,BLACK_ROOK\n" +
+                "0,1,BLACK_PAWN\n" +
+                "0,2,EMPTY\n" +
+                "0,3,BLACK_QUEEN\n" + // Moved enemy queen to here
+                "0,4,EMPTY\n" +
+                "0,5,EMPTY\n" +
+                "0,6,WHITE_PAWN\n" +
+                "0,7,WHITE_ROOK\n" +
+                "1,0,BLACK_KNIGHT\n" +
+                "1,1,BLACK_PAWN\n" +
+                "1,2,EMPTY\n" +
+                "1,3,EMPTY\n" +
+                "1,4,EMPTY\n" +
+                "1,5,EMPTY\n" +
+                "1,6,WHITE_PAWN\n" +
+                "1,7,WHITE_KNIGHT\n" +
+                "2,0,BLACK_BISHOP\n" +
+                "2,1,BLACK_PAWN\n" +
+                "2,2,EMPTY\n" +
+                "2,3,EMPTY\n" +
+                "2,4,EMPTY\n" +
+                "2,5,EMPTY\n" +
+                "2,6,WHITE_PAWN\n" +
+                "2,7,WHITE_BISHOP\n" +
+                "3,0,EMPTY\n" + // Moved enemy queen from here
+                "3,1,BLACK_PAWN\n" +
+                "3,2,EMPTY\n" +
+                "3,3,WHITE_KING\n" + // Moved king to here
+                "3,4,EMPTY\n" +
+                "3,5,EMPTY\n" +
+                "3,6,WHITE_PAWN\n" +
+                "3,7,WHITE_QUEEN\n" +
+                "4,0,BLACK_KING\n" +
+                "4,1,BLACK_PAWN\n" +
+                "4,2,EMPTY\n" +
+                "4,3,EMPTY\n" +
+                "4,4,EMPTY\n" +
+                "4,5,EMPTY\n" +
+                "4,6,WHITE_PAWN\n" +
+                "4,7,EMPTY\n" + // Moved king from here
+                "5,0,BLACK_BISHOP\n" +
+                "5,1,BLACK_PAWN\n" +
+                "5,2,EMPTY\n" +
+                "5,3,EMPTY\n" +
+                "5,4,EMPTY\n" +
+                "5,5,EMPTY\n" +
+                "5,6,WHITE_PAWN\n" +
+                "5,7,WHITE_BISHOP\n" +
+                "6,0,BLACK_KNIGHT\n" +
+                "6,1,BLACK_PAWN\n" +
+                "6,2,EMPTY\n" +
+                "6,3,EMPTY\n" +
+                "6,4,EMPTY\n" +
+                "6,5,EMPTY\n" +
+                "6,6,WHITE_PAWN\n" +
+                "6,7,WHITE_KNIGHT\n" +
+                "7,0,BLACK_ROOK\n" +
+                "7,1,BLACK_PAWN\n" +
+                "7,2,EMPTY\n" +
+                "7,3,EMPTY\n" +
+                "7,4,EMPTY\n" +
+                "7,5,EMPTY\n" +
+                "7,6,WHITE_PAWN\n" +
+                "7,7,WHITE_ROOK\n");
+        king = board.getCell(3, 3);
+        assertTrue(MoveValidator.isCheck(board, king.getCellState(), king.getPos()));
+
+        // Testing for rooks
+        new Board("0,0,BLACK_ROOK\n" +
+                "0,1,BLACK_PAWN\n" +
+                "0,2,EMPTY\n" +
+                "0,3,EMPTY\n" +
+                "0,4,EMPTY\n" +
+                "0,5,EMPTY\n" +
+                "0,6,WHITE_PAWN\n" +
+                "0,7,WHITE_ROOK\n" +
+                "1,0,BLACK_KNIGHT\n" +
+                "1,1,BLACK_PAWN\n" +
+                "1,2,EMPTY\n" +
+                "1,3,EMPTY\n" +
+                "1,4,EMPTY\n" +
+                "1,5,EMPTY\n" +
+                "1,6,WHITE_PAWN\n" +
+                "1,7,WHITE_KNIGHT\n" +
+                "2,0,BLACK_BISHOP\n" +
+                "2,1,BLACK_PAWN\n" +
+                "2,2,EMPTY\n" +
+                "2,3,EMPTY\n" +
+                "2,4,EMPTY\n" +
+                "2,5,EMPTY\n" +
+                "2,6,WHITE_PAWN\n" +
+                "2,7,WHITE_BISHOP\n" +
+                "3,0,BLACK_QUEEN\n" +
+                "3,1,BLACK_PAWN\n" +
+                "3,2,EMPTY\n" +
+                "3,3,WHITE_KING\n" + // Moved king to here
+                "3,4,EMPTY\n" +
+                "3,5,BLACK_ROOK\n" + // Moved enemy rook to here
+                "3,6,WHITE_PAWN\n" +
+                "3,7,WHITE_QUEEN\n" +
+                "4,0,BLACK_KING\n" +
+                "4,1,BLACK_PAWN\n" +
+                "4,2,EMPTY\n" +
+                "4,3,EMPTY\n" +
+                "4,4,EMPTY\n" +
+                "4,5,EMPTY\n" +
+                "4,6,WHITE_PAWN\n" +
+                "4,7,EMPTY\n" + // Moved king from here
+                "5,0,BLACK_BISHOP\n" +
+                "5,1,BLACK_PAWN\n" +
+                "5,2,EMPTY\n" +
+                "5,3,EMPTY\n" +
+                "5,4,EMPTY\n" +
+                "5,5,EMPTY\n" +
+                "5,6,WHITE_PAWN\n" +
+                "5,7,WHITE_BISHOP\n" +
+                "6,0,BLACK_KNIGHT\n" +
+                "6,1,BLACK_PAWN\n" +
+                "6,2,EMPTY\n" +
+                "6,3,EMPTY\n" +
+                "6,4,EMPTY\n" +
+                "6,5,EMPTY\n" +
+                "6,6,WHITE_PAWN\n" +
+                "6,7,WHITE_KNIGHT\n" +
+                "7,0,EMPTY\n" + // Moved enemy rook from here
+                "7,1,BLACK_PAWN\n" +
+                "7,2,EMPTY\n" +
+                "7,3,EMPTY\n" +
+                "7,4,EMPTY\n" +
+                "7,5,EMPTY\n" +
+                "7,6,WHITE_PAWN\n" +
+                "7,7,WHITE_ROOK\n");
+        king = board.getCell(3, 3);
+        assertTrue(MoveValidator.isCheck(board, king.getCellState(), king.getPos()));
+
+        // Testing for knights
+        new Board("0,0,BLACK_ROOK\n" +
+                "0,1,BLACK_PAWN\n" +
+                "0,2,EMPTY\n" +
+                "0,3,EMPTY\n" +
+                "0,4,EMPTY\n" +
+                "0,5,EMPTY\n" +
+                "0,6,WHITE_PAWN\n" +
+                "0,7,WHITE_ROOK\n" +
+                "1,0,EMPTY\n" + // Moved enemy knight from here
+                "1,1,BLACK_PAWN\n" +
+                "1,2,EMPTY\n" +
+                "1,3,EMPTY\n" +
+                "1,4,EMPTY\n" +
+                "1,5,EMPTY\n" +
+                "1,6,WHITE_PAWN\n" +
+                "1,7,WHITE_KNIGHT\n" +
+                "2,0,BLACK_BISHOP\n" +
+                "2,1,BLACK_PAWN\n" +
+                "2,2,EMPTY\n" +
+                "2,3,EMPTY\n" +
+                "2,4,EMPTY\n" +
+                "2,5,EMPTY\n" +
+                "2,6,WHITE_PAWN\n" +
+                "2,7,WHITE_BISHOP\n" +
+                "3,0,BLACK_QUEEN\n" +
+                "3,1,BLACK_PAWN\n" +
+                "3,2,EMPTY\n" +
+                "3,3,WHITE_KING\n" + // Moved king to here
+                "3,4,EMPTY\n" +
+                "3,5,EMPTY\n" +
+                "3,6,WHITE_PAWN\n" +
+                "3,7,WHITE_QUEEN\n" +
+                "4,0,BLACK_KING\n" +
+                "4,1,BLACK_PAWN\n" +
+                "4,2,EMPTY\n" +
+                "4,3,EMPTY\n" +
+                "4,4,EMPTY\n" +
+                "4,5,EMPTY\n" +
+                "4,6,WHITE_PAWN\n" +
+                "4,7,EMPTY\n" + // Moved king from here
+                "5,0,BLACK_BISHOP\n" +
+                "5,1,BLACK_PAWN\n" +
+                "5,2,BLACK_KNIGHT\n" + // Moved enemy knight to here
+                "5,3,EMPTY\n" +
+                "5,4,EMPTY\n" +
+                "5,5,EMPTY\n" +
+                "5,6,WHITE_PAWN\n" +
+                "5,7,WHITE_BISHOP\n" +
+                "6,0,BLACK_KNIGHT\n" +
+                "6,1,BLACK_PAWN\n" +
+                "6,2,EMPTY\n" +
+                "6,3,EMPTY\n" +
+                "6,4,EMPTY\n" +
+                "6,5,EMPTY\n" +
+                "6,6,WHITE_PAWN\n" +
+                "6,7,WHITE_KNIGHT\n" +
+                "7,0,BLACK_ROOK\n" +
+                "7,1,BLACK_PAWN\n" +
+                "7,2,EMPTY\n" +
+                "7,3,EMPTY\n" +
+                "7,4,EMPTY\n" +
+                "7,5,EMPTY\n" +
+                "7,6,WHITE_PAWN\n" +
+                "7,7,WHITE_ROOK\n");
+        king = board.getCell(3, 3);
+        assertTrue(MoveValidator.isCheck(board, king.getCellState(), king.getPos()));
+
+        // Testing for bishops
+        new Board("0,0,BLACK_ROOK\n" +
+                "0,1,BLACK_PAWN\n" +
+                "0,2,EMPTY\n" +
+                "0,3,EMPTY\n" +
+                "0,4,EMPTY\n" +
+                "0,5,EMPTY\n" +
+                "0,6,WHITE_PAWN\n" +
+                "0,7,WHITE_ROOK\n" +
+                "1,0,BLACK_KNIGHT\n" +
+                "1,1,BLACK_PAWN\n" +
+                "1,2,EMPTY\n" +
+                "1,3,EMPTY\n" +
+                "1,4,EMPTY\n" +
+                "1,5,EMPTY\n" +
+                "1,6,WHITE_PAWN\n" +
+                "1,7,WHITE_KNIGHT\n" +
+                "2,0,EMPTY\n" + // Moved enemy bishop from here
+                "2,1,BLACK_PAWN\n" +
+                "2,2,EMPTY\n" +
+                "2,3,EMPTY\n" +
+                "2,4,EMPTY\n" +
+                "2,5,EMPTY\n" +
+                "2,6,WHITE_PAWN\n" +
+                "2,7,WHITE_BISHOP\n" +
+                "3,0,BLACK_QUEEN\n" +
+                "3,1,BLACK_PAWN\n" +
+                "3,2,EMPTY\n" +
+                "3,3,WHITE_KING\n" + // Moved king to here
+                "3,4,EMPTY\n" +
+                "3,5,EMPTY\n" +
+                "3,6,WHITE_PAWN\n" +
+                "3,7,WHITE_QUEEN\n" +
+                "4,0,BLACK_KING\n" +
+                "4,1,BLACK_PAWN\n" +
+                "4,2,EMPTY\n" +
+                "4,3,EMPTY\n" +
+                "4,4,EMPTY\n" +
+                "4,5,EMPTY\n" +
+                "4,6,WHITE_PAWN\n" +
+                "4,7,EMPTY\n" + // Moved king from here
+                "5,0,BLACK_BISHOP\n" +
+                "5,1,BLACK_PAWN\n" +
+                "5,2,EMPTY\n" +
+                "5,3,EMPTY\n" +
+                "5,4,EMPTY\n" +
+                "5,5,BLACK_BISHOP\n" + // Moved enemy bishop to here
+                "5,6,WHITE_PAWN\n" +
+                "5,7,WHITE_BISHOP\n" +
+                "6,0,BLACK_KNIGHT\n" +
+                "6,1,BLACK_PAWN\n" +
+                "6,2,EMPTY\n" +
+                "6,3,EMPTY\n" +
+                "6,4,EMPTY\n" +
+                "6,5,EMPTY\n" +
+                "6,6,WHITE_PAWN\n" +
+                "6,7,WHITE_KNIGHT\n" +
+                "7,0,BLACK_ROOK\n" +
+                "7,1,BLACK_PAWN\n" +
+                "7,2,EMPTY\n" +
+                "7,3,EMPTY\n" +
+                "7,4,EMPTY\n" +
+                "7,5,EMPTY\n" +
+                "7,6,WHITE_PAWN\n" +
+                "7,7,WHITE_ROOK\n");
+        king = board.getCell(3, 3);
+        assertTrue(MoveValidator.isCheck(board, king.getCellState(), king.getPos()));
     }
 
     public void testIsCheckMate() throws Exception {

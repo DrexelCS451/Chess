@@ -70,42 +70,6 @@ public class MainMenuController {
                 null,
                 null,
                 "");
-        try{
-            PrintWriter writer1 = new PrintWriter("user", "UTF-8");
-            writer1.println(s);
-            writer1.close();
-
-            URL url = new URL("http://localhost:8080/myapp/user");
-            HttpURLConnection request = (HttpURLConnection) url.openConnection();
-            request.setRequestMethod("POST");
-            request.setDoOutput(true);
-            String postData = "{\"username\"=\"" + s + "\"}";
-            OutputStream os = request.getOutputStream();
-            BufferedWriter writer = new BufferedWriter(
-                    new OutputStreamWriter(os, "UTF-8"));
-            writer.write(postData);
-            writer.flush();
-            writer.close();
-            os.close();
-
-
-            request.connect();
-            JsonParser jp = new JsonParser();
-            JsonElement root = jp.parse(new InputStreamReader((InputStream) request.getContent()));
-            JsonObject rootobj = root.getAsJsonObject(); // may be Json Array if it's an array, or other type if a primitive
-
-
-
-        }catch (Exception e){
-            int test  =1;
-            test++;
-        }
-
-
-
-
-
-
 
         return true;
     }

@@ -281,9 +281,8 @@ public class MoveValidatorTest extends TestCase {
         board2 = game.makeMove(forwardMove);
         centerKing = board2.getCell(4, 3);
 
-        // TODO: this won't work until isCheck is in king move validator
         ChessMove falseMoveToCheck = new ChessMove(centerKing, board2.getCell(4, 2));
-        // TODO: assertFalse(MoveValidator.isValidMove(falseMoveToCheck, board2));
+        assertFalse(MoveValidator.isValidMove(falseMoveToCheck, board2));
 
         // Test king attack
         // Create a new board with the king in the center and a piece to attack

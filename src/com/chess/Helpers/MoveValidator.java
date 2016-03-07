@@ -127,11 +127,11 @@ public class MoveValidator {
         }
 
         // case of pawns - down and left from king and down and right from king
-        // down and left - (X - 1, Y + 1)
-        if ((kingX - 1 > -1) && (kingY + 1 < 8) && board.getCell(kingX - 1, kingY + 1).getCellState() == otherPawn)
+        // down and left - (X - 1, Y - 1)
+        if ((kingX - 1 > -1) && (kingY + 1 < 8) && board.getCell(kingX - 1, kingY - 1).getCellState() == otherPawn)
             return true;
-        // down and right - (X + 1, Y + 1)
-        if ((kingX + 1 < 8) && (kingY + 1 < 8) && board.getCell(kingX + 1, kingY + 1).getCellState() == otherPawn)
+        // down and right - (X + 1, Y - 1)
+        if ((kingX + 1 < 8) && (kingY + 1 < 8) && board.getCell(kingX + 1, kingY - 1).getCellState() == otherPawn)
             return true;
 
         // case of knights

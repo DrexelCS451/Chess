@@ -6,10 +6,12 @@ package com.chess.Models;
 public class Cell {
     private Coordinate pos;
     private Chess.Pieces cellState;
+    private boolean hasMoved;
 
     public Cell(Coordinate pos, Chess.Pieces cellState) {
         this.pos = pos;
         this.cellState = cellState;
+        this.hasMoved = false;
     }
 
     public Cell copyCell()
@@ -25,7 +27,10 @@ public class Cell {
         return cellState;
     }
 
+    public boolean getHasMoved() { return hasMoved; }
+
     public void setCellState(Chess.Pieces cellState) {
         this.cellState = cellState;
+        this.hasMoved = true;
     }
 }

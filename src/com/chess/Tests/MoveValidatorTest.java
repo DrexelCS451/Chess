@@ -574,6 +574,91 @@ public class MoveValidatorTest extends TestCase {
         Board board = BoardHelper.CreateBoard(true);
         Game game = new Game();
         game.startGame();
+
+        Cell knight = board.getCell(1, 7);
+
+        // Test that knights can jump over friendly pieces
+        ChessMove falseForwardMove = new ChessMove(knight, board.getCell(0, 5));
+        assertTrue(MoveValidator.isValidMove(falseForwardMove, board));
+
+        // Test valid knight moves
+        board = new Board("0,0,BLACK_ROOK\n" +
+                "0,1,BLACK_PAWN\n" +
+                "0,2,EMPTY\n" +
+                "0,3,EMPTY\n" +
+                "0,4,EMPTY\n" +
+                "0,5,EMPTY\n" +
+                "0,6,WHITE_PAWN\n" +
+                "0,7,WHITE_ROOK\n" +
+                "1,0,BLACK_KNIGHT\n" +
+                "1,1,BLACK_PAWN\n" +
+                "1,2,EMPTY\n" +
+                "1,3,EMPTY\n" +
+                "1,4,EMPTY\n" +
+                "1,5,EMPTY\n" +
+                "1,6,WHITE_PAWN\n" +
+                "1,7,EMPTY\n" + // Moved knight from here
+                "2,0,BLACK_BISHOP\n" +
+                "2,1,BLACK_PAWN\n" +
+                "2,2,EMPTY\n" +
+                "2,3,EMPTY\n" +
+                "2,4,EMPTY\n" +
+                "2,5,EMPTY\n" +
+                "2,6,WHITE_PAWN\n" +
+                "2,7,WHITE_BISHOP\n" +
+                "3,0,BLACK_QUEEN\n" +
+                "3,1,BLACK_PAWN\n" +
+                "3,2,EMPTY\n" +
+                "3,3,WHITE_KNIGHT\n" + // Moved knight to here
+                "3,4,EMPTY\n" +
+                "3,5,EMPTY\n" +
+                "3,6,WHITE_PAWN\n" +
+                "3,7,WHITE_QUEEN\n" +
+                "4,0,BLACK_KING\n" +
+                "4,1,BLACK_PAWN\n" +
+                "4,2,EMPTY\n" +
+                "4,3,EMPTY\n" +
+                "4,4,EMPTY\n" +
+                "4,5,EMPTY\n" +
+                "4,6,WHITE_PAWN\n" +
+                "4,7,WHITE_KING\n" +
+                "5,0,BLACK_BISHOP\n" +
+                "5,1,BLACK_PAWN\n" +
+                "5,2,EMPTY\n" +
+                "5,3,EMPTY\n" +
+                "5,4,EMPTY\n" +
+                "5,5,EMPTY\n" +
+                "5,6,WHITE_PAWN\n" +
+                "5,7,WHITE_BISHOP\n" +
+                "6,0,BLACK_KNIGHT\n" +
+                "6,1,BLACK_PAWN\n" +
+                "6,2,EMPTY\n" +
+                "6,3,EMPTY\n" +
+                "6,4,EMPTY\n" +
+                "6,5,EMPTY\n" +
+                "6,6,WHITE_PAWN\n" +
+                "6,7,WHITE_KNIGHT\n" +
+                "7,0,BLACK_ROOK\n" +
+                "7,1,BLACK_PAWN\n" +
+                "7,2,EMPTY\n" +
+                "7,3,EMPTY\n" +
+                "7,4,EMPTY\n" +
+                "7,5,EMPTY\n" +
+                "7,6,WHITE_PAWN\n" +
+                "7,7,WHITE_ROOK\n");
+        game.setBoard(board);
+        knight = board.getCell(3, 3);
+
+        ChessMove knightMove1 = new ChessMove(knight, board.getCell(4, 1));
+        ChessMove knightMove2 = new ChessMove(knight, board.getCell(5, 2));
+        ChessMove knightMove3 = new ChessMove(knight, board.getCell(5, 4));
+        ChessMove knightMove4 = new ChessMove(knight, board.getCell(4, 5));
+        ChessMove knightMove5 = new ChessMove(knight, board.getCell(2, 5));
+        ChessMove knightMove6 = new ChessMove(knight, board.getCell(1, 4));
+        ChessMove knightMove7 = new ChessMove(knight, board.getCell(1, 2));
+        ChessMove knightMove8 = new ChessMove(knight, board.getCell(2, 1));
+
+        //assertTrue(MoveValidator.isValidMove());
     }
 
     public void testBishopMoves() throws Exception {

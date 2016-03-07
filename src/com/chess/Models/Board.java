@@ -790,7 +790,7 @@ public class Board {
                             Board tempBoard = copyBoard();
                             tempGame.setBoard(tempBoard);
                             tempGame.makeMove(blackKingMoves.get(k));
-                            if (!MoveValidator.isCheck(tempBoard, king, kingCell))
+                            if (!MoveValidator.isCheck(tempBoard, king, blackKingMoves.get(k).getTo().getPos()))
                                 return true;
                         }
                     }
@@ -862,7 +862,7 @@ public class Board {
                             Board tempBoard = copyBoard();
                             tempGame.setBoard(tempBoard);
                             tempGame.makeMove(whiteKingMoves.get(k));
-                            if (!MoveValidator.isCheck(tempBoard, king, kingCell))
+                            if (!MoveValidator.isCheck(tempBoard, king, whiteKingMoves.get(k).getTo().getPos()))
                                 return true;
                         }
                     }

@@ -86,7 +86,6 @@ public class MoveValidator {
         for (int i = kingX + 1, j = kingY + 1; i < 8 && j < 8; i++, j++) {
             if (board.getCell(i, j).getCellState() != Chess.Pieces.EMPTY) {
                 if (board.getCell(i, j).getCellState() == otherBishop ||
-                        board.getCell(i, j).getCellState() == otherPawn ||
                         board.getCell(i, j).getCellState() == otherQueen) {
                     return true;
                 } else
@@ -98,7 +97,6 @@ public class MoveValidator {
         for (int i = kingX - 1, j = kingY - 1; i >= 0 && j >= 0; i--, j--) {
             if (board.getCell(i, j).getCellState() != Chess.Pieces.EMPTY) {
                 if (board.getCell(i, j).getCellState() == otherBishop ||
-                        board.getCell(i, j).getCellState() == otherPawn ||
                         board.getCell(i, j).getCellState() == otherQueen) {
                     return true;
                 } else
@@ -110,7 +108,6 @@ public class MoveValidator {
         for (int i = kingX + 1, j = kingY - 1; i < 8 && j >= 0; i++, j--) {
             if (board.getCell(i, j).getCellState() != Chess.Pieces.EMPTY) {
                 if (board.getCell(i, j).getCellState() == otherBishop ||
-                        board.getCell(i, j).getCellState() == otherPawn ||
                         board.getCell(i, j).getCellState() == otherQueen) {
                     return true;
                 } else
@@ -122,13 +119,20 @@ public class MoveValidator {
         for (int i = kingX - 1, j = kingY + 1; i >= 0 && j < 8; i--, j++) {
             if (board.getCell(i, j).getCellState() != Chess.Pieces.EMPTY) {
                 if (board.getCell(i, j).getCellState() == otherBishop ||
-                    board.getCell(i, j).getCellState() == otherPawn ||
                         board.getCell(i, j).getCellState() == otherQueen) {
                     return true;
                 } else
                     break;
             }
         }
+
+        // case of pawns - down and left from king and down and right from king
+        // down and left - (X - 1, Y + 1)
+        if ((kingX - 1 > -1) && (kingY + 1 < 8) && board.getCell(kingX - 1, kingY + 1).getCellState() == otherPawn)
+            return true;
+        // down and right - (X + 1, Y + 1)
+        if ((kingX + 1 < 8) && (kingY + 1 < 8) && board.getCell(kingX + 1, kingY + 1).getCellState() == otherPawn)
+            return true;
 
         // case of knights
         if ((kingX + 1 < 8) && (kingY - 2 > -1) &&(board.getCell(kingX + 1, kingY - 2).getCellState() == otherKnight)) {
@@ -166,7 +170,12 @@ public class MoveValidator {
         return false;
         }
 
-
+    // Not in check but has no legal move.
+    public static boolean isStaleMate(Board board, Chess.Pieces king, Coordinate kingCell) {
+        if (!isCheck(board, king, kingCell) && !board.savableKing(king, kingCell))
+            return true;
+        return false;
+    }
 
     public static boolean isValidMove(ChessMove move, Board board) {
         Chess.Pieces piece = move.getFrom().getCellState();

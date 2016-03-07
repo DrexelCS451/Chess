@@ -166,7 +166,156 @@ public class MoveValidatorTest extends TestCase {
         assertFalse(MoveValidator.isValidMove(blockedMoveBy2, board2));
     }
 
-    // TODO: test casteling
+    // TODO: test castling
+    public void testCanCastle() throws Exception {
+
+        // Move leftPawn at (5,6) to (5,5)
+        // Move leftPawn at (6,6) to (6,5)
+        // Move rightKnight at (6,7) to (7,5)
+        // Move rightBishop at (5,7) to (6,6)
+        Board board = new Board("0,0,BLACK_ROOK\n" +
+                "0,1,BLACK_PAWN\n" +
+                "0,2,EMPTY\n" +
+                "0,3,EMPTY\n" +
+                "0,4,EMPTY\n" +
+                "0,5,EMPTY\n" +
+                "0,6,WHITE_PAWN\n" +
+                "0,7,WHITE_ROOK\n" +
+                "1,0,BLACK_KNIGHT\n" +
+                "1,1,BLACK_PAWN\n" +
+                "1,2,EMPTY\n" +
+                "1,3,EMPTY\n" +
+                "1,4,EMPTY\n" +
+                "1,5,EMPTY\n" +
+                "1,6,WHITE_PAWN\n" +
+                "1,7,WHITE_KNIGHT\n" +
+                "2,0,BLACK_BISHOP\n" +
+                "2,1,BLACK_PAWN\n" +
+                "2,2,EMPTY\n" +
+                "2,3,EMPTY\n" +
+                "2,4,EMPTY\n" +
+                "2,5,EMPTY\n" +
+                "2,6,WHITE_PAWN\n" +
+                "2,7,WHITE_BISHOP\n" +
+                "3,0,BLACK_QUEEN\n" +
+                "3,1,BLACK_PAWN\n" +
+                "3,2,EMPTY\n" +
+                "3,3,EMPTY\n" +
+                "3,4,EMPTY\n" +
+                "3,5,EMPTY\n" +
+                "3,6,WHITE_PAWN\n" +
+                "3,7,WHITE_QUEEN\n" +
+                "4,0,BLACK_KING\n" +
+                "4,1,BLACK_PAWN\n" +
+                "4,2,EMPTY\n" +
+                "4,3,EMPTY\n" +
+                "4,4,WHITE_KING\n" + // Moved king to here
+                "4,5,EMPTY\n" +
+                "4,6,WHITE_PAWN\n" +
+                "4,7,EMPTY\n" + // Moved white king from here
+                "5,0,BLACK_BISHOP\n" +
+                "5,1,BLACK_PAWN\n" +
+                "5,2,EMPTY\n" +
+                "5,3,EMPTY\n" +
+                "5,4,EMPTY\n" +
+                "5,5,WHITE_PAWN\n" +
+                "5,6,EMPTY\n" +
+                "5,7,EMPTY\n" +
+                "6,0,BLACK_KNIGHT\n" +
+                "6,1,BLACK_PAWN\n" +
+                "6,2,EMPTY\n" +
+                "6,3,EMPTY\n" +
+                "6,4,EMPTY\n" +
+                "6,5,WHITE_PAWN\n" +
+                "6,6,WHITE_BISHOP\n" +
+                "6,7,EMPTY\n" +
+                "7,0,BLACK_ROOK\n" +
+                "7,1,BLACK_PAWN\n" +
+                "7,2,EMPTY\n" +
+                "7,3,EMPTY\n" +
+                "7,4,EMPTY\n" +
+                "7,5,WHITE_KNIGHT\n" +
+                "7,6,WHITE_PAWN\n" +
+                "7,7,WHITE_ROOK\n");
+        Cell king = board.getCell(4,7);
+        Cell rightRook = board.getCell(7,7);
+        assertTrue(MoveValidator.canCastle(board, king, rightRook));
+
+        // Move leftPawn2 to (1,5)
+        // Move midPawn to (2,5)
+        // Move rightPawn2 to (3,5)
+        // Move leftKnight to (0,5)
+        // Move leftBishop to (1,6)
+        // Move queen to (3,6)
+
+        Board board2 = new Board("0,0,BLACK_ROOK\n" +
+                "0,1,BLACK_PAWN\n" +
+                "0,2,EMPTY\n" +
+                "0,3,EMPTY\n" +
+                "0,4,EMPTY\n" +
+                "0,5,WHITE_KNIGHT\n" +
+                "0,6,WHITE_PAWN\n" +
+                "0,7,WHITE_ROOK\n" +
+                "1,0,BLACK_KNIGHT\n" +
+                "1,1,BLACK_PAWN\n" +
+                "1,2,EMPTY\n" +
+                "1,3,EMPTY\n" +
+                "1,4,EMPTY\n" +
+                "1,5,WHITE_PAWN\n" +
+                "1,6,WHITE_KNIGHT\n" +
+                "1,7,EMPTY\n" +
+                "2,0,BLACK_BISHOP\n" +
+                "2,1,BLACK_PAWN\n" +
+                "2,2,EMPTY\n" +
+                "2,3,EMPTY\n" +
+                "2,4,EMPTY\n" +
+                "2,5,WHITE_PAWN\n" +
+                "2,6,WHITE_PAWN\n" +
+                "2,7,EMPTY\n" +
+                "3,0,BLACK_QUEEN\n" +
+                "3,1,BLACK_PAWN\n" +
+                "3,2,EMPTY\n" +
+                "3,3,EMPTY\n" +
+                "3,4,EMPTY\n" +
+                "3,5,WHITE_PAWN\n" +
+                "3,6,WHITE_QUEEN\n" +
+                "3,7,EMPTY\n" +
+                "4,0,BLACK_KING\n" +
+                "4,1,BLACK_PAWN\n" +
+                "4,2,EMPTY\n" +
+                "4,3,EMPTY\n" +
+                "4,4,WHITE_KING\n" + // Moved king to here
+                "4,5,EMPTY\n" +
+                "4,6,WHITE_PAWN\n" +
+                "4,7,EMPTY\n" + // Moved white king from here
+                "5,0,BLACK_BISHOP\n" +
+                "5,1,BLACK_PAWN\n" +
+                "5,2,EMPTY\n" +
+                "5,3,EMPTY\n" +
+                "5,4,EMPTY\n" +
+                "5,5,WHITE_PAWN\n" +
+                "5,6,EMPTY\n" +
+                "5,7,EMPTY\n" +
+                "6,0,BLACK_KNIGHT\n" +
+                "6,1,BLACK_PAWN\n" +
+                "6,2,EMPTY\n" +
+                "6,3,EMPTY\n" +
+                "6,4,EMPTY\n" +
+                "6,5,WHITE_PAWN\n" +
+                "6,6,WHITE_BISHOP\n" +
+                "6,7,EMPTY\n" +
+                "7,0,BLACK_ROOK\n" +
+                "7,1,BLACK_PAWN\n" +
+                "7,2,EMPTY\n" +
+                "7,3,EMPTY\n" +
+                "7,4,EMPTY\n" +
+                "7,5,WHITE_KNIGHT\n" +
+                "7,6,WHITE_PAWN\n" +
+                "7,7,WHITE_ROOK\n");
+        Cell king2 = board.getCell(4,7);
+        Cell leftRook = board.getCell(7,7);
+        assertTrue(MoveValidator.canCastle(board,king2, leftRook));
+    }
     public void testKingMoves() throws Exception {
         Board board = BoardHelper.CreateBoard(true);
         Game game = new Game();
@@ -463,7 +612,7 @@ public class MoveValidatorTest extends TestCase {
         assertFalse(MoveValidator.isValidMove(falseForwardBy3, board));
     }
 
-    // TODO: test casteling
+    // TODO: test castling
     public void testRookMoves() throws Exception {
         Board board = BoardHelper.CreateBoard(true);
         Game game = new Game();

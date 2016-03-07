@@ -11,6 +11,7 @@ public class LobbyView {
     {
         p = new JPanel();
         JList list = new JList();
+        p.add(list);
     }
 
     public JPanel getView()

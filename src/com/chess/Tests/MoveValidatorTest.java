@@ -10,10 +10,6 @@ import junit.framework.TestCase;
  */
 public class MoveValidatorTest extends TestCase {
 
-    public void testFindMoves() throws Exception {
-        // TODO: don't think this is being implemented
-    }
-
     public void testIsCheck() throws Exception {
         // Test isCheck for every piece
         Board board = BoardHelper.CreateBoard(true);

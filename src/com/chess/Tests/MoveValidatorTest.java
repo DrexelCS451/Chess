@@ -402,7 +402,7 @@ public class MoveValidatorTest extends TestCase {
                 "3,4,EMPTY\n" +
                 "3,5,EMPTY\n" +
                 "3,6,WHITE_PAWN\n" +
-                "3,7,WHITE_QUEEN\n" + // Moved queen from here
+                "3,7,EMPTY\n" + // Moved queen from here
                 "4,0,BLACK_KING\n" +
                 "4,1,BLACK_PAWN\n" +
                 "4,2,EMPTY\n" +
@@ -557,6 +557,17 @@ public class MoveValidatorTest extends TestCase {
         // Test that rooks cannot move through enemy pieces
         ChessMove falseForwardBy3 = new ChessMove(rook, board.getCell(3, 0));
         assertFalse(MoveValidator.isValidMove(falseForwardBy3, board));
+
+        // Test that rooks cannot make diagonal moves
+        ChessMove forwardLeftBy2 = new ChessMove(rook, board.getCell(1, 1));
+        ChessMove forwardRightBy2 = new ChessMove(rook, board.getCell(5, 1));
+        ChessMove backLeftBy2 = new ChessMove(rook, board.getCell(5, 5));
+        ChessMove backRightBy2 = new ChessMove(rook, board.getCell(1, 5));
+
+        assertFalse(MoveValidator.isValidMove(forwardLeftBy2, board));
+        assertFalse(MoveValidator.isValidMove(forwardRightBy2, board));
+        assertFalse(MoveValidator.isValidMove(backLeftBy2, board));
+        assertFalse(MoveValidator.isValidMove(backRightBy2, board));
     }
 
     public void testKnightMoves() throws Exception {
@@ -569,5 +580,104 @@ public class MoveValidatorTest extends TestCase {
         Board board = BoardHelper.CreateBoard(true);
         Game game = new Game();
         game.startGame();
+
+        Cell bishop = board.getCell(2, 7);
+
+        // Test that bishops cant move through friendly pieces
+        ChessMove falseForwardMove = new ChessMove(bishop, board.getCell(3, 6));
+        assertFalse(MoveValidator.isValidMove(falseForwardMove, board));
+
+        // Test valid queen moves
+        board = new Board("0,0,BLACK_ROOK\n" +
+                "0,1,BLACK_PAWN\n" +
+                "0,2,EMPTY\n" +
+                "0,3,EMPTY\n" +
+                "0,4,EMPTY\n" +
+                "0,5,EMPTY\n" +
+                "0,6,WHITE_PAWN\n" +
+                "0,7,WHITE_ROOK\n" +
+                "1,0,BLACK_KNIGHT\n" +
+                "1,1,BLACK_PAWN\n" +
+                "1,2,EMPTY\n" +
+                "1,3,EMPTY\n" +
+                "1,4,EMPTY\n" +
+                "1,5,EMPTY\n" +
+                "1,6,WHITE_PAWN\n" +
+                "1,7,WHITE_KNIGHT\n" +
+                "2,0,BLACK_BISHOP\n" +
+                "2,1,BLACK_PAWN\n" +
+                "2,2,EMPTY\n" +
+                "2,3,EMPTY\n" +
+                "2,4,EMPTY\n" +
+                "2,5,EMPTY\n" +
+                "2,6,WHITE_PAWN\n" +
+                "2,7,EMPTY\n" + // Moved bishop from here
+                "3,0,BLACK_QUEEN\n" +
+                "3,1,BLACK_PAWN\n" +
+                "3,2,EMPTY\n" +
+                "3,3,WHITE_BISHOP\n" + // Moved bishop to here
+                "3,4,EMPTY\n" +
+                "3,5,EMPTY\n" +
+                "3,6,WHITE_PAWN\n" +
+                "3,7,WHITE_QUEEN\n" +
+                "4,0,BLACK_KING\n" +
+                "4,1,BLACK_PAWN\n" +
+                "4,2,EMPTY\n" +
+                "4,3,EMPTY\n" +
+                "4,4,EMPTY\n" +
+                "4,5,EMPTY\n" +
+                "4,6,WHITE_PAWN\n" +
+                "4,7,WHITE_KING\n" +
+                "5,0,BLACK_BISHOP\n" +
+                "5,1,BLACK_PAWN\n" +
+                "5,2,EMPTY\n" +
+                "5,3,EMPTY\n" +
+                "5,4,EMPTY\n" +
+                "5,5,EMPTY\n" +
+                "5,6,WHITE_PAWN\n" +
+                "5,7,WHITE_BISHOP\n" +
+                "6,0,BLACK_KNIGHT\n" +
+                "6,1,BLACK_PAWN\n" +
+                "6,2,EMPTY\n" +
+                "6,3,EMPTY\n" +
+                "6,4,EMPTY\n" +
+                "6,5,EMPTY\n" +
+                "6,6,WHITE_PAWN\n" +
+                "6,7,WHITE_KNIGHT\n" +
+                "7,0,BLACK_ROOK\n" +
+                "7,1,BLACK_PAWN\n" +
+                "7,2,EMPTY\n" +
+                "7,3,EMPTY\n" +
+                "7,4,EMPTY\n" +
+                "7,5,EMPTY\n" +
+                "7,6,WHITE_PAWN\n" +
+                "7,7,WHITE_ROOK\n");
+        game.setBoard(board);
+        bishop = board.getCell(3, 3);
+
+        ChessMove forwardLeftBy2 = new ChessMove(bishop, board.getCell(1, 1));
+        ChessMove forwardRightBy2 = new ChessMove(bishop, board.getCell(5, 1));
+        ChessMove backLeftBy2 = new ChessMove(bishop, board.getCell(5, 5));
+        ChessMove backRightBy2 = new ChessMove(bishop, board.getCell(1, 5));
+
+        assertTrue(MoveValidator.isValidMove(forwardLeftBy2, board));
+        assertTrue(MoveValidator.isValidMove(forwardRightBy2, board));
+        assertTrue(MoveValidator.isValidMove(backLeftBy2, board));
+        assertTrue(MoveValidator.isValidMove(backRightBy2, board));
+
+        // Test that bishops cannot move through enemy pieces
+        ChessMove falseForwardBy3 = new ChessMove(bishop, board.getCell(3, 0));
+        assertFalse(MoveValidator.isValidMove(falseForwardBy3, board));
+
+        // Test that bishops cannot make non-diagonal moves
+        ChessMove forwardBy2 = new ChessMove(bishop, board.getCell(3, 1));
+        ChessMove backBy2 = new ChessMove(bishop, board.getCell(3, 5));
+        ChessMove leftBy3 = new ChessMove(bishop, board.getCell(0, 3));
+        ChessMove rightBy4 = new ChessMove(bishop, board.getCell(7, 3));
+
+        assertFalse(MoveValidator.isValidMove(forwardBy2, board));
+        assertFalse(MoveValidator.isValidMove(backBy2, board));
+        assertFalse(MoveValidator.isValidMove(leftBy3, board));
+        assertFalse(MoveValidator.isValidMove(rightBy4, board));
     }
 }

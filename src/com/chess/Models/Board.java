@@ -92,37 +92,32 @@ public class Board {
 
 
         String boardString = "";
-        if(!User.isWhite)
-        {
-            for(int i = 0; i < cells.length; i++) {
-                for(int j = cells[i].length -1 ; j >=0 ; j--) {
-                    boardString += Integer.toString(i)
-                            + ","
-                            + Integer.toString(j)
-                            + ","
-                            + cells[i][j].getCellState().toString();
-                    if(!(i == 7 && j == 0)) {
-                        boardString += "\n";
-                    }
-                }
-            }
-        }
-        else
-        {
-            for(int i = 0; i < cells.length; i++) {
-                for(int j = 0; j < cells[i].length; j++) {
-                    boardString += Integer.toString(i)
-                            + ","
-                            + Integer.toString(j)
-                            + ","
-                            + cells[i][j].getCellState().toString();
-                    if(!(i == 7 && j == 7)) {
-                        boardString += "\n";
-                    }
+        if(!User.isWhite) {
+            Cell[][] cells = this.cells;
+            Cell row;
+            for(int j = 0; j < 8; j++) {
+                for (int i =0; i <4; i++) {
+                    row = cells[j][i];
+                    cells[j][i] = cells[j][7-i];
+                    cells[j][i].setPos(new Coordinate(j,i));
+                    cells[j][7-i] = row;
+                    cells[j][7-i].setPos(new Coordinate(j,7-i));
                 }
             }
         }
 
+        for(int i = 0; i < cells.length; i++) {
+            for(int j = 0; j < cells[i].length; j++) {
+                boardString += Integer.toString(i)
+                        + ","
+                        + Integer.toString(j)
+                        + ","
+                        + cells[i][j].getCellState().toString();
+                if(!(i == 7 && j == 7)) {
+                    boardString += "\n";
+                }
+            }
+        }
 
         return boardString;
     }

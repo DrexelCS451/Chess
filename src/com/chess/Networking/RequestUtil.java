@@ -80,8 +80,7 @@ public class RequestUtil {
                     checkRequests(new Listener() {
                         @Override
                         public void responce(JsonElement e) {
-                            //TODO: #$
-                            if (e!= null && !e.toString().equals("\"Fail: player not requested for match\"") && e.getAsJsonArray().size() != 0) {
+                            if (e!= null && !e.getAsJsonObject().get("Status").getAsString().equals("Fail") && e.getAsJsonArray().size() != 0) {
                                 listener.responce(e);
                             }
                         }
@@ -171,8 +170,7 @@ public class RequestUtil {
                     checkAcceptedRequests(new Listener() {
                         @Override
                         public void responce(JsonElement e) {
-                            //TODO: #$
-                            if (e!= null && !e.toString().equals("\"Fail: Failed\"")) {
+                            if (e!= null && !e.getAsJsonObject().get("Status").getAsString().equals("Fail")) {
                                 listener.responce(e);
                             }
                         }

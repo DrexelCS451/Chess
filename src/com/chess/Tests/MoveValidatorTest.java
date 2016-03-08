@@ -5,6 +5,8 @@ import com.chess.Helpers.MoveValidator;
 import com.chess.Models.*;
 import junit.framework.TestCase;
 
+import java.util.ArrayList;
+
 /**
  * Created by AlexMarion on 3/5/16.
  */
@@ -426,7 +428,77 @@ public class MoveValidatorTest extends TestCase {
     }
 
     public void testIsCheckMate() throws Exception {
+        // Test isCheckMate for every piece
+        Board board = BoardHelper.CreateBoard(true);
+        Cell king = board.getCell(4, 7);
+        assertFalse(MoveValidator.isCheckMate(king, board));
 
+        board = new Board("0,0,BLACK_ROOK\n" +
+                "0,1,BLACK_PAWN\n" +
+                "0,2,EMPTY\n" +
+                "0,3,EMPTY\n" +
+                "0,4,EMPTY\n" +
+                "0,5,EMPTY\n" +
+                "0,6,WHITE_PAWN\n" +
+                "0,7,WHITE_ROOK\n" +
+                "1,0,BLACK_KNIGHT\n" +
+                "1,1,BLACK_PAWN\n" +
+                "1,2,EMPTY\n" +
+                "1,3,EMPTY\n" +
+                "1,4,EMPTY\n" +
+                "1,5,EMPTY\n" +
+                "1,6,WHITE_PAWN\n" +
+                "1,7,WHITE_KNIGHT\n" +
+                "2,0,BLACK_BISHOP\n" +
+                "2,1,BLACK_PAWN\n" +
+                "2,2,EMPTY\n" +
+                "2,3,EMPTY\n" +
+                "2,4,EMPTY\n" +
+                "2,5,EMPTY\n" +
+                "2,6,WHITE_PAWN\n" +
+                "2,7,WHITE_BISHOP\n" +
+                "3,0,EMPTY\n" +
+                "3,1,BLACK_PAWN\n" +
+                "3,2,EMPTY\n" +
+                "3,3,EMPTY\n" +
+                "3,4,EMPTY\n" +
+                "3,5,EMPTY\n" +
+                "3,6,WHITE_PAWN\n" +
+                "3,7,WHITE_QUEEN\n" +
+                "4,0,BLACK_KING\n" +
+                "4,1,EMPTY\n" +
+                "4,2,EMPTY\n" +
+                "4,3,BLACK_PAWN\n" +
+                "4,4,EMPTY\n" +
+                "4,5,EMPTY\n" +
+                "4,6,WHITE_PAWN\n" +
+                "4,7,WHITE_KING\n" +
+                "5,0,BLACK_BISHOP\n" +
+                "5,1,BLACK_PAWN\n" +
+                "5,2,EMPTY\n" +
+                "5,3,EMPTY\n" +
+                "5,4,EMPTY\n" +
+                "5,5,WHITE_PAWN\n" +
+                "5,6,EMPTY\n" +
+                "5,7,WHITE_BISHOP\n" +
+                "6,0,BLACK_KNIGHT\n" +
+                "6,1,BLACK_PAWN\n" +
+                "6,2,EMPTY\n" +
+                "6,3,EMPTY\n" +
+                "6,4,WHITE_PAWN\n" +
+                "6,5,EMPTY\n" +
+                "6,6,EMPTY\n" +
+                "6,7,WHITE_KNIGHT\n" +
+                "7,0,BLACK_ROOK\n" +
+                "7,1,BLACK_PAWN\n" +
+                "7,2,EMPTY\n" +
+                "7,3,EMPTY\n" +
+                "7,4,BLACK_QUEEN\n" +
+                "7,5,EMPTY\n" +
+                "7,6,WHITE_PAWN\n" +
+                "7,7,WHITE_ROOK\n");
+        king = board.getCell(4, 7);
+        assertTrue(MoveValidator.isCheckMate(king, board));
     }
 
     public void testIsValidMove() throws Exception {
@@ -507,7 +579,7 @@ public class MoveValidatorTest extends TestCase {
         Board board2 = new Board("0,0,BLACK_ROOK\n" +
                 "0,1,BLACK_PAWN\n" +
                 "0,2,EMPTY\n" +
-                "0,3,EMPTY\n" +
+                "0,3,BLACK_QUEEN\n" +
                 "0,4,EMPTY\n" +
                 "0,5,WHITE_KNIGHT\n" + // Moved white knight to here
                 "0,6,WHITE_PAWN\n" + // This pawn is blocked from moving twice
@@ -528,7 +600,7 @@ public class MoveValidatorTest extends TestCase {
                 "2,5,EMPTY\n" +
                 "2,6,WHITE_PAWN\n" +
                 "2,7,WHITE_BISHOP\n" +
-                "3,0,BLACK_QUEEN\n" +
+                "3,0,EMPTY\n" +
                 "3,1,BLACK_PAWN\n" +
                 "3,2,EMPTY\n" +
                 "3,3,EMPTY\n" +
@@ -573,7 +645,6 @@ public class MoveValidatorTest extends TestCase {
         assertFalse(MoveValidator.isValidMove(blockedMoveBy2, board2));
     }
 
-    // TODO: test castling
     public void testCanCastle() throws Exception {
 
         // Move leftPawn at (5,6) to (5,5)
@@ -723,6 +794,7 @@ public class MoveValidatorTest extends TestCase {
         Cell leftRook = board.getCell(7,7);
         assertTrue(MoveValidator.canCastle(board,king2, leftRook));
     }
+
     public void testKingMoves() throws Exception {
         Board board = BoardHelper.CreateBoard(true);
         Game game = new Game();
@@ -1019,7 +1091,6 @@ public class MoveValidatorTest extends TestCase {
         assertFalse(MoveValidator.isValidMove(falseForwardBy3, board));
     }
 
-    // TODO: test castling
     public void testRookMoves() throws Exception {
         Board board = BoardHelper.CreateBoard(true);
         Game game = new Game();

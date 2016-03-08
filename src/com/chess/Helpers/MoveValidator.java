@@ -10,6 +10,276 @@ import java.util.ArrayList;
 public class MoveValidator {
     public MoveValidator() {}
 
+    public static ArrayList<ChessMove> findPawnMoves(Cell pawn, Board board) {
+        ArrayList<ChessMove> moveList = new ArrayList<ChessMove>();
+        int pawnX = pawn.getPos().getX();
+        int pawnY = pawn.getPos().getY();
+
+        // If the pawn hasn't moved it can move (0, -2)
+        if(!pawn.getHasMoved()) {
+            ChessMove move = new ChessMove(pawn, board.getCell(pawnX, pawnY - 2));
+            if(MoveValidator.isValidMove(move, board)) {
+                moveList.add(move);
+            }
+        }
+
+        // Test if the pawn can move (0, -1)
+        ChessMove move = new ChessMove(pawn, board.getCell(pawnX, pawnY - 1));
+        if(isValidMove(move, board)) {
+            moveList.add(move);
+        }
+
+        // Test if the pawn can attack (-1, -1) or (+1, -1)
+        if(pawnX + 1 < 8) {
+            move = new ChessMove(pawn, board.getCell(pawnX + 1, pawnY - 1));
+            if(isValidMove(move, board)) {
+                moveList.add(move);
+            }
+        }
+        if(pawnX - 1 > -1) {
+            move = new ChessMove(pawn, board.getCell(pawnX - 1, pawnY - 1));
+            if(isValidMove(move, board)) {
+                moveList.add(move);
+            }
+        }
+
+
+        return moveList;
+    }
+
+    public static ArrayList<ChessMove> findKingMoves(Cell king, Board board) {
+        ArrayList<ChessMove> moveList = new ArrayList<ChessMove>();
+        int kingX = king.getPos().getX();
+        int kingY = king.getPos().getY();
+        ChessMove move;
+
+        // Test up, down, left, and right
+        if(kingY - 1 > -1) {
+            move = new ChessMove(king, board.getCell(kingX, kingY - 1));
+            if(isValidMove(move, board)) {
+                moveList.add(move);
+            }
+        }
+        if(kingY + 1 < 8) {
+            move = new ChessMove(king, board.getCell(kingX, kingY + 1));
+            if(isValidMove(move, board)) {
+                moveList.add(move);
+            }
+        }
+        if(kingX - 1 > -1) {
+            move = new ChessMove(king, board.getCell(kingX - 1, kingY));
+            if(isValidMove(move, board)) {
+                moveList.add(move);
+            }
+        }
+        if(kingX + 1 < 8) {
+            move = new ChessMove(king, board.getCell(kingX + 1, kingY));
+            if(isValidMove(move, board)) {
+                moveList.add(move);
+            }
+        }
+
+        // Test diagonals
+        if(kingX - 1 > -1) {
+            if(kingY - 1 > -1) {
+                move = new ChessMove(king, board.getCell(kingX - 1, kingY - 1));
+                if(isValidMove(move, board)) {
+                    moveList.add(move);
+                }
+            }
+            if(kingY + 1 < 8) {
+                move = new ChessMove(king, board.getCell(kingX - 1, kingY + 1));
+                if(isValidMove(move, board)) {
+                    moveList.add(move);
+                }
+            }
+        }
+        if(kingX + 1 < 8) {
+            if(kingY - 1 > -1) {
+                move = new ChessMove(king, board.getCell(kingX + 1, kingY - 1));
+                if(isValidMove(move, board)) {
+                    moveList.add(move);
+                }
+            }
+            if(kingY + 1 < 8) {
+                move = new ChessMove(king, board.getCell(kingX + 1, kingY + 1));
+                if(isValidMove(move, board)) {
+                    moveList.add(move);
+                }
+            }
+        }
+        return moveList;
+    }
+
+    public static ArrayList<ChessMove> findQueenMoves(Cell queen, Board board) {
+        ArrayList<ChessMove> moveList = new ArrayList<ChessMove>();
+        moveList.addAll(findRookMoves(queen, board));
+        moveList.addAll(findBishopMoves(queen, board));
+        return moveList;
+    }
+
+    public static ArrayList<ChessMove> findRookMoves(Cell rook, Board board) {
+        ArrayList<ChessMove> moveList = new ArrayList<ChessMove>();
+        int rookX = rook.getPos().getX();
+        int rookY = rook.getPos().getY();
+        ChessMove move;
+
+        // Test left moves
+        int tempRookX = rookX;
+        while(tempRookX > -1) {
+            move = new ChessMove(rook, board.getCell(tempRookX, rookY));
+            if(isValidMove(move, board)) {
+                moveList.add(move);
+            }
+            tempRookX--;
+        }
+        // Test right moves
+        tempRookX = rookX;
+        while(tempRookX < 8) {
+            move = new ChessMove(rook, board.getCell(tempRookX, rookY));
+            if(isValidMove(move, board)) {
+                moveList.add(move);
+            }
+            tempRookX++;
+        }
+
+        // Test forward moves
+        int tempRookY = rookY;
+        while(tempRookY > -1) {
+            move = new ChessMove(rook, board.getCell(rookX, tempRookY));
+            if(isValidMove(move, board)) {
+                moveList.add(move);
+            }
+            tempRookY--;
+        }
+        // Test backward moves
+        tempRookY = rookY;
+        while(tempRookY < 8) {
+            move = new ChessMove(rook, board.getCell(rookX, tempRookY));
+            if(isValidMove(move, board)) {
+                moveList.add(move);
+            }
+            tempRookY++;
+        }
+        return moveList;
+    }
+
+    public static ArrayList<ChessMove> findKnightMoves(Cell knight, Board board) {
+        ArrayList<ChessMove> moveList = new ArrayList<ChessMove>();
+        int knightX = knight.getPos().getX();
+        int knightY = knight.getPos().getY();
+        ChessMove move;
+
+        if(knightX - 1 < -1 && knightY - 2 < -1) {
+            move = new ChessMove(knight, board.getCell(knightX - 1, knightY - 2));
+            if(isValidMove(move, board)) {
+                moveList.add(move);
+            }
+        }
+        if(knightX - 1 < -1 && knightY + 2 > 8) {
+            move = new ChessMove(knight, board.getCell(knightX - 1, knightY + 2));
+            if(isValidMove(move, board)) {
+                moveList.add(move);
+            }
+        }
+        if(knightX + 1 > 8 && knightY - 2 < -1) {
+            move = new ChessMove(knight, board.getCell(knightX + 1, knightY - 2));
+            if(isValidMove(move, board)) {
+                moveList.add(move);
+            }
+        }
+        if(knightX + 1 > 8 && knightY + 2 > 8) {
+            move = new ChessMove(knight, board.getCell(knightX + 1, knightY + 2));
+            if(isValidMove(move, board)) {
+                moveList.add(move);
+            }
+        }
+
+        if(knightX - 2 < -1 && knightY - 1 < -1) {
+            move = new ChessMove(knight, board.getCell(knightX - 2, knightY - 1));
+            if(isValidMove(move, board)) {
+                moveList.add(move);
+            }
+        }
+        if(knightX - 2 < -1 && knightY + 1 > 8) {
+            move = new ChessMove(knight, board.getCell(knightX - 2, knightY + 1));
+            if(isValidMove(move, board)) {
+                moveList.add(move);
+            }
+        }
+        if(knightX + 2 > 8 && knightY - 1 < -1) {
+            move = new ChessMove(knight, board.getCell(knightX + 2, knightY - 1));
+            if(isValidMove(move, board)) {
+                moveList.add(move);
+            }
+        }
+        if(knightX + 2 > 8 && knightY + 1 > 8) {
+            move = new ChessMove(knight, board.getCell(knightX + 2, knightY + 1));
+            if(isValidMove(move, board)) {
+                moveList.add(move);
+            }
+        }
+
+        return moveList;
+    }
+
+    public static ArrayList<ChessMove> findBishopMoves(Cell bishop, Board board) {
+        ArrayList<ChessMove> moveList = new ArrayList<ChessMove>();
+        int bishopX = bishop.getPos().getX();
+        int bishopY = bishop.getPos().getY();
+        ChessMove move;
+
+        int tempBishopX = bishopX;
+        int tempBishopY = bishopY;
+
+        // Test forwardLeft diagonal
+        while(tempBishopX > -1 && tempBishopY > -1) {
+            move = new ChessMove(bishop, board.getCell(tempBishopX, tempBishopY));
+            if(isValidMove(move, board)) {
+                moveList.add(move);
+            }
+            tempBishopX--;
+            tempBishopY--;
+        }
+
+        // Test forwardRight diagonal
+        tempBishopX = bishopX;
+        tempBishopY = bishopY;
+        while(tempBishopX < 8 && tempBishopY > -1) {
+            move = new ChessMove(bishop, board.getCell(tempBishopX, tempBishopY));
+            if(isValidMove(move, board)) {
+                moveList.add(move);
+            }
+            tempBishopX++;
+            tempBishopY--;
+        }
+
+        // Test backwardLeft diagonal
+        tempBishopX = bishopX;
+        tempBishopY = bishopY;
+        while(tempBishopX > -1 && tempBishopY < 8) {
+            move = new ChessMove(bishop, board.getCell(tempBishopX, tempBishopY));
+            if(isValidMove(move, board)) {
+                moveList.add(move);
+            }
+            tempBishopX--;
+            tempBishopY++;
+        }
+
+        // Test backwardRight diagonal
+        tempBishopX = bishopX;
+        tempBishopY = bishopY;
+        while(tempBishopX < 8 && tempBishopY < 8) {
+            move = new ChessMove(bishop, board.getCell(tempBishopX, tempBishopY));
+            if(isValidMove(move, board)) {
+                moveList.add(move);
+            }
+            tempBishopX++;
+            tempBishopY++;
+        }
+        return moveList;
+    }
+
     // Castling
     // The king and the chosen rook are on the player's first rank (Y == 7) -- DONE
     // Neither the king nor the chosen rook has previously moved. -- DONE
@@ -230,15 +500,15 @@ public class MoveValidator {
 
     // The king cannot move out of check.
     // No one can move in front of him to save him.
-    public static boolean isCheckMate(Board board, Chess.Pieces king, Coordinate kingCell) {
-        if (isCheck(board, king, kingCell) && !board.savableKing(king, kingCell))
+    public static boolean isCheckMate(Cell king, Board board) {
+        if (isCheck(board, king.getCellState(), king.getPos()) && !board.savableKing(king))
             return true;
         return false;
         }
 
     // Not in check but has no legal move.
-    public static boolean isStaleMate(Board board, Chess.Pieces king, Coordinate kingCell) {
-        if (!isCheck(board, king, kingCell) && !board.savableKing(king, kingCell))
+    public static boolean isStaleMate(Cell king, Board board) {
+        if (!isCheck(board, king.getCellState(), king.getPos()) && !board.savableKing(king))
             return true;
         return false;
     }

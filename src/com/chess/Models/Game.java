@@ -93,7 +93,14 @@ public class Game {
             board.getCell(c2).setCellState(board.getCell(c1).getCellState());
             board.getCell(c1).setCellState(Chess.Pieces.EMPTY);
         }
-
+        if(board.getBoardState() == Chess.BoardState.BLACK_TURN)
+        {
+            board.setBoardState(Chess.BoardState.WHITE_TURN);
+        }
+        else if(board.getBoardState() == Chess.BoardState.WHITE_TURN)
+        {
+            board.setBoardState(Chess.BoardState.BLACK_TURN);
+        }
         return board;
     }
 

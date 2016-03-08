@@ -1,5 +1,7 @@
 package com.chess.Networking;
 
+import com.chess.Models.Board;
+import com.chess.Models.Chess;
 import com.chess.Models.NetworkModels.UserID;
 import com.chess.Models.NetworkModels.UserName;
 import com.chess.Models.User;
@@ -98,6 +100,52 @@ public class RequestUtil {
         checkingRequests = false;
     }
 
+
+    public static void makeMove(int gameid, Board b)
+    {
+        makePostRequest("", "game?gameId=" + gameid + "&board=" + b.toString() + "&boardState=" + b.getBoardState().name(), new Listener() {
+            @Override
+            public void responce(JsonElement e) {
+
+            }
+        });
+    }
+
+
+    private static boolean checkingForMove = false;
+    public static void startCheckingForMoves(final Listener listener)
+    {
+        checkingForMove = true;
+        new Thread(new Runnable(){
+            @Override
+            public void run() {
+                while (checkingForMove) {
+                    checkAcceptedRequests(new Listener() {
+                        @Override
+                        public void responce(JsonElement e) {
+                            if((e.getAsJsonObject().get("state").getAsInt() == Chess.BoardState.BLACK_TURN.ordinal() && !User.isWhite) || (e.getAsJsonObject().get("state").getAsInt() == Chess.BoardState.WHITE_TURN.ordinal() && User.isWhite))
+                            {
+                                listener.responce(e);
+                            }
+                        }
+                    });
+                    try {
+                        Thread.sleep(3000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
+
+    }
+
+    public static void stopCheckingForMoves()
+    {
+        checkingForMove = false;
+    }
+
+
     public static void leaveLobby()
     {
         stopCheckingForRequests();
@@ -112,8 +160,6 @@ public class RequestUtil {
     }
 
 
-
-
     private static boolean checkingAcceptedRequests = false;
     public static void startCheckingForAcceptedRequests(final Listener listener)
     {
@@ -125,7 +171,7 @@ public class RequestUtil {
                     checkAcceptedRequests(new Listener() {
                         @Override
                         public void responce(JsonElement e) {
-                            if (e!= null && !e.toString().equals("\"Fail: Failed\"") && e.getAsJsonArray().size() != 0) {
+                            if (e!= null && !e.toString().equals("\"Fail: Failed\"")) {
                                 listener.responce(e);
                             }
                         }

@@ -7,6 +7,8 @@ import com.chess.Helpers.MoveValidator;
 import com.chess.Layouts.ChessView;
 import com.chess.Layouts.MainMenuView;
 import com.chess.Models.*;
+import com.chess.Networking.Listener;
+import com.chess.Networking.RequestUtil;
 import com.google.gson.JsonElement;
 
 import javax.swing.*;
@@ -21,13 +23,11 @@ public class ChessScreenController {
     public ChessScreenController(JsonElement e)
     {
         this.e = e;
-        isTurn = User.isWhite;
     }
 
     Coordinate click1;
     Coordinate click2;
     Board b;
-    boolean isTurn = true;
     public void createView(final JFrame frame)
     {
         ActionListener forfeit = new ActionListener() {
@@ -48,12 +48,23 @@ public class ChessScreenController {
         ActionListener b1 = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                b = g.makeMove(new ChessMove(b.getCell(click1),b.getCell(click2)));
-                view.setBoard(b);
-                view.resetCellColor();
-                view.remove2Buttons();
-                click1 = null;
-                click2 = null;
+                    b = g.makeMove(new ChessMove(b.getCell(click1),b.getCell(click2)));
+                    view.setBoard(b);
+                    view.resetCellColor();
+                    view.remove2Buttons();
+                    click1 = null;
+                    click2 = null;
+                    RequestUtil.makeMove(e.getAsJsonObject().get("id").getAsInt(), b);
+                    RequestUtil.startCheckingForMoves(new Listener() {
+                        @Override
+                        public void responce(JsonElement e) {
+                            b = new Board(e.getAsJsonObject().get("board").getAsString());
+                            view.setBoard(b);
+                            frame.setContentPane(view.getView());
+                            frame.revalidate();
+                            RequestUtil.stopCheckingForMoves();
+                        }
+                    });
             }
         };
 
@@ -67,36 +78,49 @@ public class ChessScreenController {
             }
         };
 
-        view.setB1Listener(b1);
+        if (!((g.getBoard().getBoardState() == Chess.BoardState.BLACK_TURN && !User.isWhite) || (g.getBoard().getBoardState() == Chess.BoardState.WHITE_TURN && User.isWhite))) {
+            RequestUtil.startCheckingForMoves(new Listener() {
+                @Override
+                public void responce(JsonElement e) {
+                    b = new Board(e.getAsJsonObject().get("board").getAsString());
+                    view.setBoard(b);
+                    frame.setContentPane(view.getView());
+                    frame.revalidate();
+                    RequestUtil.stopCheckingForMoves();
+                }
+            });
+        }
+
+            view.setB1Listener(b1);
         view.setB2Listener(b2);
         view.setForfeitListener(forfeit);
         view.setCellClickListner(new CellListener() {
-            @Override
-            public void actionPerformed(int i, int j) {
-               if(BoardHelper.SquareIsUsers(i,j,b))
-               {
-                   view.resetCellColor();
-                   click1 = new Coordinate(i,j);
-                   click2 = null;
-                   view.cellClicked(i,j);
-                   view.remove2Buttons();
-               }
-               else if(click1 != null && MoveValidator.isValidMove(new ChessMove(b.getCell(click1.getX(), click1.getY()),b.getCell(i, j)),b))
-               {
-                   view.resetCellColor();
-                   click2 = new Coordinate(i,j);
-                   view.cellClicked(click1.getX(),click1.getY());
-                   view.cellClicked(i,j);
-                   view.show2Buttons("Confirm","Cancel");
-               }
+             @Override
+             public void actionPerformed(int i, int j) {
+                 if ((g.getBoard().getBoardState() == Chess.BoardState.BLACK_TURN && !User.isWhite) || (g.getBoard().getBoardState() == Chess.BoardState.WHITE_TURN && User.isWhite)) {
+
+                     if (BoardHelper.SquareIsUsers(i, j, b)) {
+                         view.resetCellColor();
+                         click1 = new Coordinate(i, j);
+                         click2 = null;
+                         view.cellClicked(i, j);
+                         view.remove2Buttons();
+                     } else if (click1 != null && MoveValidator.isValidMove(new ChessMove(b.getCell(click1.getX(), click1.getY()), b.getCell(i, j)), b)) {
+                         view.resetCellColor();
+                         click2 = new Coordinate(i, j);
+                         view.cellClicked(click1.getX(), click1.getY());
+                         view.cellClicked(i, j);
+                         view.show2Buttons("Confirm", "Cancel");
+                     }
+                 }
+
+             }
+         }
+        );
 
 
-            }
-        });
-
-
-        view.setBoard(b);
-        frame.setContentPane(view.getView());
-        frame.revalidate();
+            view.setBoard(b);
+            frame.setContentPane(view.getView());
+            frame.revalidate();
+        }
     }
-}

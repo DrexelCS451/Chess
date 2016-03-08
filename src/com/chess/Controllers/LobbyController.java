@@ -77,6 +77,7 @@ public class LobbyController {
                         String n = r.getAsJsonObject().get("player1Name").getAsString();
                         int reply = JOptionPane.showConfirmDialog(null, n + " sent a game request. Would you like to accept?", "Accept?", JOptionPane.YES_NO_OPTION);
                         if (reply == JOptionPane.YES_OPTION) {
+                            User.isWhite = false;
                             RequestUtil.replyRequest(Integer.toString(e.getAsJsonArray().get(0).getAsJsonObject().get("Id").getAsInt()),true, new Listener() {
                                 @Override
                                 public void responce(JsonElement e) {

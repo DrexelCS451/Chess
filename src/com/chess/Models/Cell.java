@@ -23,6 +23,10 @@ public class Cell {
         return pos;
     }
 
+    public void setPos(Coordinate pos) {
+        this.pos = pos;
+    }
+
     public Chess.Pieces getCellState() {
         return cellState;
     }

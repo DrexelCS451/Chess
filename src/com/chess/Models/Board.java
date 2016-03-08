@@ -45,6 +45,26 @@ public class Board {
                 cells[i][j] = new Cell(new Coordinate(x, y), Chess.Pieces.valueOf(cellLists[index][2]));
             }
         }
+
+
+        if(!User.isWhite)
+        {
+            Cell row;
+
+            for(int j = 0; j < 8; j++)
+            {
+                for (int i =0; i <4; i++)
+                {
+                    row = cells[j][i];
+                    cells[j][i] = cells[j][7-i];
+                    cells[j][i].setPos(new Coordinate(j,i));
+                    cells[j][7-i] = row;
+                    cells[j][7-i].setPos(new Coordinate(j,7-i));
+                }
+            }
+
+
+        }
     }
 
     public Cell getCell(int x, int y)

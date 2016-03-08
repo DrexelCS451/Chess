@@ -57,14 +57,14 @@ public class LobbyController {
             }
         });
 
-        
+
         final Set<Integer> seenRequests = new HashSet<>();
         RequestUtil.startCheckingForRequests(new Listener() {
             @Override
             public void responce(JsonElement e) {
 
                 for (JsonElement r : e.getAsJsonArray()) {
-                    if (!seenRequests.contains(r.getAsJsonObject().get("id").getAsInt())) {
+                    if (!seenRequests.contains(r.getAsJsonObject().get("Id").getAsInt())) {
                         String n = r.getAsJsonObject().get("player1Name").getAsString();
                         int reply = JOptionPane.showConfirmDialog(null, n + " sent a game request. Would you like to accept?", "Accept?", JOptionPane.YES_NO_OPTION);
                         if (reply == JOptionPane.YES_OPTION) {

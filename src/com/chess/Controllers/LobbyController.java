@@ -74,27 +74,28 @@ public class LobbyController {
             public void responce(JsonElement e) {
                 for (JsonElement r : e.getAsJsonArray()) {
                     if (!seenRequests.contains(r.getAsJsonObject().get("Id").getAsInt())) {
+                        seenRequests.add(r.getAsJsonObject().get("Id").getAsInt());
                         String n = r.getAsJsonObject().get("player1Name").getAsString();
                         int reply = JOptionPane.showConfirmDialog(null, n + " sent a game request. Would you like to accept?", "Accept?", JOptionPane.YES_NO_OPTION);
                         if (reply == JOptionPane.YES_OPTION) {
                             User.isWhite = false;
                             RequestUtil.replyRequest(Integer.toString(e.getAsJsonArray().get(0).getAsJsonObject().get("Id").getAsInt()),true, new Listener() {
                                 @Override
-                                public void responce(JsonElement e) {
+                                public void responce(JsonElement el) {
                                     //start game
                                     RequestUtil.leaveLobby();
-                                    ChessScreenController c = new ChessScreenController(e);
+                                    ChessScreenController c = new ChessScreenController(el);
                                     c.createView(frame);
                                 }
                             });
                             break;
                         } else {
-                            RequestUtil.replyRequest(Integer.toString(e.getAsJsonArray().get(0).getAsJsonObject().get("Id").getAsInt()),false, new Listener() {
+                            RequestUtil.replyRequest(Integer.toString(e.getAsJsonArray().get(0).getAsJsonObject().get("Id").getAsInt()), false, new Listener() {
                                 @Override
                                 public void responce(JsonElement e) {
                                 }
                             });
-                            seenRequests.add(r.getAsJsonObject().get("Id").getAsInt());
+
                         }
                     }
                 }

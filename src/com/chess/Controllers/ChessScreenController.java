@@ -6,10 +6,8 @@ import com.chess.Helpers.ImageHelper;
 import com.chess.Helpers.MoveValidator;
 import com.chess.Layouts.ChessView;
 import com.chess.Layouts.MainMenuView;
-import com.chess.Models.Board;
-import com.chess.Models.ChessMove;
-import com.chess.Models.Coordinate;
-import com.chess.Models.Game;
+import com.chess.Models.*;
+import com.google.gson.JsonElement;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -19,15 +17,17 @@ import java.awt.event.ActionListener;
  * Created by tomer on 2/10/16.
  */
 public class ChessScreenController {
-    public ChessScreenController()
+    JsonElement e;
+    public ChessScreenController(JsonElement e)
     {
-
+        this.e = e;
+        isTurn = User.isWhite;
     }
 
     Coordinate click1;
     Coordinate click2;
     Board b;
-
+    boolean isTurn = true;
     public void createView(final JFrame frame)
     {
         ActionListener forfeit = new ActionListener() {
@@ -38,7 +38,6 @@ public class ChessScreenController {
                 if (reply == JOptionPane.YES_OPTION) {
                     new MainMenuController().createView(frame);
                 }
-
             }
         };
 

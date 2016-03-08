@@ -122,7 +122,7 @@ public class RequestUtil {
                     checkAcceptedRequests(new Listener() {
                         @Override
                         public void responce(JsonElement e) {
-                            if((e.getAsJsonObject().get("state").getAsString().equals(Chess.BoardState.BLACK_TURN.name()) && !User.isWhite) || (e.getAsJsonObject().get("state").getAsString().equals(Chess.BoardState.WHITE_TURN.name()) && User.isWhite))
+                            if(e!= null && ((e.getAsJsonObject().get("state").getAsString().equals(Chess.BoardState.BLACK_TURN.name()) && !User.isWhite) || (e.getAsJsonObject().get("state").getAsString().equals(Chess.BoardState.WHITE_TURN.name()) && User.isWhite)))
                             {
                                 listener.responce(e);
                             }

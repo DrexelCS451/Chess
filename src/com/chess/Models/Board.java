@@ -50,7 +50,6 @@ public class Board {
         if(!User.isWhite)
         {
             Cell row;
-
             for(int j = 0; j < 8; j++)
             {
                 for (int i =0; i <4; i++)
@@ -62,8 +61,6 @@ public class Board {
                     cells[j][7-i].setPos(new Coordinate(j,7-i));
                 }
             }
-
-
         }
     }
 
@@ -92,19 +89,41 @@ public class Board {
     }
 
     public String toString() {
+
+
         String boardString = "";
-        for(int i = 0; i < cells.length; i++) {
-            for(int j = 0; j < cells[i].length; j++) {
-                boardString += Integer.toString(i)
-                        + ","
-                        + Integer.toString(j)
-                        + ","
-                        + cells[i][j].getCellState().toString();
-                if(!(i == 7 && j == 7)) {
-                    boardString += "\n";
+        if(!User.isWhite)
+        {
+            for(int i = 0; i < cells.length; i++) {
+                for(int j = cells[i].length -1 ; j >=0 ; j--) {
+                    boardString += Integer.toString(i)
+                            + ","
+                            + Integer.toString(j)
+                            + ","
+                            + cells[i][j].getCellState().toString();
+                    if(!(i == 7 && j == 0)) {
+                        boardString += "\n";
+                    }
                 }
             }
         }
+        else
+        {
+            for(int i = 0; i < cells.length; i++) {
+                for(int j = 0; j < cells[i].length; j++) {
+                    boardString += Integer.toString(i)
+                            + ","
+                            + Integer.toString(j)
+                            + ","
+                            + cells[i][j].getCellState().toString();
+                    if(!(i == 7 && j == 7)) {
+                        boardString += "\n";
+                    }
+                }
+            }
+        }
+
+
         return boardString;
     }
 

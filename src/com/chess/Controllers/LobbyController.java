@@ -43,6 +43,15 @@ public class LobbyController {
             }
         });
 
+        v.setLeaveRequestListner(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                RequestUtil.leaveLobby();
+                MainMenuController c = new MainMenuController();
+                c.createView(frame);
+            }
+        });
+
         v.setSendRequestListner(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -62,31 +71,35 @@ public class LobbyController {
         RequestUtil.startCheckingForRequests(new Listener() {
             @Override
             public void responce(JsonElement e) {
-
                 for (JsonElement r : e.getAsJsonArray()) {
                     if (!seenRequests.contains(r.getAsJsonObject().get("Id").getAsInt())) {
                         String n = r.getAsJsonObject().get("player1Name").getAsString();
                         int reply = JOptionPane.showConfirmDialog(null, n + " sent a game request. Would you like to accept?", "Accept?", JOptionPane.YES_NO_OPTION);
                         if (reply == JOptionPane.YES_OPTION) {
                             RequestUtil.stopCheckingForRequests();
-                            RequestUtil.replyRequest(Integer.toString(e.getAsJsonArray().get(0).getAsJsonObject().get("player1").getAsInt()), new Listener() {
+                            RequestUtil.replyRequest(Integer.toString(e.getAsJsonArray().get(0).getAsJsonObject().get("Id").getAsInt()),true, new Listener() {
                                 @Override
                                 public void responce(JsonElement e) {
                                     //start game
+                                    RequestUtil.leaveLobby();
                                     ChessScreenController c = new ChessScreenController(e);
                                     c.createView(frame);
                                 }
                             });
                             break;
                         } else {
-                            seenRequests.add(r.getAsJsonObject().get("id").getAsInt());
+                            RequestUtil.replyRequest(Integer.toString(e.getAsJsonArray().get(0).getAsJsonObject().get("Id").getAsInt()),false, new Listener() {
+                                @Override
+                                public void responce(JsonElement e) {
+                                }
+                            });
+                            seenRequests.add(r.getAsJsonObject().get("Id").getAsInt());
                         }
                     }
                 }
 
             }
         });
-
 
         RequestUtil.startCheckingForAcceptedRequests(new Listener() {
             @Override

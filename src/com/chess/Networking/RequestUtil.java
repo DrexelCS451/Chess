@@ -63,40 +63,50 @@ public class RequestUtil {
         makePostRequest("", "request?userId=" + getUserId() + "&opponentId=" + oppId, listener);
     }
 
-    public static void replyRequest(String oppId, Listener listener) {
-        makePutRequest("", "request?userId=" + getUserId() + "&opponentId=" + oppId, listener);
+    public static void replyRequest(String repId, boolean accecpt, Listener listener) {
+        makePutRequest("", "request?requestId=" + repId + "&accept=" + ((accecpt)?"true":"false"), listener);
     }
 
     private static boolean checkingRequests = false;
     public static void startCheckingForRequests(final Listener listener)
     {
         checkingRequests = true;
-        new Runnable(){
+        new Thread(new Runnable(){
             @Override
             public void run() {
                 while (checkingRequests) {
                     checkRequests(new Listener() {
                         @Override
                         public void responce(JsonElement e) {
-                            if (e.getAsJsonArray().size() != 0) {
+                            if (e!= null && !e.toString().equals("\"Fail: player not requested for match\"") && e.getAsJsonArray().size() != 0) {
                                 listener.responce(e);
                             }
                         }
                     });
                     try {
-                        Thread.sleep(3);
+                        Thread.sleep(3000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                 }
             }
-        }.run();
+        }).start();
 
     }
 
     public static void stopCheckingForRequests()
     {
         checkingRequests = false;
+    }
+
+    public static void leaveLobby()
+    {
+        makeDeleteRequest("lobby?userId=" + getUserId(), new Listener() {
+            @Override
+            public void responce(JsonElement e) {
+
+            }
+        });
     }
 
 
@@ -106,26 +116,26 @@ public class RequestUtil {
     public static void startCheckingForAcceptedRequests(final Listener listener)
     {
         checkingAcceptedRequests = true;
-        new Runnable(){
+        new Thread(new Runnable(){
             @Override
             public void run() {
                 while (checkingAcceptedRequests) {
                     checkAcceptedRequests(new Listener() {
                         @Override
                         public void responce(JsonElement e) {
-                            if (e.getAsJsonArray().size() != 0) {
+                            if (e!= null && !e.toString().equals("\"Fail: Failed\"") && e.getAsJsonArray().size() != 0) {
                                 listener.responce(e);
                             }
                         }
                     });
                     try {
-                        Thread.sleep(3);
+                        Thread.sleep(3000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                 }
             }
-        }.run();
+        }).start();
 
     }
 
@@ -140,7 +150,7 @@ public class RequestUtil {
 
     public static void makePostRequest(final String json,final String urlEnd, final Listener listener)
     {
-        new Runnable(){
+        new Thread(new Runnable(){
             @Override
             public void run() {
                 try{
@@ -163,13 +173,13 @@ public class RequestUtil {
                     listener.responce(null);
                 }
             }
-        }.run();
+        }).start();
     }
 
 
     public static void makePutRequest(final String json,final String urlEnd, final Listener listener)
     {
-        new Runnable(){
+        new Thread(new Runnable(){
             @Override
             public void run() {
                 try{
@@ -192,11 +202,11 @@ public class RequestUtil {
                     listener.responce(null);
                 }
             }
-        }.run();
+        }).start();
     }
     public static void makeGetRequest(final String urlEnd, final Listener listener)
     {
-        new Runnable(){
+        new Thread(new Runnable(){
             @Override
             public void run() {
                 try{
@@ -211,7 +221,27 @@ public class RequestUtil {
                     listener.responce(null);
                 }
             }
-        }.run();
+        }).start();
+    }
+
+    public static void makeDeleteRequest(final String urlEnd, final Listener listener)
+    {
+        new Thread(new Runnable(){
+            @Override
+            public void run() {
+                try{
+                    URL url = new URL(baseUrl + urlEnd);
+                    HttpURLConnection request = (HttpURLConnection) url.openConnection();
+                    request.setRequestMethod("DELETE");
+                    request.connect();
+                    JsonParser jp = new JsonParser();
+                    JsonElement root = jp.parse(new InputStreamReader((InputStream) request.getContent()));
+                    listener.responce(root);
+                }catch (Exception e){
+                    listener.responce(null);
+                }
+            }
+        }).start();
     }
 
 }

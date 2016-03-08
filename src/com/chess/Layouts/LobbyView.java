@@ -21,7 +21,7 @@ public class LobbyView {
     JPanel p;
     JList list;
     int selectedUser = -1;
-    Button b;
+    Button b,b1;
     JsonArray users;
     public LobbyView()
     {
@@ -38,6 +38,9 @@ public class LobbyView {
         b = new Button("Send Request");
         p.add(list);
         p.add(b);
+
+        b1 = new Button("Leave Lobby");
+        p.add(b1);
     }
 
     public void setSendRequestListner(ActionListener listner)
@@ -45,6 +48,10 @@ public class LobbyView {
         b.addActionListener(listner);
     }
 
+    public void setLeaveRequestListner(ActionListener listner)
+    {
+        b1.addActionListener(listner);
+    }
 
     public int getSelectedUserId()
     {

@@ -79,14 +79,15 @@ public class RequestUtil {
                 while (checkingRequests) {
                     checkRequests(new Listener() {
                         @Override
-                        public void responce(JsonElement e) {if (e!= null && e.isJsonArray() && e.getAsJsonArray().size() != 0) {
+                        public void responce(JsonElement e) {
+                            if (e!= null && e.isJsonArray() && e.getAsJsonArray().size() != 0) {
                                 listener.responce(e);
                             }
                         }
                     });
                     try {
                         Thread.sleep(3000);
-                    } catch (InterruptedException e) {
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
@@ -169,14 +170,14 @@ public class RequestUtil {
                     checkAcceptedRequests(new Listener() {
                         @Override
                         public void responce(JsonElement e) {
-                            if (e!= null && !e.getAsJsonObject().has("Status")) {
+                            if (e!= null && !e.getAsJsonObject().has("status")) {
                                 listener.responce(e);
                             }
                         }
                     });
                     try {
                         Thread.sleep(3000);
-                    } catch (InterruptedException e) {
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }

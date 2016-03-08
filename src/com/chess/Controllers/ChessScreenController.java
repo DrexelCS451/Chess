@@ -60,7 +60,7 @@ public class ChessScreenController {
                             RequestUtil.startCheckingForMoves(new Listener() {
                                 @Override
                                 public void responce(JsonElement e) {
-                                    b = new Board(e.getAsJsonObject().get("board").getAsString());
+                                    b = new Board(e.getAsJsonObject().get("encodedGameBoard").getAsString());
                                     b.setBoardState(Chess.BoardState.valueOf(e.getAsJsonObject().get("state").getAsString()));
                                     g.setBoard(b);
                                     view.setBoard(b);

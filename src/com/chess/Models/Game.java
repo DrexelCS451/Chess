@@ -105,7 +105,7 @@ public class Game {
     }
 
     private void initBoard() {
-        board = BoardHelper.CreateBoard(true);
+        board = BoardHelper.CreateBoard(User.isWhite);
     }
 
     public void endGame() {}

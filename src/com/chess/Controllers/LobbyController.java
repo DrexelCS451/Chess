@@ -106,6 +106,7 @@ public class LobbyController {
         RequestUtil.startCheckingForAcceptedRequests(new Listener() {
             @Override
             public void responce(JsonElement e) {
+                RequestUtil.leaveLobby();
                 ChessScreenController c = new ChessScreenController(e);
                 c.createView(frame);
             }

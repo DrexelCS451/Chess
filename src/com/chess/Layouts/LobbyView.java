@@ -10,6 +10,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Vector;
 
@@ -49,13 +50,15 @@ public class LobbyView {
     {
         if(selectedUser != -1)
         {
-            return users.get(selectedUser).getAsJsonObject().get("userId").getAsInt();
+            return ids.get(selectedUser);
         }
         else
         {
             return -1;
         }
     }
+
+    ArrayList<Integer> ids = new ArrayList<Integer>();
 
     public void setList(JsonArray users)
     {
@@ -67,6 +70,7 @@ public class LobbyView {
             if(!Integer.toString((e.getAsJsonObject().get("userId").getAsInt())).equals(RequestUtil.getUserId()))
             {
                 names.add(e.getAsJsonObject().get("username").getAsString());
+                ids.add(e.getAsJsonObject().get("userId").getAsInt());
             }
         }
         list.setListData(names);

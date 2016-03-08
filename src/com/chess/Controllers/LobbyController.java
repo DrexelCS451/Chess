@@ -43,6 +43,21 @@ public class LobbyController {
             }
         });
 
+        v.setSendRequestListner(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                if (v.getSelectedUserId() != -1) {
+                    RequestUtil.sendRequest(Integer.toString(v.getSelectedUserId()), new Listener() {
+                        @Override
+                        public void responce(JsonElement e) {
+
+                        }
+                    });
+                }
+            }
+        });
+
+        
         final Set<Integer> seenRequests = new HashSet<>();
         RequestUtil.startCheckingForRequests(new Listener() {
             @Override
@@ -81,18 +96,6 @@ public class LobbyController {
             }
         });
 
-        v.setSendRequestListner(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                if (v.getSelectedUserId() != -1) {
-                    RequestUtil.sendRequest(Integer.toString(v.getSelectedUserId()), new Listener() {
-                        @Override
-                        public void responce(JsonElement e) {
 
-                        }
-                    });
-                }
-            }
-        });
     }
 }

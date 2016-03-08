@@ -96,6 +96,7 @@ public class MainMenuController {
             RequestUtil.lookupUser(s, new Listener() {
                 @Override
                 public void responce(JsonElement e) {
+                    //TODO: #$
                     if(e.getAsJsonObject().get("status").getAsBoolean())
                     {
                         JOptionPane.showMessageDialog(frame, "Error: Username already taken.");

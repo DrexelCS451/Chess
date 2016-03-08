@@ -40,7 +40,7 @@ public class BoardTest extends TestCase {
 
     public void testGetBoardState() throws Exception {
         Board board = BoardHelper.CreateBoard(true);
-        assertTrue(board.getBoardState() == null);
+        assertTrue(board.getBoardState() != null);
         assertFalse(board.getBoardState() == Chess.BoardState.BLACK_TURN);
     }
 

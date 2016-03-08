@@ -79,8 +79,7 @@ public class RequestUtil {
                 while (checkingRequests) {
                     checkRequests(new Listener() {
                         @Override
-                        public void responce(JsonElement e) {
-                            if (e!= null && !e.getAsJsonObject().get("Status").getAsString().equals("Fail") && e.getAsJsonArray().size() != 0) {
+                        public void responce(JsonElement e) {if (e!= null && e.isJsonArray() && e.getAsJsonArray().size() != 0) {
                                 listener.responce(e);
                             }
                         }
@@ -170,7 +169,7 @@ public class RequestUtil {
                     checkAcceptedRequests(new Listener() {
                         @Override
                         public void responce(JsonElement e) {
-                            if (e!= null && !e.getAsJsonObject().get("Status").getAsString().equals("Fail")) {
+                            if (e!= null && !e.getAsJsonObject().has("Status")) {
                                 listener.responce(e);
                             }
                         }

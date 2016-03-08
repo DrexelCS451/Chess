@@ -123,7 +123,7 @@ public class RequestUtil {
                     checkAcceptedRequests(new Listener() {
                         @Override
                         public void responce(JsonElement e) {
-                            if((e.getAsJsonObject().get("state").getAsInt() == Chess.BoardState.BLACK_TURN.ordinal() && !User.isWhite) || (e.getAsJsonObject().get("state").getAsInt() == Chess.BoardState.WHITE_TURN.ordinal() && User.isWhite))
+                            if((e.getAsJsonObject().get("state").getAsString().equals(Chess.BoardState.BLACK_TURN.name()) && !User.isWhite) || (e.getAsJsonObject().get("state").getAsString().equals(Chess.BoardState.WHITE_TURN.name()) && User.isWhite))
                             {
                                 listener.responce(e);
                             }

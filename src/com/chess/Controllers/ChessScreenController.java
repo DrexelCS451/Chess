@@ -78,7 +78,8 @@ public class ChessScreenController {
             }
         };
 
-        if (!((g.getBoard().getBoardState() == Chess.BoardState.BLACK_TURN && !User.isWhite) || (g.getBoard().getBoardState() == Chess.BoardState.WHITE_TURN && User.isWhite))) {
+        if(!((e.getAsJsonObject().get("state").getAsString().equals(Chess.BoardState.BLACK_TURN.name()) && !User.isWhite) || (e.getAsJsonObject().get("state").getAsString().equals(Chess.BoardState.WHITE_TURN.name()) && User.isWhite)))
+        {
             RequestUtil.startCheckingForMoves(new Listener() {
                 @Override
                 public void responce(JsonElement e) {

@@ -64,7 +64,7 @@ public class RequestUtil {
     }
 
     public static void replyRequest(String repId, boolean accecpt, Listener listener) {
-        makePutRequest("", "request?requestId=" + repId + "&accept=" + ((accecpt)?"true":"false"), listener);
+        makePutRequest("", "request?requestId=" + repId + "&accept=" + ((accecpt) ? "true" : "false"), listener);
     }
 
     private static boolean checkingRequests = false;
@@ -84,14 +84,13 @@ public class RequestUtil {
                         }
                     });
                     try {
-                        Thread.sleep(300000);
+                        Thread.sleep(3000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                 }
             }
         }).start();
-
     }
 
     public static void stopCheckingForRequests()
@@ -101,6 +100,9 @@ public class RequestUtil {
 
     public static void leaveLobby()
     {
+        stopCheckingForRequests();
+        stopCheckingForAcceptedRequests();
+        stopRefreshingLobby();
         makeDeleteRequest("lobby?userId=" + getUserId(), new Listener() {
             @Override
             public void responce(JsonElement e) {
@@ -144,6 +146,33 @@ public class RequestUtil {
         checkingAcceptedRequests = false;
     }
 
+
+
+
+    private static boolean refreshingLobby = false;
+    public static void startRefreshingLobby(final Listener listener)
+    {
+        refreshingLobby = true;
+        new Thread(new Runnable(){
+            @Override
+            public void run() {
+                while (refreshingLobby) {
+                    getLobby(listener);
+                    try {
+                        Thread.sleep(3000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
+
+    }
+
+    public static void stopRefreshingLobby()
+    {
+        refreshingLobby = false;
+    }
 
 
 

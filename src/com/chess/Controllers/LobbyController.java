@@ -35,7 +35,7 @@ public class LobbyController {
             }
         });
 
-        RequestUtil.getLobby(new Listener() {
+        RequestUtil.startRefreshingLobby(new Listener() {
             @Override
             public void responce(JsonElement e) {
                 JsonArray a = e.getAsJsonArray();
@@ -47,6 +47,7 @@ public class LobbyController {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 RequestUtil.leaveLobby();
+
                 MainMenuController c = new MainMenuController();
                 c.createView(frame);
             }
@@ -76,7 +77,6 @@ public class LobbyController {
                         String n = r.getAsJsonObject().get("player1Name").getAsString();
                         int reply = JOptionPane.showConfirmDialog(null, n + " sent a game request. Would you like to accept?", "Accept?", JOptionPane.YES_NO_OPTION);
                         if (reply == JOptionPane.YES_OPTION) {
-                            RequestUtil.stopCheckingForRequests();
                             RequestUtil.replyRequest(Integer.toString(e.getAsJsonArray().get(0).getAsJsonObject().get("Id").getAsInt()),true, new Listener() {
                                 @Override
                                 public void responce(JsonElement e) {

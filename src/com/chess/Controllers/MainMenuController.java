@@ -1,6 +1,9 @@
 package com.chess.Controllers;
 
 import com.chess.Layouts.MainMenuView;
+import com.chess.Models.User;
+import com.chess.Networking.Listener;
+import com.chess.Networking.RequestUtil;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -14,6 +17,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * Created by tomer on 2/8/16.
@@ -30,8 +34,7 @@ public class MainMenuController {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 checkFirstUse(frame);
-                ChessScreenController c = new ChessScreenController();
-                c.createView(frame);
+
             }
         };
 
@@ -54,15 +57,31 @@ public class MainMenuController {
         frame.revalidate();
     }
 
-    private boolean checkFirstUse(JFrame frame)
+    private boolean checkFirstUse(final JFrame frame)
     {
-        File varTmpDir = new File("user");
+        File varTmpDir = new File("user.txt");
         if(varTmpDir.exists())
         {
+            try{
+                User u = new User();
+                Scanner scanner = new Scanner(varTmpDir);
+                u.id = scanner.nextLine();
+                scanner.close();
+                RequestUtil.joinLobby(new Listener() {
+                    @Override
+                    public void responce(JsonElement e) {
+
+                    }
+                });
+                LobbyController c = new LobbyController(u);
+                c.createView(frame);
+            }catch (Exception e){}
+
+
             return false;
         }
 
-        String s = (String)JOptionPane.showInputDialog(
+        final String s = (String)JOptionPane.showInputDialog(
                 frame,
                 "Enter new Username",
                 "Username",
@@ -70,6 +89,45 @@ public class MainMenuController {
                 null,
                 null,
                 "");
+        if(s!=null && !s.isEmpty())
+        {
+            RequestUtil.lookupUser(s, new Listener() {
+                @Override
+                public void responce(JsonElement e) {
+                    if(e.getAsJsonObject().get("status").getAsBoolean())
+                    {
+                        JOptionPane.showMessageDialog(frame, "Error: Username already taken.");
+                        checkFirstUse(frame);
+                    }
+                    else
+                    {
+                        RequestUtil.CreateUser(s, new Listener() {
+                            @Override
+                            public void responce(JsonElement e) {
+                                try{
+                                    PrintWriter writer = new PrintWriter("user.txt", "UTF-8");
+                                    writer.println(Integer.toString(e.getAsJsonObject().get("userId").getAsInt()));
+                                    writer.close();
+                                    User u = new User();
+                                    u.id =Integer.toString(e.getAsJsonObject().get("userId").getAsInt());
+                                    RequestUtil.joinLobby(new Listener() {
+                                        @Override
+                                        public void responce(JsonElement e) {
+
+                                        }
+                                    });
+                                    LobbyController c = new LobbyController(u);
+                                    c.createView(frame);
+                                }catch (Exception e1){}
+                            }
+                        });
+
+
+                    }
+                }
+            });
+
+        }
 
         return true;
     }

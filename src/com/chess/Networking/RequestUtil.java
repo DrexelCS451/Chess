@@ -84,7 +84,7 @@ public class RequestUtil {
                         }
                     });
                     try {
-                        Thread.sleep(3000);
+                        Thread.sleep(300000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }

@@ -1,5 +1,6 @@
 package com.chess;
 import com.chess.Controllers.MainMenuController;
+import com.chess.Networking.RequestUtil;
 
 import javax.swing.*;
 import java.awt.*;
@@ -29,5 +30,6 @@ public class Main {
             }
         });*/
         createAndShowGUI();
+
     }
 }

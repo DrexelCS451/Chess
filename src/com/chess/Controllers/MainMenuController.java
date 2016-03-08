@@ -59,6 +59,14 @@ public class MainMenuController {
 
     private boolean checkFirstUse(final JFrame frame)
     {
+        Runtime.getRuntime().addShutdownHook(new Thread() {
+            @Override
+            public void run() {
+                RequestUtil.leaveLobby();
+            }
+        });
+
+
         File varTmpDir = new File("user.txt");
         if(varTmpDir.exists())
         {

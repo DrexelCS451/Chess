@@ -499,6 +499,71 @@ public class MoveValidatorTest extends TestCase {
                 "7,7,WHITE_ROOK\n");
         king = board.getCell(4, 7);
         assertTrue(MoveValidator.isCheckMate(king, board));
+
+        board = new Board("0,0,EMPTY\n" +
+                "0,1,EMPTY\n" +
+                "0,2,EMPTY\n" +
+                "0,3,EMPTY\n" +
+                "0,4,EMPTY\n" +
+                "0,5,EMPTY\n" +
+                "0,6,EMPTY\n" +
+                "0,7,EMPTY\n" +
+                "1,0,EMPTY\n" +
+                "1,1,EMPTY\n" +
+                "1,2,EMPTY\n" +
+                "1,3,EMPTY\n" +
+                "1,4,EMPTY\n" +
+                "1,5,EMPTY\n" +
+                "1,6,EMPTY\n" +
+                "1,7,EMPTY\n" +
+                "2,0,EMPTY\n" +
+                "2,1,EMPTY\n" +
+                "2,2,EMPTY\n" +
+                "2,3,EMPTY\n" +
+                "2,4,EMPTY\n" +
+                "2,5,EMPTY\n" +
+                "2,6,EMPTY\n" +
+                "2,7,EMPTY\n" +
+                "3,0,EMPTY\n" +
+                "3,1,EMPTY\n" +
+                "3,2,EMPTY\n" +
+                "3,3,EMPTY\n" +
+                "3,4,EMPTY\n" +
+                "3,5,EMPTY\n" +
+                "3,6,EMPTY\n" +
+                "3,7,EMPTY\n" +
+                "4,0,EMPTY\n" +
+                "4,1,EMPTY\n" +
+                "4,2,EMPTY\n" +
+                "4,3,EMPTY\n" +
+                "4,4,EMPTY\n" +
+                "4,5,EMPTY\n" +
+                "4,6,EMPTY\n" +
+                "4,7,EMPTY\n" +
+                "5,0,EMPTY\n" +
+                "5,1,EMPTY\n" +
+                "5,2,EMPTY\n" +
+                "5,3,EMPTY\n" +
+                "5,4,EMPTY\n" +
+                "5,5,EMPTY\n" +
+                "5,6,EMPTY\n" +
+                "5,7,EMPTY\n" +
+                "6,0,EMPTY\n" +
+                "6,1,EMPTY\n" +
+                "6,2,EMPTY\n" +
+                "6,3,EMPTY\n" +
+                "6,4,EMPTY\n" +
+                "6,5,EMPTY\n" +
+                "6,6,EMPTY\n" +
+                "6,7,EMPTY\n" +
+                "7,0,EMPTY\n" +
+                "7,1,EMPTY\n" +
+                "7,2,EMPTY\n" +
+                "7,3,EMPTY\n" +
+                "7,4,EMPTY\n" +
+                "7,5,EMPTY\n" +
+                "7,6,EMPTY\n" +
+                "7,7,EMPTY\n");
     }
 
     public void testIsValidMove() throws Exception {

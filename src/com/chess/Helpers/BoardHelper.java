@@ -102,6 +102,7 @@ public class BoardHelper {
             cell = new Cell(c, Chess.Pieces.BLACK_PAWN);
             b.setCell(i,row3,cell);
         }
+        b.setBoardState(Chess.BoardState.WHITE_TURN);
         return b;
     }
 

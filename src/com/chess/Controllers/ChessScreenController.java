@@ -54,17 +54,22 @@ public class ChessScreenController {
                     view.remove2Buttons();
                     click1 = null;
                     click2 = null;
-                    RequestUtil.makeMove(e.getAsJsonObject().get("id").getAsInt(), b);
-                    RequestUtil.startCheckingForMoves(new Listener() {
+                    RequestUtil.makeMove(e.getAsJsonObject().get("id").getAsInt(), b, new Listener() {
                         @Override
                         public void responce(JsonElement e) {
-                            b = new Board(e.getAsJsonObject().get("board").getAsString());
-                            view.setBoard(b);
-                            frame.setContentPane(view.getView());
-                            frame.revalidate();
-                            RequestUtil.stopCheckingForMoves();
+                            RequestUtil.startCheckingForMoves(new Listener() {
+                                @Override
+                                public void responce(JsonElement e) {
+                                    b = new Board(e.getAsJsonObject().get("board").getAsString());
+                                    view.setBoard(b);
+                                    frame.setContentPane(view.getView());
+                                    frame.revalidate();
+                                    RequestUtil.stopCheckingForMoves();
+                                }
+                            });
                         }
                     });
+
             }
         };
 

@@ -101,14 +101,13 @@ public class RequestUtil {
     }
 
 
-    public static void makeMove(int gameid, Board b)
+    public static void makeMove(int gameid, Board b, Listener listener)
     {
-        makePostRequest("", "game?gameId=" + gameid + "&board=" + b.toString() + "&boardState=" + b.getBoardState().name(), new Listener() {
-            @Override
-            public void responce(JsonElement e) {
-
-            }
-        });
+        String board = "";
+        try{
+            board = URLEncoder.encode(b.toString(), "UTF-8");
+        }catch (Exception e){}
+        makePostRequest("", "game?gameId=" + gameid + "&board=" + board + "&boardState=" + b.getBoardState().name(), listener);
     }
 
 

@@ -18,10 +18,8 @@ import java.util.Set;
  * Created by tomer on 3/7/16.
  */
 public class LobbyController {
-    User u;
-    public LobbyController(User u)
+    public LobbyController()
     {
-        this.u = u;
     }
 
     public void createView(final JFrame frame)
@@ -29,6 +27,13 @@ public class LobbyController {
         final LobbyView v = new LobbyView();
         frame.setContentPane(v.getView());
         frame.revalidate();
+
+        RequestUtil.joinLobby(new Listener() {
+            @Override
+            public void responce(JsonElement e) {
+
+            }
+        });
 
         RequestUtil.getLobby(new Listener() {
             @Override

@@ -45,9 +45,7 @@ public class RequestUtil {
 
     public static void joinLobby(Listener listener)
     {
-        Gson gson = new Gson();
-        String json = gson.toJson(new UserID(getUserId()));
-        makePostRequest(json, "lobby", listener);
+        makePostRequest("", "lobby?userId=" + getUserId(), listener);
     }
 
     public static void checkRequests(Listener listener)

@@ -1,5 +1,6 @@
 package com.chess.Layouts;
 
+import com.chess.Networking.RequestUtil;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -63,7 +64,10 @@ public class LobbyView {
         Vector<String> names = new Vector<>();
         for(JsonElement e:users)
         {
-            names.add(Integer.toString(e.getAsJsonObject().get("userId").getAsInt()));
+            if(!Integer.toString((e.getAsJsonObject().get("userId").getAsInt())).equals(RequestUtil.getUserId()))
+            {
+                names.add(e.getAsJsonObject().get("username").getAsString());
+            }
         }
         list.setListData(names);
     }

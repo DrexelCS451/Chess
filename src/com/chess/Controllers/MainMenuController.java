@@ -67,13 +67,7 @@ public class MainMenuController {
                 Scanner scanner = new Scanner(varTmpDir);
                 u.id = scanner.nextLine();
                 scanner.close();
-                RequestUtil.joinLobby(new Listener() {
-                    @Override
-                    public void responce(JsonElement e) {
-
-                    }
-                });
-                LobbyController c = new LobbyController(u);
+                LobbyController c = new LobbyController();
                 c.createView(frame);
             }catch (Exception e){}
 
@@ -108,15 +102,8 @@ public class MainMenuController {
                                     PrintWriter writer = new PrintWriter("user.txt", "UTF-8");
                                     writer.println(Integer.toString(e.getAsJsonObject().get("userId").getAsInt()));
                                     writer.close();
-                                    User u = new User();
-                                    u.id =Integer.toString(e.getAsJsonObject().get("userId").getAsInt());
-                                    RequestUtil.joinLobby(new Listener() {
-                                        @Override
-                                        public void responce(JsonElement e) {
-
-                                        }
-                                    });
-                                    LobbyController c = new LobbyController(u);
+                                    User.id =Integer.toString(e.getAsJsonObject().get("userId").getAsInt());
+                                    LobbyController c = new LobbyController();
                                     c.createView(frame);
                                 }catch (Exception e1){}
                             }

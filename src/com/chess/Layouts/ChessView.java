@@ -3,6 +3,7 @@ package com.chess.Layouts;
 import com.chess.Helpers.CellListener;
 import com.chess.Helpers.ImageHelper;
 import com.chess.Models.Board;
+import com.chess.Models.User;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,7 +27,7 @@ public class ChessView {
     {
         p = new JPanel();
         p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
-        label =new Label("Your Turn  Playing Bobby");
+        label =new Label(User.isWhite?"Your Turn":"Opponents turn");
         label.setAlignment(Label.CENTER);
         label.setMaximumSize(new Dimension(Integer.MAX_VALUE, label.getMinimumSize().height));
         p.add(label);
@@ -72,6 +73,10 @@ public class ChessView {
         p.add(panelButtons);
     }
 
+    public void setLabel(String newlabel)
+    {
+        label.setText(newlabel);
+    }
     public JPanel getView()
     {
         return p;

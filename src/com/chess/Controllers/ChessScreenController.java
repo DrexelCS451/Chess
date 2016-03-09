@@ -28,6 +28,7 @@ public class ChessScreenController {
     Coordinate click1;
     Coordinate click2;
     Board b;
+    boolean inCheck = false;
     public void createView(final JFrame frame)
     {
         ActionListener forfeit = new ActionListener() {
@@ -50,6 +51,8 @@ public class ChessScreenController {
             public void actionPerformed(ActionEvent actionEvent) {
                     b = g.makeMove(new ChessMove(b.getCell(click1),b.getCell(click2)));
                     view.setBoard(b);
+                    view.setLabel("Opponent's Turn");
+
                     view.resetCellColor();
                     view.remove2Buttons();
                     click1 = null;
@@ -57,12 +60,42 @@ public class ChessScreenController {
                     RequestUtil.makeMove(e.getAsJsonObject().get("id").getAsInt(), b, new Listener() {
                         @Override
                         public void responce(JsonElement e) {
+                            Coordinate king = b.findKing( (!User.isWhite) ? Chess.Pieces.WHITE_KING: Chess.Pieces.BLACK_KING);
+
+                            if(MoveValidator.isCheckMate(b.getCell(king),b))
+                            {
+
+                                JOptionPane.showMessageDialog(frame, "You Won!");
+                                MainMenuController m = new MainMenuController();
+                                m.createView(frame);
+                                RequestUtil.stopCheckingForMoves();
+                                return;
+                            }
+
+
+
+
                             RequestUtil.startCheckingForMoves(new Listener() {
                                 @Override
                                 public void responce(JsonElement e) {
                                     b = new Board(e.getAsJsonObject().get("encodedGameBoard").getAsString());
+                                    Coordinate king = b.findKing( (User.isWhite) ? Chess.Pieces.WHITE_KING: Chess.Pieces.BLACK_KING);
+
+                                    if(MoveValidator.isCheckMate(b.getCell(king),b))
+                                    {
+                                        RequestUtil.stopCheckingForMoves();
+                                        JOptionPane.showMessageDialog(frame, "You Lost!");
+                                        MainMenuController m = new MainMenuController();
+                                        m.createView(frame);
+                                    }
+
+
+
+                                    view.setLabel("Your Turn");
                                     b.setBoardState(Chess.BoardState.valueOf(e.getAsJsonObject().get("state").getAsString()));
                                     g.setBoard(b);
+                                    inCheck = MoveValidator.isCheck(b, (User.isWhite) ? Chess.Pieces.WHITE_KING: Chess.Pieces.BLACK_KING,b.findKing( (User.isWhite) ? Chess.Pieces.WHITE_KING: Chess.Pieces.BLACK_KING));
+
                                     view.setBoard(b);
                                     frame.setContentPane(view.getView());
                                     frame.revalidate();
@@ -116,6 +149,7 @@ public class ChessScreenController {
                          view.cellClicked(i, j);
                          view.remove2Buttons();
                      } else if (click1 != null && MoveValidator.isValidMove(new ChessMove(b.getCell(click1.getX(), click1.getY()), b.getCell(i, j)), b)) {
+
                          view.resetCellColor();
                          click2 = new Coordinate(i, j);
                          view.cellClicked(click1.getX(), click1.getY());

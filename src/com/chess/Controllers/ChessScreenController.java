@@ -91,7 +91,7 @@ public class ChessScreenController {
                                 return;
                             }
 
-                          /*  if(MoveValidator.isStaleMate(b.getCell(king),b))
+                            if(MoveValidator.isStaleMate(b.getCell(king),b))
                             {
                                 ViewStatsController.updateTime();
                                 JOptionPane.showMessageDialog(frame, "Stalemate!");
@@ -99,7 +99,7 @@ public class ChessScreenController {
                                 m.createView(frame);
                                 RequestUtil.stopCheckingForMoves();
                                 return;
-                            }*/
+                            }
 
 
 
@@ -137,7 +137,7 @@ public class ChessScreenController {
         }
 
 
-            view.setB1Listener(b1);
+        view.setB1Listener(b1);
         view.setB2Listener(b2);
         view.setForfeitListener(forfeit);
         view.setCellClickListner(new CellListener() {
@@ -193,23 +193,20 @@ public class ChessScreenController {
         {
             RequestUtil.stopCheckingForMoves();
             ViewStatsController.updateTime();
-            JOptionPane.showMessageDialog(frame, "Stalemate!");
+            JOptionPane.showMessageDialog(frame, "You Lost!");
             MainMenuController m = new MainMenuController();
             m.createView(frame);
             return;
         }
 
-       /* if(MoveValidator.isStaleMate(b.getCell(king),b)) {
+       if(MoveValidator.isStaleMate(b.getCell(king),b)) {
             RequestUtil.stopCheckingForMoves();
-            Stats s = ViewStatsController.getStats();
-            s.setLosses(s.getLosses() + 1);
-            ViewStatsController.saveStats(s);
             ViewStatsController.updateTime();
-            JOptionPane.showMessageDialog(frame, "You Lost!");
+            JOptionPane.showMessageDialog(frame, "Stalemate!");
             MainMenuController m = new MainMenuController();
             m.createView(frame);
             return;
-        }*/
+        }
 
         view.setLabel("Your Turn");
         b.setBoardState(Chess.BoardState.valueOf(e.getAsJsonObject().get("state").getAsString()));

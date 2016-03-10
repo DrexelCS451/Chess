@@ -627,17 +627,6 @@ public class MoveValidator {
         Cell fromCell = move.getFrom();
         Cell toCell = move.getTo();
 
-        // Create a temporary board to see if check
-        Game tempGame = new Game();
-        Board tempBoard = new Board(board.toString());
-        tempGame.setBoard(tempBoard);
-        tempGame.makeMove(move);
-        Coordinate kingPos = board.findKing(Chess.Pieces.BLACK_KING);
-        if(isCheck(tempBoard, Chess.Pieces.BLACK_KING, kingPos)) {
-            return false;
-        }
-
-
         // If cell is empty, move is not an attack
         if(toCell.getCellState() == Chess.Pieces.EMPTY) {
             return validate_PAWN_MOVE(move, board);
@@ -662,16 +651,6 @@ public class MoveValidator {
     private static boolean validate_WHITE_PAWN(ChessMove move, Board board) {
         Cell fromCell = move.getFrom();
         Cell toCell = move.getTo();
-
-        // Create a temporary board to see if check
-        Game tempGame = new Game();
-        Board tempBoard = new Board(board.toString());
-        tempGame.setBoard(tempBoard);
-        tempGame.makeMove(move);
-        Coordinate kingPos = board.findKing(Chess.Pieces.WHITE_KING);
-        if(isCheck(tempBoard, Chess.Pieces.WHITE_KING, kingPos)) {
-            return false;
-        }
 
         // If cell is empty, move is not an attack
         if(toCell.getCellState() == Chess.Pieces.EMPTY) {
@@ -840,16 +819,6 @@ public class MoveValidator {
     private static boolean validate_BLACK_QUEEN(ChessMove move, Board board) {
         Cell toCell = move.getTo();
 
-        // Create a temporary board to see if check
-        Game tempGame = new Game();
-        Board tempBoard = new Board(board.toString());
-        tempGame.setBoard(tempBoard);
-        tempGame.makeMove(move);
-        Coordinate kingPos = board.findKing(Chess.Pieces.BLACK_KING);
-        if(isCheck(tempBoard, Chess.Pieces.BLACK_KING, kingPos)) {
-            return false;
-        }
-
         if(toCell.getCellState() == Chess.Pieces.EMPTY) {
             return validate_QUEEN_MOVE(move, board);
         }
@@ -868,16 +837,6 @@ public class MoveValidator {
 
     private static boolean validate_WHITE_QUEEN(ChessMove move, Board board) {
         Cell toCell = move.getTo();
-
-        // Create a temporary board to see if check
-        Game tempGame = new Game();
-        Board tempBoard = new Board(board.toString());
-        tempGame.setBoard(tempBoard);
-        tempGame.makeMove(move);
-        Coordinate kingPos = board.findKing(Chess.Pieces.WHITE_KING);
-        if(isCheck(tempBoard, Chess.Pieces.WHITE_KING, kingPos)) {
-            return false;
-        }
 
         if(toCell.getCellState() == Chess.Pieces.EMPTY) {
             return validate_QUEEN_MOVE(move, board);
@@ -956,15 +915,6 @@ public class MoveValidator {
     private static boolean validate_BLACK_ROOK(ChessMove move, Board board) {
         Cell toCell = move.getTo();
 
-        // Create a temporary board to see if check
-        Game tempGame = new Game();
-        Board tempBoard = new Board(board.toString());
-        tempGame.setBoard(tempBoard);
-        tempGame.makeMove(move);
-        Coordinate kingPos = board.findKing(Chess.Pieces.BLACK_KING);
-        if(isCheck(tempBoard, Chess.Pieces.BLACK_KING, kingPos)) {
-            return false;
-        }
 
         if(toCell.getCellState() == Chess.Pieces.EMPTY) {
             return validate_ROOK_MOVE(move, board);
@@ -983,15 +933,6 @@ public class MoveValidator {
     private static boolean validate_WHITE_ROOK(ChessMove move, Board board) {
         Cell toCell = move.getTo();
 
-        // Create a temporary board to see if check
-        Game tempGame = new Game();
-        Board tempBoard = new Board(board.toString());
-        tempGame.setBoard(tempBoard);
-        tempGame.makeMove(move);
-        Coordinate kingPos = board.findKing(Chess.Pieces.WHITE_KING);
-        if(isCheck(tempBoard, Chess.Pieces.WHITE_KING, kingPos)) {
-            return false;
-        }
 
         if(toCell.getCellState() == Chess.Pieces.EMPTY) {
             return validate_ROOK_MOVE(move, board);
@@ -1051,16 +992,6 @@ public class MoveValidator {
     private static boolean validate_BLACK_KNIGHT(ChessMove move, Board board) {
         Cell toCell = move.getTo();
 
-        // Create a temporary board to see if check
-        Game tempGame = new Game();
-        Board tempBoard = new Board(board.toString());
-        tempGame.setBoard(tempBoard);
-        tempGame.makeMove(move);
-        Coordinate kingPos = board.findKing(Chess.Pieces.BLACK_KING);
-        if(isCheck(tempBoard, Chess.Pieces.BLACK_KING, kingPos)) {
-            return false;
-        }
-
         if(toCell.getCellState() == Chess.Pieces.EMPTY) {
             return validate_KNIGHT_MOVE(move, board);
         }
@@ -1078,15 +1009,6 @@ public class MoveValidator {
     private static boolean validate_WHITE_KNIGHT(ChessMove move, Board board) {
         Cell toCell = move.getTo();
 
-        // Create a temporary board to see if check
-        Game tempGame = new Game();
-        Board tempBoard = new Board(board.toString());
-        tempGame.setBoard(tempBoard);
-        tempGame.makeMove(move);
-        Coordinate kingPos = board.findKing(Chess.Pieces.WHITE_KING);
-        if(isCheck(tempBoard, Chess.Pieces.WHITE_KING, kingPos)) {
-            return false;
-        }
 
         if(toCell.getCellState() == Chess.Pieces.EMPTY) {
             return validate_KNIGHT_MOVE(move, board);
@@ -1154,15 +1076,6 @@ public class MoveValidator {
     private static boolean validate_BLACK_BISHOP(ChessMove move, Board board) {
         Cell toCell = move.getTo();
 
-        // Create a temporary board to see if check
-        Game tempGame = new Game();
-        Board tempBoard = new Board(board.toString());
-        tempGame.setBoard(tempBoard);
-        tempGame.makeMove(move);
-        Coordinate kingPos = board.findKing(Chess.Pieces.BLACK_KING);
-        if(isCheck(tempBoard, Chess.Pieces.BLACK_KING, kingPos)) {
-            return false;
-        }
 
         if(toCell.getCellState() == Chess.Pieces.EMPTY) {
             return validate_BISHOP_MOVE(move, board);
@@ -1182,15 +1095,6 @@ public class MoveValidator {
     private static boolean validate_WHITE_BISHOP(ChessMove move, Board board) {
         Cell toCell = move.getTo();
 
-        // Create a temporary board to see if check
-        Game tempGame = new Game();
-        Board tempBoard = new Board(board.toString());
-        tempGame.setBoard(tempBoard);
-        tempGame.makeMove(move);
-        Coordinate kingPos = board.findKing(Chess.Pieces.WHITE_KING);
-        if(isCheck(tempBoard, Chess.Pieces.WHITE_KING, kingPos)) {
-            return false;
-        }
 
         if(toCell.getCellState() == Chess.Pieces.EMPTY) {
             return validate_BISHOP_MOVE(move, board);

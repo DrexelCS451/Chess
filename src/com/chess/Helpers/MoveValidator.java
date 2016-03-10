@@ -10,41 +10,41 @@ import java.util.ArrayList;
 public class MoveValidator {
     public MoveValidator() {}
 
-    public static ArrayList<ChessMove> findPawnMoves(Cell pawn, Board board) {
+    public static ArrayList<ChessMove> findPawnMoves(Cell pawn, Board board){
+        int multiplier = -1;
+        if ((pawn.getCellState() == Chess.Pieces.BLACK_PAWN && User.isWhite)
+                || (pawn.getCellState() == Chess.Pieces.WHITE_PAWN && !User.isWhite)) {
+            multiplier = 1;
+        }
         ArrayList<ChessMove> moveList = new ArrayList<ChessMove>();
         int pawnX = pawn.getPos().getX();
         int pawnY = pawn.getPos().getY();
 
         // If the pawn hasn't moved it can move (0, -2)
         if(!pawn.getHasMoved()) {
-            int delta = 0;
-            if (pawn.getPos().getY() == 6)
-                delta = -2;
-            else if (pawn.getPos().getY() == 1)
-                delta = 2;
 
-
-            ChessMove move = new ChessMove(pawn, board.getCell(pawnX, pawnY + delta));
+            ChessMove move = new ChessMove(pawn, board.getCell(pawnX, pawnY + 2*multiplier));
             if(MoveValidator.isValidMove(move, board)) {
                 moveList.add(move);
             }
         }
 
+
         // Test if the pawn can move (0, -1)
-        ChessMove move = new ChessMove(pawn, board.getCell(pawnX, pawnY - 1));
+        ChessMove move = new ChessMove(pawn, board.getCell(pawnX, pawnY + 1*multiplier));
         if(isValidMove(move, board)) {
             moveList.add(move);
         }
 
         // Test if the pawn can attack (-1, -1) or (+1, -1)
         if(pawnX + 1 < 8) {
-            move = new ChessMove(pawn, board.getCell(pawnX + 1, pawnY - 1));
+            move = new ChessMove(pawn, board.getCell(pawnX + 1, pawnY + 1*multiplier));
             if(isValidMove(move, board)) {
                 moveList.add(move);
             }
         }
         if(pawnX - 1 > -1) {
-            move = new ChessMove(pawn, board.getCell(pawnX - 1, pawnY - 1));
+            move = new ChessMove(pawn, board.getCell(pawnX - 1, pawnY + 1*multiplier));
             if(isValidMove(move, board)) {
                 moveList.add(move);
             }

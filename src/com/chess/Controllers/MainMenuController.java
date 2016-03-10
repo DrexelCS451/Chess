@@ -7,7 +7,6 @@ import com.chess.Networking.RequestUtil;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.sun.media.jfxmedia.logging.Logger;
 import org.omg.CORBA.NameValuePair;
 
 import javax.swing.*;
@@ -19,6 +18,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by tomer on 2/8/16.
@@ -80,7 +81,7 @@ public class MainMenuController {
                 LobbyController c = new LobbyController();
                 c.createView(frame);
             }catch (Exception e){
-                Logger.logMsg(Logger.WARNING, e.getStackTrace().toString());
+                Logger.getLogger("test").log(Level.WARNING, e.getStackTrace().toString());
             }
 
 
@@ -118,7 +119,7 @@ public class MainMenuController {
                                     LobbyController c = new LobbyController();
                                     c.createView(frame);
                                 }catch (Exception e1){
-                                    Logger.logMsg(Logger.WARNING, e1.getStackTrace().toString());
+                                    Logger.getLogger("test").log(Level.WARNING, e1.getStackTrace().toString());
                                 }
                             }
                         });

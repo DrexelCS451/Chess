@@ -18,7 +18,7 @@ import java.util.logging.Logger;
  * Created by tomer on 2/10/16.
  */
 public class RequestUtil {
-    public static String baseUrl = "http://localhost:8080/myapp/";
+    public static String baseUrl = "http://10.246.251.85:80/myapp/";
 
     public static String getUserId()
     {

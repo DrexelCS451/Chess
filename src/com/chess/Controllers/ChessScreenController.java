@@ -199,7 +199,7 @@ public class ChessScreenController {
             return;
         }
 
-        if(MoveValidator.isStaleMate(b.getCell(king),b)) {
+       /* if(MoveValidator.isStaleMate(b.getCell(king),b)) {
             RequestUtil.stopCheckingForMoves();
             Stats s = ViewStatsController.getStats();
             s.setLosses(s.getLosses() + 1);
@@ -209,7 +209,7 @@ public class ChessScreenController {
             MainMenuController m = new MainMenuController();
             m.createView(frame);
             return;
-        }
+        }*/
 
         view.setLabel("Your Turn");
         b.setBoardState(Chess.BoardState.valueOf(e.getAsJsonObject().get("state").getAsString()));

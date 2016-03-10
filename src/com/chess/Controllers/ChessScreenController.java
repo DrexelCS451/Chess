@@ -66,12 +66,18 @@ public class ChessScreenController {
 
                     view.resetCellColor();
                     view.remove2Buttons();
+                    final Coordinate king = b.findKing( (!User.isWhite) ? Chess.Pieces.WHITE_KING: Chess.Pieces.BLACK_KING);
+
+                    if(MoveValidator.isStaleMate(b.getCell(king),b))
+                    {
+                        //b.setBoardState(Chess.BoardState.STALEMATE);
+                    }
+
                     click1 = null;
                     click2 = null;
                     RequestUtil.makeMove(e.getAsJsonObject().get("id").getAsInt(), b, new Listener() {
                         @Override
                         public void responce(JsonElement e) {
-                            Coordinate king = b.findKing( (!User.isWhite) ? Chess.Pieces.WHITE_KING: Chess.Pieces.BLACK_KING);
 
                             if(MoveValidator.isCheckMate(b.getCell(king),b))
                             {
@@ -86,6 +92,15 @@ public class ChessScreenController {
                                 return;
                             }
 
+                            if(MoveValidator.isStaleMate(b.getCell(king),b))
+                            {
+                                ViewStatsController.updateTime();
+                                JOptionPane.showMessageDialog(frame, "Stalemate!");
+                                MainMenuController m = new MainMenuController();
+                                m.createView(frame);
+                                RequestUtil.stopCheckingForMoves();
+                                return;
+                            }
 
 
 
@@ -155,7 +170,7 @@ public class ChessScreenController {
             view.setBoard(b);
             frame.setContentPane(view.getView());
             frame.revalidate();
-        }
+    }
 
     public void moveMade(JFrame frame,ChessView view, Game g, JsonElement e)
     {
@@ -177,6 +192,15 @@ public class ChessScreenController {
 
         if(MoveValidator.isCheckMate(b.getCell(king),b))
         {
+            RequestUtil.stopCheckingForMoves();
+            ViewStatsController.updateTime();
+            JOptionPane.showMessageDialog(frame, "Stalemate!");
+            MainMenuController m = new MainMenuController();
+            m.createView(frame);
+            return;
+        }
+
+        if(MoveValidator.isStaleMate(b.getCell(king),b)) {
             RequestUtil.stopCheckingForMoves();
             Stats s = ViewStatsController.getStats();
             s.setLosses(s.getLosses() + 1);

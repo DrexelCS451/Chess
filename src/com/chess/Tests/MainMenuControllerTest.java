@@ -1,6 +1,7 @@
 package com.chess.Tests;
 
 import com.chess.Controllers.MainMenuController;
+import com.chess.Networking.RequestUtil;
 import junit.framework.Assert;
 import junit.framework.TestCase;
 

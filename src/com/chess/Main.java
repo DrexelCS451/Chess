@@ -33,9 +33,6 @@ public class Main {
             }
         });*/
 
-        Stats s = ViewStatsController.getStats();
-        s.setForfiet(5);
-        ViewStatsController.saveStats(s);
         createAndShowGUI();
 
     }

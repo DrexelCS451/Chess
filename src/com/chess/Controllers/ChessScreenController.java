@@ -2,10 +2,8 @@ package com.chess.Controllers;
 
 import com.chess.Helpers.BoardHelper;
 import com.chess.Helpers.CellListener;
-import com.chess.Helpers.ImageHelper;
 import com.chess.Helpers.MoveValidator;
 import com.chess.Layouts.ChessView;
-import com.chess.Layouts.MainMenuView;
 import com.chess.Models.*;
 import com.chess.Networking.Listener;
 import com.chess.Networking.RequestUtil;
@@ -18,6 +16,7 @@ import java.util.Date;
 
 /**
  * Created by tomer on 2/10/16.
+ *
  */
 public class ChessScreenController {
     JsonElement e;
@@ -36,7 +35,6 @@ public class ChessScreenController {
         ActionListener forfeit = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-
                 int reply = JOptionPane.showConfirmDialog(null, "Are you sure you want to forfeit? This will count as a loss.", "Forfeit?", JOptionPane.YES_NO_OPTION);
                 if (reply == JOptionPane.YES_OPTION) {
                     b.setBoardState(User.isWhite ? Chess.BoardState.BLACK_WIN : Chess.BoardState.WHITE_WIN);
@@ -50,7 +48,6 @@ public class ChessScreenController {
                             new MainMenuController().createView(frame);
                         }
                     });
-
                 }
             }
         };

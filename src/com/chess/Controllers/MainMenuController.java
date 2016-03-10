@@ -7,6 +7,7 @@ import com.chess.Networking.RequestUtil;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.sun.media.jfxmedia.logging.Logger;
 import org.omg.CORBA.NameValuePair;
 
 import javax.swing.*;
@@ -78,7 +79,9 @@ public class MainMenuController {
                 //u.id = "389";
                 LobbyController c = new LobbyController();
                 c.createView(frame);
-            }catch (Exception e){}
+            }catch (Exception e){
+                Logger.logMsg(Logger.WARNING, e.getStackTrace().toString());
+            }
 
 
             return false;
@@ -114,7 +117,9 @@ public class MainMenuController {
                                     User.id =Integer.toString(e.getAsJsonObject().get("userId").getAsInt());
                                     LobbyController c = new LobbyController();
                                     c.createView(frame);
-                                }catch (Exception e1){}
+                                }catch (Exception e1){
+                                    Logger.logMsg(Logger.WARNING, e1.getStackTrace().toString());
+                                }
                             }
                         });
 

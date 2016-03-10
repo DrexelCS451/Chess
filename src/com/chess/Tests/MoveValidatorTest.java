@@ -86,7 +86,7 @@ public class MoveValidatorTest extends TestCase {
         assertTrue(MoveValidator.isCheck(board, king.getCellState(), king.getPos()));
 
         // Testing for kings
-        new Board("0,0,BLACK_ROOK\n" +
+        board = new Board("0,0,BLACK_ROOK\n" +
                 "0,1,BLACK_PAWN\n" +
                 "0,2,EMPTY\n" +
                 "0,3,EMPTY\n" +
@@ -154,7 +154,7 @@ public class MoveValidatorTest extends TestCase {
         assertTrue(MoveValidator.isCheck(board, king.getCellState(), king.getPos()));
 
         // Testing for queens
-        new Board("0,0,BLACK_ROOK\n" +
+        board = new Board("0,0,BLACK_ROOK\n" +
                 "0,1,BLACK_PAWN\n" +
                 "0,2,EMPTY\n" +
                 "0,3,BLACK_QUEEN\n" + // Moved enemy queen to here
@@ -222,7 +222,7 @@ public class MoveValidatorTest extends TestCase {
         assertTrue(MoveValidator.isCheck(board, king.getCellState(), king.getPos()));
 
         // Testing for rooks
-        new Board("0,0,BLACK_ROOK\n" +
+        board = new Board("0,0,BLACK_ROOK\n" +
                 "0,1,BLACK_PAWN\n" +
                 "0,2,EMPTY\n" +
                 "0,3,EMPTY\n" +
@@ -290,7 +290,7 @@ public class MoveValidatorTest extends TestCase {
         assertTrue(MoveValidator.isCheck(board, king.getCellState(), king.getPos()));
 
         // Testing for knights
-        new Board("0,0,BLACK_ROOK\n" +
+        board = new Board("0,0,BLACK_ROOK\n" +
                 "0,1,BLACK_PAWN\n" +
                 "0,2,EMPTY\n" +
                 "0,3,EMPTY\n" +
@@ -358,7 +358,7 @@ public class MoveValidatorTest extends TestCase {
         assertTrue(MoveValidator.isCheck(board, king.getCellState(), king.getPos()));
 
         // Testing for bishops
-        new Board("0,0,BLACK_ROOK\n" +
+        board = new Board("0,0,BLACK_ROOK\n" +
                 "0,1,BLACK_PAWN\n" +
                 "0,2,EMPTY\n" +
                 "0,3,EMPTY\n" +

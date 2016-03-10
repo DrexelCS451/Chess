@@ -6,6 +6,7 @@ import com.chess.Models.NetworkModels.UserID;
 import com.chess.Models.NetworkModels.UserName;
 import com.chess.Models.User;
 import com.google.gson.*;
+import com.sun.media.jfxmedia.logging.Logger;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -28,7 +29,9 @@ public class RequestUtil {
         String p = "";
         try{
             p = URLEncoder.encode(name, "UTF-8");
-        }catch (Exception e){}
+        }catch (Exception e){
+            Logger.logMsg(Logger.WARNING, e.getStackTrace().toString());
+        }
 
         makeGetRequest("user?username=" + p, listener);
     }
@@ -89,6 +92,7 @@ public class RequestUtil {
                         Thread.sleep(3000);
                     } catch (Exception e) {
                         e.printStackTrace();
+                        Logger.logMsg(Logger.WARNING, e.getStackTrace().toString());
                     }
                 }
             }
@@ -110,7 +114,10 @@ public class RequestUtil {
         String board = "";
         try{
             board = URLEncoder.encode(b.toString(), "UTF-8");
-        }catch (Exception e){}
+        }catch (Exception e){
+            Logger.logMsg(Logger.WARNING, e.getStackTrace().toString());
+
+        }
         makePostRequest("", "game?gameId=" + gameid + "&board=" + board + "&boardState=" + b.getBoardState().name(), listener);
     }
 
@@ -136,6 +143,7 @@ public class RequestUtil {
                         Thread.sleep(3000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
+                        Logger.logMsg(Logger.WARNING, e.getStackTrace().toString());
                     }
                 }
             }
@@ -183,6 +191,7 @@ public class RequestUtil {
                         Thread.sleep(3000);
                     } catch (Exception e) {
                         e.printStackTrace();
+                        Logger.logMsg(Logger.WARNING, e.getStackTrace().toString());
                     }
                 }
             }
@@ -211,6 +220,7 @@ public class RequestUtil {
                         Thread.sleep(3000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
+                        Logger.logMsg(Logger.WARNING, e.getStackTrace().toString());
                     }
                 }
             }
@@ -249,6 +259,7 @@ public class RequestUtil {
                     listener.responce(rootobj);
                 }catch (Exception e){
                     listener.responce(null);
+                    Logger.logMsg(Logger.WARNING, e.getStackTrace().toString());
                 }
             }
         }).start();
@@ -277,6 +288,7 @@ public class RequestUtil {
                     listener.responce(rootobj);
                 }catch (Exception e){
                     listener.responce(null);
+                    Logger.logMsg(Logger.WARNING, e.getStackTrace().toString());
                 }
             }
         }).start();
@@ -296,6 +308,7 @@ public class RequestUtil {
                     listener.responce(root);
                 }catch (Exception e){
                     listener.responce(null);
+                    Logger.logMsg(Logger.WARNING, e.getStackTrace().toString());
                 }
             }
         }).start();
@@ -316,6 +329,7 @@ public class RequestUtil {
                     listener.responce(root);
                 }catch (Exception e){
                     listener.responce(null);
+                    Logger.logMsg(Logger.WARNING, e.getStackTrace().toString());
                 }
             }
         }).start();

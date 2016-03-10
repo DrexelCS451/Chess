@@ -89,8 +89,6 @@ public class Board {
     }
 
     public String toString() {
-
-
         String boardString = "";
         if(!User.isWhite) {
             Cell[][] cells = this.cells;

@@ -357,9 +357,11 @@ public class MoveValidator {
         }
         return false;
      }
+
     public static boolean isCheck(Board board, Chess.Pieces king, Coordinate kingCell) {
         int kingX = kingCell.getX();
         int kingY = kingCell.getY();
+        Chess.Pieces otherKing;
         Chess.Pieces otherQueen;
         Chess.Pieces otherRook;
         Chess.Pieces otherPawn;
@@ -367,6 +369,7 @@ public class MoveValidator {
         Chess.Pieces otherKnight;
 
         if (king == Chess.Pieces.BLACK_KING) {
+            otherKing = Chess.Pieces.WHITE_KING;
             otherQueen = Chess.Pieces.WHITE_QUEEN;
             otherRook = Chess.Pieces.WHITE_ROOK;
             otherPawn = Chess.Pieces.WHITE_PAWN;
@@ -374,12 +377,40 @@ public class MoveValidator {
             otherKnight = Chess.Pieces.WHITE_KNIGHT;
         }
         else {
+            otherKing = Chess.Pieces.BLACK_KING;
             otherQueen = Chess.Pieces.BLACK_QUEEN;
             otherRook = Chess.Pieces.BLACK_ROOK;
             otherPawn = Chess.Pieces.BLACK_PAWN;
             otherBishop = Chess.Pieces.BLACK_BISHOP;
             otherKnight = Chess.Pieces.BLACK_KNIGHT;
         }
+
+        // Case of king: left, right, in front, behind, or diagonals
+        // Check front
+        if(kingX - 1 > -1 && board.getCell(kingX-1, kingY).getCellState() == otherKing)
+            return true;
+        // Check behind
+        if(kingX + 1 < 8 && board.getCell(kingX+1, kingY).getCellState() == otherKing)
+            return true;
+        // Check left
+        if(kingY - 1 > -1 && board.getCell(kingX, kingY-1).getCellState() == otherKing)
+            return true;
+        // Check right
+        if(kingY + 1 < 8 && board.getCell(kingX, kingY+1).getCellState() == otherKing)
+            return true;
+        // Check frontLeft
+        if(kingX - 1 > -1 && kingY - 1 > -1 && board.getCell(kingX-1, kingY-1).getCellState() == otherKing)
+            return true;
+        // Check frontRight
+        if(kingX - 1 > -1 && kingY + 1 < 8 && board.getCell(kingX-1, kingY+1).getCellState() == otherKing)
+            return true;
+        // Check behindLeft
+        if(kingX + 1 < 8 && kingY - 1 > -1 && board.getCell(kingX+1, kingY-1).getCellState() == otherKing)
+            return true;
+        // Check behindRight
+        if(kingX + 1 < 8 && kingY + 1 < 8 && board.getCell(kingX+1, kingY+1).getCellState() == otherKing)
+            return true;
+
         // vertical or horizontal attack = queen or rook
         // from above for white, below for black (vertical attacks)
         for (int i = (kingY - 1); i >= 0; i--) {

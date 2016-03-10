@@ -8,7 +8,6 @@ import com.chess.Models.*;
 import com.chess.Networking.Listener;
 import com.chess.Networking.RequestUtil;
 import com.google.gson.JsonElement;
-
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

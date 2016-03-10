@@ -75,6 +75,7 @@ public class MainMenuController {
                 Scanner scanner = new Scanner(varTmpDir);
                 u.id = scanner.nextLine();
                 scanner.close();
+                //u.id = "389";
                 LobbyController c = new LobbyController();
                 c.createView(frame);
             }catch (Exception e){}

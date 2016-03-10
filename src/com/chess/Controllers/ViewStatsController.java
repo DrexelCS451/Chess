@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
+import java.util.Date;
 
 /**
  * Created by Tomer on 2/9/16.
@@ -30,31 +31,44 @@ public class ViewStatsController {
                 menu.createView(frame);
             }
         };
-        frame.setContentPane(ViewStatsView.getviewStatsView(10,5,2,1004,returnAction));
+        frame.setContentPane(ViewStatsView.getviewStatsView(getStats(),returnAction));
         frame.revalidate();
     }
 
 
     public static void saveStats(Stats stats){
-        File newStatFile = new File(STAT_FILE_NAME);
         try {
-            PrintWriter fileWriter = new PrintWriter(newStatFile);
-            fileWriter.print(stats.getWins() + ',' + stats.getLosses() + ',' + stats.getForfiet() + ',' + stats.getTimePlayed());
-            fileWriter.close();
-        }catch (FileNotFoundException e){
+            PrintWriter writer = new PrintWriter(STAT_FILE_NAME, "UTF-8");
+            writer.print(stats.getWins() + "," + stats.getLosses() + "," + stats.getForfiet() + "," + stats.getTimePlayed());
+            writer.close();
+        }catch (Exception e){
             e.printStackTrace();
         }
     }
 
-    public static Stats getStats() throws IOException {
-        File statFile = new File(STAT_FILE_NAME);
-        FileInputStream fileReader = new FileInputStream(statFile);
-        byte[] data = new byte[(int) statFile.length()];
-        fileReader.read(data);
-        fileReader.close();
-        String fileData = new String(data);
-        String[] splitFile = fileData.split(",");
-        return new Stats(splitFile[0], splitFile[1], splitFile[2], splitFile[3]);
+    public static Stats getStats()  {
+
+        try {
+            File statFile = new File(STAT_FILE_NAME);
+            FileInputStream fileReader = null;
+            fileReader = new FileInputStream(statFile);
+            byte[] data = new byte[(int) statFile.length()];
+            fileReader.read(data);
+            fileReader.close();
+            String fileData = new String(data);
+            String[] splitFile = fileData.split(",");
+            return new Stats(Integer.parseInt(splitFile[0]), Integer.parseInt(splitFile[1]), Integer.parseInt(splitFile[2]), Integer.parseInt(splitFile[3]));
+        } catch (Exception e) {
+            return new Stats(0,0,0,0);
+        }
+    }
+
+    public static void updateTime()
+    {
+        int mins = (int)(new Date().getTime() - User.timeStarted) / 1000 / 60;
+        Stats s = getStats();
+        s.setTimePlayed(s.getTimePlayed() + mins);
+        saveStats(s);
 
     }
 

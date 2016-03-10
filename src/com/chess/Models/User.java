@@ -13,5 +13,6 @@ public class User {
 
     public String name;
     public static String id = "0";
+    public static long timeStarted = 0;
 
 }

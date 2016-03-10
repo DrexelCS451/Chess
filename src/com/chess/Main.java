@@ -1,5 +1,8 @@
 package com.chess;
 import com.chess.Controllers.MainMenuController;
+import com.chess.Controllers.ViewStatsController;
+import com.chess.Layouts.ViewStatsView;
+import com.chess.Models.Stats;
 import com.chess.Networking.RequestUtil;
 
 import javax.swing.*;
@@ -29,6 +32,10 @@ public class Main {
 
             }
         });*/
+
+        Stats s = ViewStatsController.getStats();
+        s.setForfiet(5);
+        ViewStatsController.saveStats(s);
         createAndShowGUI();
 
     }

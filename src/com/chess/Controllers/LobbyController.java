@@ -28,102 +28,103 @@ public class LobbyController {
         frame.setContentPane(v.getView());
         frame.revalidate();
 
-        RequestUtil.joinLobby(new Listener() {
+        RequestUtil.deleteGames(new Listener() {
             @Override
-            public void responce(JsonElement e) {
+            public void responce(JsonElement r) {
+                RequestUtil.joinLobby(new Listener() {
+                    @Override
+                    public void responce(JsonElement e) {
 
-            }
-        });
+                    }
+                });
 
-        RequestUtil.startRefreshingLobby(new Listener() {
-            @Override
-            public void responce(JsonElement e) {
-                JsonArray a = e.getAsJsonArray();
-                v.setList(a);
-            }
-        });
+                RequestUtil.startRefreshingLobby(new Listener() {
+                    @Override
+                    public void responce(JsonElement e) {
+                        JsonArray a = e.getAsJsonArray();
+                        v.setList(a);
+                    }
+                });
 
-        v.setLeaveRequestListner(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                RequestUtil.leaveLobby();
+                v.setLeaveRequestListner(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent actionEvent) {
+                        RequestUtil.leaveLobby();
 
-                MainMenuController c = new MainMenuController();
-                c.createView(frame);
-            }
-        });
+                        MainMenuController c = new MainMenuController();
+                        c.createView(frame);
+                    }
+                });
 
-        v.setSendRequestListner(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                if (v.getSelectedUserId() != -1) {
-                    RequestUtil.sendRequest(Integer.toString(v.getSelectedUserId()), new Listener() {
-                        @Override
-                        public void responce(JsonElement e) {
-
-                        }
-                    });
-                }
-            }
-        });
-
-
-
-        final Set<Integer> seenRequests = new HashSet<>();
-        RequestUtil.startCheckingForRequests(new Listener() {
-            @Override
-            public void responce(final JsonElement e) {
-                for (JsonElement r : e.getAsJsonArray()) {
-                    if (!seenRequests.contains(r.getAsJsonObject().get("Id").getAsInt())) {
-                        seenRequests.add(r.getAsJsonObject().get("Id").getAsInt());
-                        String n = r.getAsJsonObject().get("player1Name").getAsString();
-                        int reply = JOptionPane.showConfirmDialog(null, n + " sent a game request. Would you like to accept?", "Accept?", JOptionPane.YES_NO_OPTION);
-                        if (reply == JOptionPane.YES_OPTION) {
-                            User.isWhite = false;
-
-                             l = new Listener() {
-                                @Override
-                                public void responce(JsonElement el) {
-                                    if(el.getAsJsonObject().has("status"))
-                                    {
-                                        //RequestUtil.replyRequest(Integer.toString(e.getAsJsonArray().get(0).getAsJsonObject().get("Id").getAsInt()),true,l);
-                                    }
-                                    else
-                                    {
-                                        RequestUtil.leaveLobby();
-                                        ChessScreenController c = new ChessScreenController(el);
-                                        c.createView(frame);
-                                    }
-                                    //start game
-
-                                }
-                            };
-                            RequestUtil.replyRequest(Integer.toString(e.getAsJsonArray().get(0).getAsJsonObject().get("Id").getAsInt()),true,l);
-                            break;
-                        } else {
-                            RequestUtil.replyRequest(Integer.toString(e.getAsJsonArray().get(0).getAsJsonObject().get("Id").getAsInt()), false, new Listener() {
+                v.setSendRequestListner(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent actionEvent) {
+                        if (v.getSelectedUserId() != -1) {
+                            RequestUtil.sendRequest(Integer.toString(v.getSelectedUserId()), new Listener() {
                                 @Override
                                 public void responce(JsonElement e) {
 
                                 }
                             });
-
                         }
                     }
-                }
+                });
 
+
+                final Set<Integer> seenRequests = new HashSet<>();
+                RequestUtil.startCheckingForRequests(new Listener() {
+                    @Override
+                    public void responce(final JsonElement e) {
+                        for (JsonElement r : e.getAsJsonArray()) {
+                            if (!seenRequests.contains(r.getAsJsonObject().get("Id").getAsInt())) {
+                                seenRequests.add(r.getAsJsonObject().get("Id").getAsInt());
+                                String n = r.getAsJsonObject().get("player1Name").getAsString();
+                                int reply = JOptionPane.showConfirmDialog(null, n + " sent a game request. Would you like to accept?", "Accept?", JOptionPane.YES_NO_OPTION);
+                                if (reply == JOptionPane.YES_OPTION) {
+                                    User.isWhite = false;
+
+                                    l = new Listener() {
+                                        @Override
+                                        public void responce(JsonElement el) {
+                                            if (el.getAsJsonObject().has("status")) {
+                                                //RequestUtil.replyRequest(Integer.toString(e.getAsJsonArray().get(0).getAsJsonObject().get("Id").getAsInt()),true,l);
+                                            } else {
+                                                RequestUtil.leaveLobby();
+                                                ChessScreenController c = new ChessScreenController(el);
+                                                c.createView(frame);
+                                            }
+                                            //start game
+
+                                        }
+                                    };
+                                    RequestUtil.replyRequest(Integer.toString(e.getAsJsonArray().get(0).getAsJsonObject().get("Id").getAsInt()), true, l);
+                                    break;
+                                } else {
+                                    RequestUtil.replyRequest(Integer.toString(e.getAsJsonArray().get(0).getAsJsonObject().get("Id").getAsInt()), false, new Listener() {
+                                        @Override
+                                        public void responce(JsonElement e) {
+
+                                        }
+                                    });
+
+                                }
+                            }
+                        }
+
+                    }
+                });
+
+                RequestUtil.startCheckingForAcceptedRequests(new Listener() {
+                    @Override
+                    public void responce(JsonElement e) {
+                        RequestUtil.leaveLobby();
+                        User.isWhite = true;
+                        ChessScreenController c = new ChessScreenController(e);
+                        c.createView(frame);
+                    }
+                });
             }
         });
-
-        RequestUtil.startCheckingForAcceptedRequests(new Listener() {
-            @Override
-            public void responce(JsonElement e) {
-                RequestUtil.leaveLobby();
-                ChessScreenController c = new ChessScreenController(e);
-                c.createView(frame);
-            }
-        });
-
 
     }
 }

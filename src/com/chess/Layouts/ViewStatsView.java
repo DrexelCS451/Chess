@@ -1,5 +1,7 @@
 package com.chess.Layouts;
 
+import com.chess.Models.Stats;
+
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
@@ -9,7 +11,7 @@ import java.awt.event.ActionListener;
  * Created by Tomer on 2/9/16.
  */
 public class ViewStatsView {
-    public static JPanel getviewStatsView(int win, int loss, int forfiegt, int time, ActionListener returnAction)
+    public static JPanel getviewStatsView(Stats stats, ActionListener returnAction)
     {
 
         JPanel rootpane = new JPanel();
@@ -21,16 +23,16 @@ public class ViewStatsView {
         JPanel pane = new JPanel();
         pane.setLayout(new GridLayout(4,2));
         pane.add(new Label("Wins", SwingConstants.VERTICAL));
-        pane.add(new Label(Integer.toString(win),SwingConstants.VERTICAL));
+        pane.add(new Label("" + stats.getWins(),SwingConstants.VERTICAL));
 
         pane.add(new Label("Loses",SwingConstants.VERTICAL));
-        pane.add(new Label(Integer.toString(loss),SwingConstants.VERTICAL));
+        pane.add(new Label("" + stats.getLosses(),SwingConstants.VERTICAL));
 
         pane.add(new Label("Forfeits",SwingConstants.VERTICAL));
-        pane.add(new Label(Integer.toString(forfiegt),SwingConstants.VERTICAL));
+        pane.add(new Label("" + stats.getForfiet(),SwingConstants.VERTICAL));
 
         pane.add(new Label("Time Played", SwingConstants.VERTICAL));
-        pane.add(new Label(Integer.toString(time) + " minutes", SwingConstants.VERTICAL));
+        pane.add(new Label(stats.getTimePlayed() + " minutes", SwingConstants.VERTICAL));
         pane.setBorder(BorderFactory.createLineBorder(Color.black));
         rootpane.add(pane);
 

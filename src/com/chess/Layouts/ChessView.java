@@ -117,6 +117,18 @@ public class ChessView {
         b2.setEnabled(false);
     }
 
+    public void disableForfeit()
+    {
+        forfeit.setLabel("");
+        forfeit.setEnabled(false);
+    }
+
+    public void enableForfeit()
+    {
+        forfeit.setLabel("forfeit");
+        forfeit.setEnabled(true);
+    }
+
     public void setForfeitListener(ActionListener listener)
     {
         forfeit.addActionListener(listener);

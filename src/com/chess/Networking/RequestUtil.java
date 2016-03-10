@@ -16,7 +16,7 @@ import java.net.URLEncoder;
  * Created by tomer on 2/10/16.
  */
 public class RequestUtil {
-    public static String baseUrl = "http://localhost:8080/myapp/";
+    public static String baseUrl = "http://10.246.251.85:80/myapp/";
 
     public static String getUserId()
     {
@@ -30,7 +30,7 @@ public class RequestUtil {
             p = URLEncoder.encode(name, "UTF-8");
         }catch (Exception e){}
 
-        makeGetRequest("user?username=" + p,listener);
+        makeGetRequest("user?username=" + p, listener);
     }
 
     public static void CreateUser(String name,Listener listener)
@@ -100,6 +100,10 @@ public class RequestUtil {
         checkingRequests = false;
     }
 
+    public static void deleteGames(Listener listener)
+    {
+        makeDeleteRequest("game?userId=" + getUserId(),listener);
+    }
 
     public static void makeMove(int gameid, Board b, Listener listener)
     {
@@ -122,7 +126,7 @@ public class RequestUtil {
                     checkAcceptedRequests(new Listener() {
                         @Override
                         public void responce(JsonElement e) {
-                            if(e!= null && ((e.getAsJsonObject().get("state").getAsString().equals(Chess.BoardState.BLACK_TURN.name()) && !User.isWhite) || (e.getAsJsonObject().get("state").getAsString().equals(Chess.BoardState.WHITE_TURN.name()) && User.isWhite)))
+                            if(e!= null && ((e.getAsJsonObject().get("state").getAsString().startsWith("BLACK") && !User.isWhite) || (e.getAsJsonObject().get("state").getAsString().startsWith("WHITE") && User.isWhite)))
                             {
                                 listener.responce(e);
                             }
@@ -249,7 +253,6 @@ public class RequestUtil {
             }
         }).start();
     }
-
 
     public static void makePutRequest(final String json,final String urlEnd, final Listener listener)
     {

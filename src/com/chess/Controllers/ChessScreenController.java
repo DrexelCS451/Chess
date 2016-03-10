@@ -68,10 +68,10 @@ public class ChessScreenController {
                     view.remove2Buttons();
                     final Coordinate king = b.findKing( (!User.isWhite) ? Chess.Pieces.WHITE_KING: Chess.Pieces.BLACK_KING);
 
-                    if(MoveValidator.isStaleMate(b.getCell(king),b))
+                   /* if(MoveValidator.isStaleMate(b.getCell(king),b))
                     {
                         //b.setBoardState(Chess.BoardState.STALEMATE);
-                    }
+                    }*/
 
                     click1 = null;
                     click2 = null;
@@ -92,7 +92,7 @@ public class ChessScreenController {
                                 return;
                             }
 
-                            if(MoveValidator.isStaleMate(b.getCell(king),b))
+                          /*  if(MoveValidator.isStaleMate(b.getCell(king),b))
                             {
                                 ViewStatsController.updateTime();
                                 JOptionPane.showMessageDialog(frame, "Stalemate!");
@@ -100,7 +100,7 @@ public class ChessScreenController {
                                 m.createView(frame);
                                 RequestUtil.stopCheckingForMoves();
                                 return;
-                            }
+                            }*/
 
 
 

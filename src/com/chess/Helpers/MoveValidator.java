@@ -560,35 +560,74 @@ public class MoveValidator {
 
     public static boolean isValidMove(ChessMove move, Board board) {
         Chess.Pieces piece = move.getFrom().getCellState();
+        boolean validMoveForPiece;
+        Chess.Pieces kingColor;
         switch(piece) {
             case EMPTY:
                 return false;
             case BLACK_PAWN:
-                return validate_BLACK_PAWN(move, board);
+                validMoveForPiece = validate_BLACK_PAWN(move, board);
+                kingColor = Chess.Pieces.BLACK_KING;
+                break;
             case WHITE_PAWN:
-                return validate_WHITE_PAWN(move, board);
+                validMoveForPiece = validate_WHITE_PAWN(move, board);
+                kingColor = Chess.Pieces.WHITE_KING;
+                break;
             case BLACK_KING:
-                return validate_BLACK_KING(move, board);
+                validMoveForPiece = validate_BLACK_KING(move, board);
+                kingColor = Chess.Pieces.BLACK_KING;
+                break;
             case WHITE_KING:
-                return validate_WHITE_KING(move, board);
+                validMoveForPiece = validate_WHITE_KING(move, board);
+                kingColor = Chess.Pieces.WHITE_KING;
+                break;
             case BLACK_QUEEN:
-                return validate_BLACK_QUEEN(move, board);
+                validMoveForPiece = validate_BLACK_QUEEN(move, board);
+                kingColor = Chess.Pieces.BLACK_KING;
+                break;
             case WHITE_QUEEN:
-                return validate_WHITE_QUEEN(move, board);
+                validMoveForPiece = validate_WHITE_QUEEN(move, board);
+                kingColor = Chess.Pieces.WHITE_KING;
+                break;
             case BLACK_ROOK:
-                return validate_BLACK_ROOK(move, board);
+                validMoveForPiece = validate_BLACK_ROOK(move, board);
+                kingColor = Chess.Pieces.BLACK_KING;
+                break;
             case WHITE_ROOK:
-                return validate_WHITE_ROOK(move, board);
+                validMoveForPiece = validate_WHITE_ROOK(move, board);
+                kingColor = Chess.Pieces.WHITE_KING;
+                break;
             case BLACK_KNIGHT:
-                return validate_BLACK_KNIGHT(move, board);
+                validMoveForPiece = validate_BLACK_KNIGHT(move, board);
+                kingColor = Chess.Pieces.BLACK_KING;
+                break;
             case WHITE_KNIGHT:
-                return validate_WHITE_KNIGHT(move, board);
+                validMoveForPiece = validate_WHITE_KNIGHT(move, board);
+                kingColor = Chess.Pieces.WHITE_KING;
+                break;
             case BLACK_BISHOP:
-                return validate_BLACK_BISHOP(move, board);
+                validMoveForPiece = validate_BLACK_BISHOP(move, board);
+                kingColor = Chess.Pieces.BLACK_KING;
+                break;
             case WHITE_BISHOP:
-                return validate_WHITE_BISHOP(move, board);
+                validMoveForPiece = validate_WHITE_BISHOP(move, board);
+                kingColor = Chess.Pieces.WHITE_KING;
+                break;
+            default:
+                validMoveForPiece = false;
+                kingColor = Chess.Pieces.BLACK_KING;
+                break;
         }
-        return false;
+
+        if (!validMoveForPiece)
+            return false;
+
+        //Check if the move would put the king in check
+        Board temp = board.copyBoard();
+        Game tempGame = new Game();
+        tempGame.setBoard(temp);
+        tempGame.makeMove(move);
+        return !isCheck(temp, kingColor, temp.findKing(kingColor));
     }
 
     /*

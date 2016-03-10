@@ -22,10 +22,11 @@ public class MoveValidator {
 
         // If the pawn hasn't moved it can move (0, -2)
         if(!pawn.getHasMoved()) {
-
-            ChessMove move = new ChessMove(pawn, board.getCell(pawnX, pawnY + 2*multiplier));
-            if(MoveValidator.isValidMove(move, board)) {
-                moveList.add(move);
+            if ((pawnY == 1 && multiplier == 1) || (pawnY == 6 && multiplier == -1)) {
+                ChessMove move = new ChessMove(pawn, board.getCell(pawnX, pawnY + 2 * multiplier));
+                if (MoveValidator.isValidMove(move, board)) {
+                    moveList.add(move);
+                }
             }
         }
 
@@ -502,10 +503,16 @@ public class MoveValidator {
 
         // case of pawns - down and left from king and down and right from king
         // down and left - (X - 1, Y - 1)
-        if ((kingX - 1 > -1) && (kingY - 1 > -1) && board.getCell(kingX - 1, kingY - 1).getCellState() == otherPawn)
+        int multiplier = -1;
+        if ((king == Chess.Pieces.BLACK_KING && User.isWhite)
+            || (king == Chess.Pieces.WHITE_KING && !User.isWhite))
+            multiplier = 1;
+
+        int newKingY = kingY + 1 * multiplier;
+        if ((kingX - 1 > -1) && (newKingY > -1) && (newKingY < 8) && board.getCell(kingX - 1, newKingY).getCellState() == otherPawn)
             return true;
         // down and right - (X + 1, Y - 1)
-        if ((kingX + 1 < 8) && (kingY - 1 > -1) && board.getCell(kingX + 1, kingY - 1).getCellState() == otherPawn)
+        if ((kingX + 1 < 8) && (newKingY > -1) && (newKingY < 8) && board.getCell(kingX + 1, newKingY).getCellState() == otherPawn)
             return true;
 
         // case of knights

@@ -143,33 +143,52 @@ public class Board {
         return false;
     }
 
+    public boolean savableKingAuxKing(ArrayList<ChessMove> validMoves, Cell piece) {
+        for (int k = 0; k < validMoves.size(); k++) {
+            Game tempGame = new Game();
+            Board tempBoard = copyBoard();
+            tempGame.setBoard(tempBoard);
+            tempGame.makeMove(validMoves.get(k));
+            Cell newKingPos = validMoves.get(k).getTo();
+            if (!MoveValidator.isCheck(tempBoard, piece.getCellState(), newKingPos.getPos()))
+                return true;
+        }
+        return false;
+    }
+
     public boolean savableKing(Cell king) {
         if (king.getCellState() == Chess.Pieces.BLACK_KING) {
             for (int i = 0; i < 8; i++) {
                 for (int j = 0; j < 8; j++) {
                     if (getCell(i,j).getCellState() == Chess.Pieces.BLACK_QUEEN) {
                         ArrayList<ChessMove> blackQueenMoves = MoveValidator.findQueenMoves(getCell(i, j), this);
-                        return savableKingAux(blackQueenMoves, king);
+                         if (savableKingAux(blackQueenMoves, king))
+                             return true;
                     }
                     else if (getCell(i,j).getCellState() == Chess.Pieces.BLACK_BISHOP) {
                         ArrayList<ChessMove> blackBishopMoves = MoveValidator.findBishopMoves(getCell(i, j), this);
-                        return savableKingAux(blackBishopMoves, king);
+                        if (savableKingAux(blackBishopMoves, king))
+                            return true;
                     }
                     else if (getCell(i,j).getCellState() == Chess.Pieces.BLACK_PAWN) {
                         ArrayList<ChessMove> blackPawnMoves = MoveValidator.findPawnMoves(getCell(i, j), this);
-                        return savableKingAux(blackPawnMoves, king);
+                        if(savableKingAux(blackPawnMoves, king))
+                            return true;
                     }
                     else if (getCell(i,j).getCellState() == Chess.Pieces.BLACK_ROOK) {
                         ArrayList<ChessMove> blackRookMoves = MoveValidator.findRookMoves(getCell(i, j), this);
-                        return savableKingAux(blackRookMoves, king);
+                        if (savableKingAux(blackRookMoves, king))
+                            return true;
                     }
                     else if (getCell(i,j).getCellState() == Chess.Pieces.BLACK_KNIGHT) {
                         ArrayList<ChessMove> blackKnightMoves = MoveValidator.findKnightMoves(getCell(i, j), this);
-                        return savableKingAux(blackKnightMoves, king);
+                        if (savableKingAux(blackKnightMoves, king))
+                            return true;
                     }
                     else if (getCell(i,j).getCellState() == Chess.Pieces.BLACK_KING) {
                         ArrayList<ChessMove> blackKingMoves = MoveValidator.findKingMoves(getCell(i, j), this);
-                        return savableKingAux(blackKingMoves, king);
+                        if (savableKingAuxKing(blackKingMoves, king))
+                            return true;
                     }
                 }
             }
@@ -179,27 +198,33 @@ public class Board {
                 for (int j = 0; j < 8; j++) {
                     if (getCell(i,j).getCellState() == Chess.Pieces.WHITE_QUEEN) {
                         ArrayList<ChessMove> whiteQueenMoves = MoveValidator.findQueenMoves(getCell(i, j), this);
-                        return savableKingAux(whiteQueenMoves, king);
+                        if (savableKingAux(whiteQueenMoves, king))
+                            return true;
                     }
                     else if (getCell(i,j).getCellState() == Chess.Pieces.WHITE_BISHOP) {
                         ArrayList<ChessMove> whiteBishopMoves = MoveValidator.findBishopMoves(getCell(i, j), this);
-                        return savableKingAux(whiteBishopMoves, king);
+                        if (savableKingAux(whiteBishopMoves, king))
+                            return true;
                     }
                     else if (getCell(i,j).getCellState() == Chess.Pieces.WHITE_PAWN) {
                         ArrayList<ChessMove> whitePawnMoves = MoveValidator.findPawnMoves(getCell(i, j), this);
-                        return savableKingAux(whitePawnMoves, king);
+                        if (savableKingAux(whitePawnMoves, king))
+                            return true;
                     }
                     else if (getCell(i,j).getCellState() == Chess.Pieces.WHITE_ROOK) {
                         ArrayList<ChessMove> whiteRookMoves = MoveValidator.findRookMoves(getCell(i, j), this);
-                        return savableKingAux(whiteRookMoves, king);
+                        if (savableKingAux(whiteRookMoves, king))
+                            return true;
                     }
                     else if (getCell(i,j).getCellState() == Chess.Pieces.WHITE_KNIGHT) {
                         ArrayList<ChessMove> whiteKnightMoves = MoveValidator.findKnightMoves(getCell(i, j), this);
-                        return savableKingAux(whiteKnightMoves, king);
+                        if (savableKingAux(whiteKnightMoves, king))
+                            return true;
                     }
                     else if (getCell(i,j).getCellState() == Chess.Pieces.WHITE_KING) {
                         ArrayList<ChessMove> whiteKingMoves = MoveValidator.findKingMoves(getCell(i, j), this);
-                        return savableKingAux(whiteKingMoves, king);
+                        if (savableKingAuxKing(whiteKingMoves, king))
+                            return true;
                     }
                 }
             }

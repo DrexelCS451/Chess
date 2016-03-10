@@ -745,9 +745,9 @@ public class MoveValidatorTest extends TestCase {
                 "4,5,EMPTY\n" +
                 "4,6,EMPTY\n" +
                 "4,7,EMPTY\n" +
-                "5,0,WHITE_KING\n" +
-                "5,1,BLACK_PAWN\n" +
-                "5,2,BLACK_KING\n" +
+                "5,0,BLACK_KING\n" +
+                "5,1,WHITE_PAWN\n" +
+                "5,2,WHITE_KING\n" +
                 "5,3,EMPTY\n" +
                 "5,4,EMPTY\n" +
                 "5,5,EMPTY\n" +
@@ -769,17 +769,8 @@ public class MoveValidatorTest extends TestCase {
                 "7,5,EMPTY\n" +
                 "7,6,EMPTY\n" +
                 "7,7,EMPTY\n");
-        king = board.getCell(5, 0);
-
-        for(ChessMove move : MoveValidator.findKingMoves(king, board)) {
-            System.out.print(move.getFrom().getPos().getX() + "," + move.getTo().getPos().getY());
-            System.out.println("   " + move.getTo().getPos().getX() + "," + move.getTo().getPos().getY());
-        }
-
-        // THIS ONE IS FAILING: THINKS THE KING CAN MOVE LEFT AND RIGHT
-        // maybe it's testing for pawn moves the wrong way?
-        //assertTrue(MoveValidator.isStaleMate(king, board));
-
+        Cell blackKing = board.getCell(5, 0);
+        assertTrue(MoveValidator.isStaleMate(blackKing, board));
 
         board = new Board("0,0,BLACK_KING\n" +
                 "0,1,EMPTY\n" +

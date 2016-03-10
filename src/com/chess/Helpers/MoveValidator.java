@@ -17,7 +17,14 @@ public class MoveValidator {
 
         // If the pawn hasn't moved it can move (0, -2)
         if(!pawn.getHasMoved()) {
-            ChessMove move = new ChessMove(pawn, board.getCell(pawnX, pawnY - 2));
+            int delta = 0;
+            if (pawn.getPos().getY() == 6)
+                delta = -2;
+            else if (pawn.getPos().getY() == 1)
+                delta = 2;
+
+
+            ChessMove move = new ChessMove(pawn, board.getCell(pawnX, pawnY + delta));
             if(MoveValidator.isValidMove(move, board)) {
                 moveList.add(move);
             }
